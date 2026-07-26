@@ -49,12 +49,6 @@ export class AttackScene extends Phaser.Scene implements AttackPresenter {
       }
     });
 
-    // Allow click anywhere on overlay to skip
-    this.input.on('pointerdown', () => {
-      if (this.stageContainer.visible) {
-        AttackDirector.getInstance().skip();
-      }
-    });
   }
 
   private setupStageUI(): void {

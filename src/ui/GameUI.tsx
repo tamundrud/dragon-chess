@@ -4,6 +4,7 @@ import { ChessGameController } from '../chess/ChessGameController';
 import { ChessMoveRequest, GameStatus, PieceColor } from '../chess/chessTypes';
 import { PhaserGameManager } from '../game/PhaserGameManager';
 import { AttackDirector } from '../game/animation/AttackDirector';
+import { AttackLifecycleState } from '../game/animation/attackTypes';
 
 interface GameUIProps {
   controller: ChessGameController;
@@ -15,8 +16,10 @@ export const GameUI: React.FC<GameUIProps> = ({ controller, onBackToMenu, onOpen
   const containerRef = useRef<HTMLDivElement>(null);
   const managerRef = useRef<PhaserGameManager | null>(null);
   const [status, setStatus] = useState<GameStatus>(controller.getStatus());
-  const [isAttackActive, setIsAttackActive] = useState<boolean>(false);
+  const [attackState, setAttackState] = useState<AttackLifecycleState>('idle');
+  const isAttackActive = attackState !== 'idle' && attackState !== 'completing';
   const [promotionReq, setPromotionReq] = useState<{ request: ChessMoveRequest; turn: PieceColor } | null>(null);
+  const [isGameReady, setIsGameReady] = useState(false);
 
   useEffect(() => {
     // Subscribe to chess controller status updates
@@ -26,7 +29,7 @@ export const GameUI: React.FC<GameUIProps> = ({ controller, onBackToMenu, onOpen
 
     // Subscribe to attack director to disable undo/restart during animations
     const unsubAttack = AttackDirector.getInstance().subscribe((state) => {
-      setIsAttackActive(state !== 'idle' && state !== 'completing');
+      setAttackState(state);
     });
 
     return () => {
@@ -38,12 +41,19 @@ export const GameUI: React.FC<GameUIProps> = ({ controller, onBackToMenu, onOpen
   useEffect(() => {
     if (containerRef.current && !managerRef.current) {
       const manager = new PhaserGameManager(controller);
+      const unsubscribeReady = manager.onReady(() => setIsGameReady(true));
       manager.init('phaser-container');
       managerRef.current = manager;
 
       manager.onPromotionRequired((request, turn) => {
         setPromotionReq({ request, turn });
       });
+
+      return () => {
+        unsubscribeReady();
+        manager.destroy();
+        managerRef.current = null;
+      };
     }
 
     return () => {
@@ -83,7 +93,12 @@ export const GameUI: React.FC<GameUIProps> = ({ controller, onBackToMenu, onOpen
   };
 
   return (
-    <div id="game-ui" className="flex min-h-screen w-full flex-col bg-[#080808] text-[#e0e0e0]">
+    <div
+      id="game-ui"
+      data-game-ready={isGameReady ? 'true' : 'false'}
+      data-attack-state={attackState}
+      className="flex min-h-screen w-full flex-col bg-[#080808] text-[#e0e0e0]"
+    >
       {/* Header Bar */}
       <header className="flex items-center justify-between border-b gold-border bg-[#121212] px-4 sm:px-6 py-3 sm:py-4 shadow-md z-10">
         <button

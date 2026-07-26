@@ -16,6 +16,8 @@ export class PhaserGameManager {
   private unsubscribeInputSelect: (() => void) | null = null;
   private onPromotionCallback: ((request: ChessMoveRequest, turn: PieceColor) => void) | null = null;
   private pendingPromotionRequest: ChessMoveRequest | null = null;
+  private onReadyCallback: (() => void) | null = null;
+  private isReady = false;
 
   constructor(controller: ChessGameController) {
     this.controller = controller;
@@ -80,6 +82,20 @@ export class PhaserGameManager {
     this.unsubscribeInputMove = inputController.onMoveRequest((request: ChessMoveRequest) => {
       this.handleMoveRequest(request);
     });
+
+    // The canvas is created before scene input and controller subscriptions are
+    // connected. Only advertise readiness after the complete integration setup.
+    this.isReady = true;
+    this.onReadyCallback?.();
+  }
+
+  public onReady(callback: () => void): () => void {
+    this.onReadyCallback = callback;
+    if (this.isReady) callback();
+
+    return () => {
+      if (this.onReadyCallback === callback) this.onReadyCallback = null;
+    };
   }
 
   private handleMoveRequest(request: ChessMoveRequest): void {
@@ -199,5 +215,7 @@ export class PhaserGameManager {
     }
     this.boardScene = null;
     this.attackScene = null;
+    this.isReady = false;
+    this.onReadyCallback = null;
   }
 }
