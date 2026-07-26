@@ -35,3 +35,9 @@ Implements the 11-beat storybook capture animation for `fire_stream_attack`:
 9. **Soot & Sparks Reaction** (`impact` phase): Comic soot cloud and golden spark burst envelope the wobbling/shrinking defender.
 10. **Satisfied Recovery** (`recovering` phase): Glow fades, posture returns to upright, followed by a proud nod and playful nostril smoke ring.
 11. **Clean Return** (`completing` phase): All temporary graphics, tweens, timers, and camera shakes clean up, restoring board input.
+
+## Completion versus cancellation
+
+`skip()` is a user-requested fast completion: it cleans presentation and invokes the pending completion callback, so the prepared legal move is committed exactly once.
+
+`abort()` is teardown cancellation: it stops timers and audio, asks the presenter to clean up, discards the pending callback, resets lifecycle state to `idle`, and does **not** commit the prepared move. Navigation and game destruction use abort. Both director and scene cleanup operations are idempotent.

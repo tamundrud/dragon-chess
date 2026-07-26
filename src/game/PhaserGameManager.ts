@@ -190,6 +190,14 @@ export class PhaserGameManager {
   }
 
   public destroy(): void {
+    // A prepared capture belongs to this manager. Navigation must cancel it,
+    // never turn teardown into an implicit move commit.
+    AttackDirector.getInstance().abort();
+    AudioController.getInstance().stopAll();
+    this.controller.setInputLocked(false);
+    this.boardScene?.getInputController().setLocked(false);
+    this.pendingPromotionRequest = null;
+    this.onPromotionCallback = null;
     if (this.unsubscribeChess) this.unsubscribeChess();
     if (this.unsubscribeInputMove) this.unsubscribeInputMove();
     if (this.unsubscribeInputSelect) this.unsubscribeInputSelect();
@@ -199,5 +207,8 @@ export class PhaserGameManager {
     }
     this.boardScene = null;
     this.attackScene = null;
+    this.unsubscribeChess = null;
+    this.unsubscribeInputMove = null;
+    this.unsubscribeInputSelect = null;
   }
 }

@@ -258,6 +258,48 @@ describe('Attack Framework & Lifecycle', () => {
 
     director.unregisterPresenter(mockPresenter);
   });
+
+  it('aborts without invoking completion and is idempotent', () => {
+    SettingsStore.getInstance().update({ animationEnabled: true, animationMode: 'normal' });
+    const cleanup = vi.fn();
+    const presenter: AttackPresenter = {
+      playAttack: vi.fn(),
+      skip: vi.fn(),
+      cleanup,
+    };
+    director.registerPresenter(presenter);
+    const completed = vi.fn();
+
+    director.startAttack({
+      from: 'e4', to: 'd5', piece: 'p', color: 'w', captured: 'p', san: 'exd5', flags: 'c',
+    }, completed);
+    director.abort();
+    director.abort();
+
+    expect(completed).not.toHaveBeenCalled();
+    expect(cleanup).toHaveBeenCalledTimes(2);
+    expect(director.getState()).toBe('idle');
+    expect(director.getCurrentContext()).toBeNull();
+    director.unregisterPresenter(presenter);
+  });
+
+  it('can start and complete a new attack after aborting one', () => {
+    SettingsStore.getInstance().update({ animationEnabled: true, animationMode: 'normal' });
+    const firstCompletion = vi.fn();
+    const secondCompletion = vi.fn();
+    const move = {
+      from: 'e4', to: 'd5', piece: 'p' as const, color: 'w' as const,
+      captured: 'p' as const, san: 'exd5', flags: 'c',
+    };
+
+    director.startAttack(move, firstCompletion);
+    director.abort();
+    expect(director.startAttack(move, secondCompletion)).toBe(true);
+    director.skip();
+
+    expect(firstCompletion).not.toHaveBeenCalled();
+    expect(secondCompletion).toHaveBeenCalledOnce();
+  });
 });
 
 describe('Attack System & Chess Engine Integration', () => {

@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { ArrowLeft, RotateCcw, Sliders, Undo2, Crown, ShieldAlert, Award } from 'lucide-react';
 import { ChessGameController } from '../chess/ChessGameController';
 import { ChessMoveRequest, GameStatus, PieceColor } from '../chess/chessTypes';
+import { AttackLifecycleState } from '../game/animation/attackTypes';
 import { PhaserGameManager } from '../game/PhaserGameManager';
 import { AttackDirector } from '../game/animation/AttackDirector';
 
@@ -16,6 +17,7 @@ export const GameUI: React.FC<GameUIProps> = ({ controller, onBackToMenu, onOpen
   const managerRef = useRef<PhaserGameManager | null>(null);
   const [status, setStatus] = useState<GameStatus>(controller.getStatus());
   const [isAttackActive, setIsAttackActive] = useState<boolean>(false);
+  const [attackState, setAttackState] = useState<AttackLifecycleState>('idle');
   const [promotionReq, setPromotionReq] = useState<{ request: ChessMoveRequest; turn: PieceColor } | null>(null);
 
   useEffect(() => {
@@ -26,6 +28,7 @@ export const GameUI: React.FC<GameUIProps> = ({ controller, onBackToMenu, onOpen
 
     // Subscribe to attack director to disable undo/restart during animations
     const unsubAttack = AttackDirector.getInstance().subscribe((state) => {
+      setAttackState(state);
       setIsAttackActive(state !== 'idle' && state !== 'completing');
     });
 
@@ -83,12 +86,16 @@ export const GameUI: React.FC<GameUIProps> = ({ controller, onBackToMenu, onOpen
   };
 
   return (
-    <div id="game-ui" className="flex min-h-screen w-full flex-col bg-[#080808] text-[#e0e0e0]">
+    <div id="game-ui" data-attack-state={attackState} className="flex min-h-screen w-full flex-col bg-[#080808] text-[#e0e0e0]">
       {/* Header Bar */}
       <header className="flex items-center justify-between border-b gold-border bg-[#121212] px-4 sm:px-6 py-3 sm:py-4 shadow-md z-10">
         <button
           id="back-menu-btn"
-          onClick={onBackToMenu}
+          onClick={() => {
+            managerRef.current?.destroy();
+            managerRef.current = null;
+            onBackToMenu();
+          }}
           className="flex items-center gap-1.5 rounded-sm px-3 sm:px-4 py-2 text-xs font-bold uppercase tracking-widest btn-ghost transition-colors"
         >
           <ArrowLeft className="h-4 w-4" />

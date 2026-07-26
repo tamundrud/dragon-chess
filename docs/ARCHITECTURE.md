@@ -83,11 +83,16 @@ Must not own chess rules.
 - Audio settings.
 - Local persistence.
 
-## Vertical Slice Implementation (Completed)
+## Current Vertical Slice Implementation
 - **FireDragonPresenter**: Implements the `AttackPresenter` interface for `fire_stream_attack`. Renders procedural dragon graphics, flame cones, ember particles, and defender reaction silhouettes across all 6 attack lifecycle phases.
 - **Single Entry Point**: Captures in `ChessGameController` are routed through `PhaserGameManager.handleMoveRequest()`, which initiates `AttackDirector.startAttack()`. The move commit to `chess.js` occurs via the callback when the attack reaches the `completing` phase.
 - **State Protection**: When an attack starts, `ChessGameController.setInputLocked(true)` prevents duplicate moves or UI actions (undo/restart) until the lifecycle completes.
 - **Data-Driven Registries**: Both `CharacterRegistry` and `AttackRegistry` provide clean decoupling between piece types, character identities, and presentation choreography.
 
 ## Export & Continued Work
-- The architecture supports seamless extension by adding new `AttackPresenter` implementations for remaining pieces (e.g., Viking Warriors, Obsidian Clan) without touching core chess engine rules or React overlays.
+- The architecture is intended to support extension by adding new `AttackPresenter` implementations for remaining pieces (e.g., Viking Warriors, Obsidian Clan) without touching core chess engine rules or React overlays.
+
+
+## Teardown boundary
+
+`PhaserGameManager.destroy()` owns navigation teardown. It aborts an active presentation before destroying Phaser, stops audio, unlocks controller/board input, and releases subscriptions. `AttackScene` unregisters itself and removes keyboard, pointer, and resize listeners on both Phaser `shutdown` and `destroy`. React Strict Mode cleanup can therefore run repeatedly without retaining a presenter or committing a pending capture.

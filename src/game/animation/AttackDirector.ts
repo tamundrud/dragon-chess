@@ -170,6 +170,31 @@ export class AttackDirector {
     this.finishCleanup();
   }
 
+  /**
+   * Cancels the active presentation without completing its pending chess move.
+   * Unlike skip(), abort() deliberately discards the completion callback.
+   */
+  public abort(): void {
+    this.clearScheduledTimeouts();
+    AudioController.getInstance().stopAll();
+
+    // Discard this first so even a defensive or re-entrant presenter cleanup
+    // cannot commit the move which was only prepared for presentation.
+    this.onCompleteCallback = null;
+    if (this.presenter) {
+      try {
+        this.presenter.cleanup();
+      } catch (error) {
+        console.warn('Presenter cleanup failed while aborting attack:', error);
+      }
+    }
+
+    this.currentContext = null;
+    this.currentDefinition = null;
+    this.state = 'idle';
+    this.notifyListeners();
+  }
+
   private completeImmediately(): void {
     this.state = 'completing';
     this.notifyListeners();

@@ -1,85 +1,57 @@
-# Dragon Chess — Vertical Slice
+# Dragon Chess — Lifecycle Baseline
 
-Dragon Chess is an animated, child-friendly chess game that combines standard chess rules with dramatic, storybook-style animated capture battles. Built specifically for an 8-year-old child who loves chess and dragons, the project ensures 100% rules compliance while making every piece capture feel like a playful fantasy adventure.
+Dragon Chess is a child-friendly, local pass-and-play chess prototype. `chess.js` is the sole rules authority; Phaser renders the board and capture presentations, while React owns only the surrounding menus and settings UI.
 
----
+## Reproducible setup
 
-## 🚀 Fresh-Clone Startup Instructions
+Node.js 22 LTS and npm are the supported toolchain. The committed `package-lock.json` is authoritative.
 
-To set up and run the project locally from a fresh clone:
+```bash
+npm ci
+npm run dev
+```
 
-1. **Install Dependencies**:
-   ```bash
-   npm install
-   ```
+Open `http://localhost:3000`. Run all automated checks with:
 
-2. **Start Development Server**:
-   ```bash
-   npm run dev
-   ```
-   Open `http://localhost:3000` in your browser.
+```bash
+npm test
+npm run typecheck
+npm run lint
+npm run build
+npx playwright install chromium
+npx playwright test
+```
 
-3. **Run Verification & Quality Checks**:
-   ```bash
-   # Run all automated unit tests (Vitest)
-   npm test -- --run
+CI runs these checks (and installs Chromium) for pushes and pull requests.
 
-   # Run TypeScript type checking
-   npm run typecheck
+## Evidence and current scope
 
-   # Run ESLint
-   npm run lint
+### Unit tested
 
-   # Build production bundle
-   npm run build
-   ```
+Vitest covers controller move validation and game status, settings/registry scaffolding, attack lifecycle and skip behavior, Fire Dragon presenter cleanup, and the distinction between completing and aborting an attack. These tests exercise selected behavior around `chess.js`; they are not an independent proof of every possible rules position.
 
----
+### Browser tested
 
-## 🏛️ Architectural Boundaries & Invariants
+Playwright runs Chromium at a 390 × 844 viewport and checks the start screen, opening a game, tap-based quiet moves, capture presentation, skip/commit, navigation abort/new-game recovery, restart, and horizontal overflow. This is automated browser coverage, not physical-device certification.
 
-The project enforces strict separation of concerns to guarantee reliability and maintainability:
+### Manual verification
 
-1. **Authoritative Engine (`chess.js`)**:
-   `chess.js` (managed inside `ChessGameController`) is the sole rules authority. It generates legal moves, validates move attempts, tracks turns, and evaluates check, checkmate, and draw conditions. Neither Phaser nor React ever duplicate or calculate chess rules.
-2. **Presentation Invariant**:
-   Attack animations are purely presentation. Whether animations are enabled, disabled, set to fast/instant, or skipped mid-flight, the exact same final chess state is committed to `chess.js` and rendered on the board.
-3. **Phaser 3 Rendering & Timeline Management**:
-   Phaser manages board rendering (`BoardScene`) and animated battle scenes (`AttackScene`). It derives all visual piece positions from the authoritative controller.
-4. **React UI**:
-   React provides surrounding application menus (`StartMenu`), game status headers (`GameUI`), and settings modals (`SettingsModal`). React never stores a second copy of the chess board state.
-5. **Data-Driven Registries**:
-   Characters (`CharacterRegistry`) and attack choreographies (`AttackRegistry`) are decoupled from gameplay logic. Adding new characters or attacks requires adding data definitions, without altering the chess engine or board scenes.
+No physical phone or broad browser/device matrix is claimed by this repository. See `docs/TEST_PLAN.md` for suggested manual checks.
 
----
+## Attack navigation semantics
 
-## ✅ Completed Features (Phases 1–4)
+Capture moves are prepared but are not applied to `chess.js` until presentation completion:
 
-- **Phase 1 (Foundation)**: Complete project structure, TypeScript/Vite/Phaser/React setup, and local persistence for user settings (`SettingsStore`).
-- **Phase 2 (Playable Chess)**: Full standard chess rules, mobile-first responsive board, local pass-and-play, promotion modal overlay, check/checkmate/stalemate indicators, undo, and restart.
-- **Phase 3 (Attack Framework)**: `AttackDirector` lifecycle (`idle` -> `preparing` -> `attacking` -> `impact` -> `recovering` -> `completing`), input locking during battle, skip handling, speed multiplier support (Normal, Fast, Instant), reduced motion mode, and duplicate-move prevention.
-- **Phase 4 (Fire Dragon Vertical Slice)**: Storybook 11-beat capture choreography for the Light Knight (`fire_dragon` character executing `fire_stream_attack`). Features layered procedural graphics (wings, glowing belly, jaw articulation), travelling flame cones, ember particles, soot/spark reaction on defender silhouettes, and missing-audio tolerance.
+- `AttackDirector.skip()` stops the presentation **and completes it**, invoking the pending callback and committing the prepared move.
+- `AttackDirector.abort()` stops presentation/audio and cleans temporary state **without invoking the callback**, so navigation or teardown does not commit the prepared move.
 
----
+Destroying a game manager aborts any active attack and resets input before Phaser is destroyed. Scene shutdown/destroy handlers unregister presenters and remove input/resize listeners; cleanup is safe to call repeatedly.
 
-## 🎨 Asset Strategy & Temporary Tokens
+## Art and known limitations
 
-- **Temporary Procedural Assets**: For the vertical slice, piece graphics and battle scenes are generated using high-quality procedural Phaser vector shapes (`Phaser.GameObjects.Graphics`). Standard faction badges and backlit silhouettes are used for defenders.
-- **Missing Audio Tolerance**: `AudioController` safely catches missing audio files or browser autoplay restrictions without crashing or breaking animations.
-- **Deferred Features**: Custom 2D illustrated sprite sheets, additional character choreographies (Vikings, Obsidian Clan dragons), and AI single-player opponents are deferred to future development phases.
-- **Private Fan-Project Constraints**: All assets are cleanly generated or procedural. No copyrighted book, movie, or proprietary artwork is included. Designed strictly as a safe, family-friendly game.
-
----
-
-## 🐛 Known Defects & Technical Debt
-
-- **None**: All 46 automated tests pass cleanly across 4 Vitest test suites. TypeScript type checking and ESLint report zero errors or warnings.
-- **Viewport Optimization**: Tested and verified across portrait mobile (360x800, 390x844), tablet, and desktop viewports without creating duplicate Phaser instances on resize.
-
----
-
-## 🤖 Continued Work (Codex / Claude Code)
-
-This repository is stabilized and ready for automated AI development tools:
-- **Recommended First Codex Task**: Implement `VikingWarriorPresenter` for Pawn captures, adding a simple spear-thrust or shield-bash animation following the `FireDragonPresenter` template in `src/game/animation/`.
-- **Reference Documentation**: Refer to `AGENTS.md` and `docs/ARCHITECTURE.md` for guidelines on adding new data-driven character presenters without violating chess state boundaries.
+- Board tokens and the Fire Dragon battle are temporary procedural Phaser graphics, not final illustrated art.
+- Audio files may be absent; playback failures are tolerated.
+- Only one character-specific attack is present. Other captures use temporary generic presentation.
+- Browser smoke coverage currently targets Chromium at one emulated mobile viewport; physical phones, other browsers, landscape, tablet, high-DPI behavior, accessibility, and visual quality still require manual validation.
+- The production bundle currently triggers Vite's large-chunk warning.
+- No AI opponent, PWA/offline support, backend, Firebase integration, deployment configuration, or final asset pipeline is included. Those remain deferred.

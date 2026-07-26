@@ -16,12 +16,14 @@ export class BoardScene extends Phaser.Scene {
   private lastMove: { from: string; to: string } | null = null;
   private gameStatus?: GameStatus;
   private inputController!: InputController;
+  private cleanedUp = false;
 
   constructor() {
     super({ key: 'BoardScene' });
   }
 
   create(): void {
+    this.cleanedUp = false;
     this.boardGraphics = this.add.graphics();
     this.highlightGraphics = this.add.graphics();
     this.inputController = new InputController();
@@ -31,6 +33,8 @@ export class BoardScene extends Phaser.Scene {
     this.setupInputHandling();
 
     this.scale.on('resize', this.handleResize, this);
+    this.events.once(Phaser.Scenes.Events.SHUTDOWN, this.handleSceneCleanup, this);
+    this.events.once(Phaser.Scenes.Events.DESTROY, this.handleSceneCleanup, this);
   }
 
   private calculateBoardDimensions(): void {
@@ -65,7 +69,10 @@ export class BoardScene extends Phaser.Scene {
   }
 
   private setupInputHandling(): void {
-    this.input.on('pointerdown', (pointer: Phaser.Input.Pointer) => {
+    this.input.on('pointerdown', this.handlePointerDown, this);
+  }
+
+  private handlePointerDown(pointer: Phaser.Input.Pointer): void {
       if (this.inputController.isLocked()) return;
 
       const col = Math.floor((pointer.x - this.boardOffsetX) / this.squareSize);
@@ -77,7 +84,16 @@ export class BoardScene extends Phaser.Scene {
         const square = `${file}${rank}`;
         this.inputController.handleSquareSelect(square);
       }
-    });
+  }
+
+  private handleSceneCleanup(): void {
+    if (this.cleanedUp) return;
+    this.cleanedUp = true;
+    this.scale.off('resize', this.handleResize, this);
+    this.input.off('pointerdown', this.handlePointerDown, this);
+    this.inputController?.setLocked(false);
+    this.pieceContainers.forEach((container) => container.destroy());
+    this.pieceContainers.clear();
   }
 
   public getInputController(): InputController {
