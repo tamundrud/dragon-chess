@@ -1,0 +1,41 @@
+@import "tailwindcss";
+
+@layer base {
+  body {
+    background-color: #080808;
+    color: #e0e0e0;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+  }
+}
+
+.serif {
+  font-family: 'Georgia', serif;
+}
+.gold-text {
+  color: #b8860b;
+}
+.gold-border {
+  border-color: rgba(184, 134, 11, 0.2);
+}
+.surface {
+  background-color: #121212;
+  border: 1px solid #222222;
+}
+.btn-active {
+  background-color: #b8860b;
+  color: #080808;
+  transition: all 0.2s;
+}
+.btn-active:hover {
+  background-color: #d4af37;
+}
+.btn-ghost {
+  border: 1px solid #444444;
+  color: #888888;
+  background-color: transparent;
+  transition: all 0.2s;
+}
+.btn-ghost:hover {
+  border-color: #b8860b;
+  color: #e0e0e0;
+}

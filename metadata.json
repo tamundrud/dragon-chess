@@ -1,0 +1,6 @@
+{
+  "name": "Dragon Chess",
+  "description": "A child-friendly chess game with playful dragon capture animations",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
