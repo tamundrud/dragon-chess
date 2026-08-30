@@ -1,12 +1,30 @@
 {
+  "run_id": "dragon-chess-agent-runner-pilot",
   "branch": "agent-runner-pilot",
   "contract": ".agent/branch-contract.md",
+  "state": ".agent/state.json",
+  "worktree_shared_paths": [
+    "node_modules"
+  ],
   "verification": [
     "npm run test",
     "npm run typecheck",
     "npm run lint",
     "npm run build"
   ],
+  "review": {
+    "enabled": false,
+    "command": [
+      "claude",
+      "--print",
+      "--no-session-persistence",
+      "--permission-mode",
+      "plan"
+    ],
+    "schema": ".agent/review-schema.json",
+    "temporary_output": ".agent/reviews/review.tmp.json",
+    "authoritative_output": ".agent/reviews/review.json"
+  },
   "tickets": [
     {
       "id": "RUNNER-001",
