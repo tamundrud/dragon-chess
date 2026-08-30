@@ -1,0 +1,34 @@
+{
+  "branch": "agent-runner-pilot",
+  "contract": ".agent/branch-contract.md",
+  "verification": [
+    "npm run test",
+    "npm run typecheck",
+    "npm run lint",
+    "npm run build"
+  ],
+  "tickets": [
+    {
+      "id": "RUNNER-001",
+      "title": "Add aggregate verification script",
+      "worker": "codex",
+      "model": "gpt-5.6-luna",
+      "effort": "low",
+      "allowed_paths": [
+        "package.json"
+      ],
+      "instructions": "Add a package.json script named `check` that runs the existing test, typecheck, lint, and build scripts sequentially. Do not alter dependencies or any application code."
+    },
+    {
+      "id": "RUNNER-002",
+      "title": "Document aggregate verification command",
+      "worker": "codex",
+      "model": "gpt-5.6-luna",
+      "effort": "low",
+      "allowed_paths": [
+        "README.md"
+      ],
+      "instructions": "Update the README fresh-clone verification section to document `npm run check` as the convenient aggregate verification command while retaining the existing individual commands for targeted checks. Do not change product documentation outside that setup/verification section."
+    }
+  ]
+}
