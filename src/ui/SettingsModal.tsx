@@ -19,16 +19,16 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose })
 
   return (
     <div id="settings-modal-overlay" className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 backdrop-blur-sm">
-      <div id="settings-modal" className="surface w-full max-w-md rounded-sm border border-[#222] bg-[#121212] p-6 text-[#e0e0e0] shadow-2xl">
-        <div className="flex items-center justify-between border-b gold-border pb-4">
-          <div className="flex items-center gap-2">
-            <Sliders className="h-6 w-6 text-[#b8860b]" />
-            <h2 className="serif text-2xl font-bold gold-text uppercase tracking-wider">Game Settings</h2>
+      <div id="settings-modal" className="surface w-full max-h-[calc(100dvh-2rem)] overflow-y-auto max-w-md rounded-sm border border-[#222] bg-[#121212] p-6 text-[#e0e0e0] shadow-2xl">
+        <div className="flex items-center justify-between gap-2 border-b gold-border pb-4">
+          <div className="flex min-w-0 items-center gap-2">
+            <Sliders className="h-6 w-6 shrink-0 text-[#b8860b]" />
+            <h2 className="serif text-xl sm:text-2xl font-bold gold-text uppercase tracking-wider">Game Settings</h2>
           </div>
           <button
             id="close-settings-btn"
             onClick={onClose}
-            className="rounded-sm p-1.5 text-gray-400 hover:text-[#e0e0e0] hover:bg-white/5 transition-colors"
+            className="shrink-0 flex items-center justify-center min-h-11 min-w-11 rounded-sm p-1.5 text-gray-400 hover:text-[#e0e0e0] hover:bg-white/5 transition-colors"
             aria-label="Close settings"
           >
             <X className="h-6 w-6" />
@@ -37,7 +37,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose })
 
         <div className="mt-6 space-y-6">
           {/* Animation Enabled */}
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between gap-3">
             <div>
               <label htmlFor="anim-enabled-toggle" className="font-bold text-xs uppercase tracking-widest text-gray-300">Battle Animations</label>
               <p className="text-[11px] text-gray-500 font-mono">Play animated capture scenes</p>
@@ -47,7 +47,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose })
               type="checkbox"
               checked={settings.animationEnabled}
               onChange={(e) => updateSettings({ animationEnabled: e.target.checked })}
-              className="h-6 w-6 rounded-sm border-[#333] bg-[#1a1a1a] text-[#b8860b] focus:ring-[#b8860b]"
+              className="h-6 w-6 shrink-0 rounded-sm border-[#333] bg-[#1a1a1a] text-[#b8860b] focus:ring-[#b8860b]"
             />
           </div>
 
@@ -74,7 +74,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose })
           </div>
 
           {/* Reduced Motion */}
-          <div className="flex items-center justify-between border-t border-[#222] pt-4">
+          <div className="flex items-center justify-between gap-3 border-t border-[#222] pt-4">
             <div className="flex items-center gap-2">
               <Eye className="h-5 w-5 text-[#b8860b]" />
               <div>
@@ -87,12 +87,12 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose })
               type="checkbox"
               checked={settings.reducedMotion}
               onChange={(e) => updateSettings({ reducedMotion: e.target.checked })}
-              className="h-6 w-6 rounded-sm border-[#333] bg-[#1a1a1a] text-[#b8860b] focus:ring-[#b8860b]"
+              className="h-6 w-6 shrink-0 rounded-sm border-[#333] bg-[#1a1a1a] text-[#b8860b] focus:ring-[#b8860b]"
             />
           </div>
 
           {/* Mute Audio */}
-          <div className="flex items-center justify-between border-t border-[#222] pt-4">
+          <div className="flex items-center justify-between gap-3 border-t border-[#222] pt-4">
             <div className="flex items-center gap-2">
               {settings.mute ? <VolumeX className="h-5 w-5 text-red-500" /> : <Volume2 className="h-5 w-5 text-[#b8860b]" />}
               <div>
@@ -104,7 +104,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose })
               type="checkbox"
               checked={settings.mute}
               onChange={(e) => updateSettings({ mute: e.target.checked })}
-              className="h-6 w-6 rounded-sm border-[#333] bg-[#1a1a1a] text-[#b8860b] focus:ring-[#b8860b]"
+              className="h-6 w-6 shrink-0 rounded-sm border-[#333] bg-[#1a1a1a] text-[#b8860b] focus:ring-[#b8860b]"
             />
           </div>
 
@@ -128,7 +128,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose })
         </div>
 
         {/* Action Buttons */}
-        <div className="mt-8 flex items-center justify-between border-t gold-border pt-4">
+        <div className="mt-8 flex items-center justify-between gap-3 border-t gold-border pt-4">
           <button
             id="reset-settings-btn"
             type="button"

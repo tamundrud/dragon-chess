@@ -15,7 +15,7 @@ vi.mock('phaser', () => ({ default: {
   Game: class {
     events = host.events;
     canvas = host.canvas;
-    scale = { updateBounds: host.updateBounds };
+    scale = { updateBounds: host.updateBounds, setParentSize: host.setParentSize };
     scene = {
       getScene: () => host.board,
       isSleeping: () => false, isActive: () => true,
@@ -34,6 +34,7 @@ const host = vi.hoisted(() => ({
   destroy: vi.fn(),
   canvas: null as unknown as HTMLCanvasElement,
   updateBounds: vi.fn(),
+  setParentSize: vi.fn(),
 }));
 
 describe('PhaserGameManager lifecycle', () => {
@@ -180,4 +181,34 @@ describe('PhaserGameManager lifecycle', () => {
     expect(ready).not.toHaveBeenCalled();
     expect(game.events.listenerCount('ready')).toBe(0);
   });
+
+  it('tracks settled parent size and ignores resize callbacks after destruction', () => {
+    let notify!: ResizeObserverCallback;
+    const disconnect = vi.fn();
+    const observe = vi.fn();
+    vi.stubGlobal('ResizeObserver', class {
+      constructor(callback: ResizeObserverCallback) { notify = callback; }
+      observe = observe;
+      disconnect = disconnect;
+    });
+    try {
+      const { manager, events, canvas } = mount(new ChessGameController(), false);
+      const parent = document.createElement('div');
+      parent.append(canvas);
+      vi.spyOn(parent, 'getBoundingClientRect').mockReturnValue({ width: 800, height: 300 } as DOMRect);
+      events.emit('ready');
+      expect(observe).toHaveBeenCalledWith(parent);
+      host.setParentSize.mockClear();
+      notify([], {} as ResizeObserver);
+      expect(host.setParentSize).toHaveBeenCalledWith(800, 300);
+      manager.destroy();
+      expect(disconnect).toHaveBeenCalledOnce();
+      host.setParentSize.mockClear();
+      notify([], {} as ResizeObserver);
+      expect(host.setParentSize).not.toHaveBeenCalled();
+    } finally {
+      vi.unstubAllGlobals();
+    }
+  });
+
 });

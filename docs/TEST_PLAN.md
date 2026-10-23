@@ -59,8 +59,8 @@ Before a task is complete, run project equivalents of:
 - Production build.
 Report exact results.
 
-## Verification Results (Vertical Slice)
-All verification commands have been executed and passed with 0 defects:
+## Historical Verification Results (Original Vertical Slice)
+The original vertical-slice run reported the following results; these counts are historical, not the current recovery acceptance record:
 - `npm test -- --run`: **4 passed test suites, 46 passed tests** (100% pass rate).
   - `smoke.test.tsx` (7 tests): Scaffold and component rendering.
   - `chess_rules.test.ts` (15 tests): `chess.js` authoritative engine compliance, illegal move rejection, castling, promotion, checkmate, stalemate, draw conditions.
@@ -69,3 +69,32 @@ All verification commands have been executed and passed with 0 defects:
 - `npm run typecheck`: **0 errors** (`tsc --noEmit`).
 - `npm run lint`: **0 errors, 0 warnings** (`eslint .`).
 - `npm run build`: **Production build succeeded** in ~14s (`vite build`).
+
+
+## Recovery Phase 2 Browser Coverage
+
+Build first, then run `npx playwright test`. The committed configuration serves production `dist` through Vite preview on port 4173 with strict port ownership. It never starts the development server or silently reuses an existing listener.
+
+| Project | Viewport | Input / engine |
+| --- | --- | --- |
+| chromium | 1366 x 768 | Mouse / Chromium |
+| phone-360-portrait | 360 x 800 | Touch / Chromium |
+| phone-390-portrait | 390 x 844 | Touch / Chromium, iPhone emulation |
+| phone-landscape | 800 x 360 | Touch / Chromium |
+| tablet | 768 x 1024 | Touch / Chromium |
+
+Every project runs the Phase 1 capture-start, repeated capture/menu/new-game, deliberate Skip/Undo/recapture, and Fire Dragon cancellation scenarios. Additional cases check document/body widths, reachable settings and controls, illegal move rejection, Undo/Restart state restoration, instant/reduced-motion settings, and return to a playable new game. Touch projects also verify trusted canvas touch events, legal moves across both viewport orientations with one canvas, and touch Skip after resizing an active capture. The two touch-specific cases intentionally skip desktop.
+
+Screenshots are evidence for visual review, not golden-image pass/fail assertions. Named menu, board, settings, active capture, resized capture, and rotated board attachments accompany the HTML report. Every test records a trace and checks uncaught page errors. CI uploads `playwright-report/` and `test-results/` even on success, retaining them for 14 days. Local managed runs use `/workspace/dragon-chess-playwright.config.mjs` with `/usr/bin/chromium`; see the verification record for exact commands and current counts.
+
+## Remaining Manual UX Acceptance
+
+Automation and agent screenshot inspection do not close these gates:
+
+- Play on physical iOS Safari and Android Chrome, including browser bar expansion/collapse, safe areas/notches, rotation, and high-density screens.
+- Check thumb tap comfort, selection/deselection feedback, and vertical scrolling around the canvas on short landscape screens. The layout retains a 300px canvas minimum and allows vertical page scrolling.
+- Have the intended child user complete moves, Undo, Restart, settings, promotion selection/cancellation, capture Skip, and return to menu without assistance.
+- Judge normal/Fast/Instant/reduced-motion capture readability and comfort, especially Fire Dragon composition during rotation, plus audio unlock/mute behavior on hardware.
+- Assess long check/checkmate status messages and promotion overlays on phones using real games. Chess-rule correctness remains covered by the unit suite; these are visual/interaction acceptance checks.
+
+Current automated outcomes, known limitations, and review coverage live in [the Phase 2 verification record](reviews/recovery-phase2.md).

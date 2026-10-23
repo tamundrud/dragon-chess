@@ -11,6 +11,7 @@ export class AttackScene extends Phaser.Scene implements AttackPresenter {
   private statusText!: Phaser.GameObjects.Text;
   private attackerText!: Phaser.GameObjects.Text;
   private defenderText!: Phaser.GameObjects.Text;
+  private skipContainer!: Phaser.GameObjects.Container;
   private skipButtonText!: Phaser.GameObjects.Text;
   private attackerContainer!: Phaser.GameObjects.Container;
   private defenderContainer!: Phaser.GameObjects.Container;
@@ -91,7 +92,7 @@ export class AttackScene extends Phaser.Scene implements AttackPresenter {
       color: '#888888',
     }).setOrigin(0.5);
 
-    const skipContainer = this.add.container(width / 2, height * 0.85, [skipBg, this.skipButtonText]);
+    const skipContainer = this.skipContainer = this.add.container(width / 2, height * 0.85, [skipBg, this.skipButtonText]);
     skipContainer.setSize(120, 40);
     skipContainer.setInteractive(new Phaser.Geom.Rectangle(-60, -20, 120, 40), Phaser.Geom.Rectangle.Contains);
     
@@ -109,6 +110,8 @@ export class AttackScene extends Phaser.Scene implements AttackPresenter {
       this.defenderText,
       skipContainer,
     ]);
+
+    this.layoutStage(width, height);
 
     this.fireDragonPresenter = new FireDragonPresenter(
       this,
@@ -391,12 +394,23 @@ export class AttackScene extends Phaser.Scene implements AttackPresenter {
   private handleResize(gameSize: Phaser.Structs.Size): void {
     this.cameras.main.setViewport(0, 0, gameSize.width, gameSize.height);
     this.stageContainer.setPosition(0, 0);
-    this.statusText.setPosition(gameSize.width / 2, gameSize.height * 0.22);
-    this.attackerText.setPosition(gameSize.width * 0.25, gameSize.height * 0.72);
-    this.defenderText.setPosition(gameSize.width * 0.75, gameSize.height * 0.72);
+    this.layoutStage(gameSize.width, gameSize.height);
     if (this.stageContainer.visible) {
       this.drawOverlay();
     }
+  }
+
+  private layoutStage(width: number, height: number): void {
+    const compact = width < 600;
+    this.statusText.setFontSize(compact ? 16 : 24);
+    this.statusText.setWordWrapWidth(width * 0.9, true);
+    this.statusText.setPosition(width / 2, height * 0.22);
+    for (const [text, x] of [[this.attackerText, 0.25], [this.defenderText, 0.75]] as const) {
+      text.setFontSize(compact ? 12 : 18);
+      text.setWordWrapWidth(width * 0.44, true);
+      text.setPosition(width * x, height * 0.72);
+    }
+    this.skipContainer.setPosition(width / 2, height * 0.9);
   }
 
   private handleSceneCleanup(): void {
