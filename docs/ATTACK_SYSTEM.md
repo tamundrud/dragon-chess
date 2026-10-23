@@ -25,7 +25,7 @@ Only one attack may run at a time.
 
 `AttackScene` is registered with `AttackDirector`; it delegates Fire Dragon captures to `FireDragonPresenter` and presents all other attack IDs with generic temporary graphics. Registry descriptions for axe smash, decisive arc, and shield bash are configuration intent, not separate implemented presenters. Audio calls use HTML Audio after user unlock, with missing-file/rejection tolerance; no sound files are shipped.
 
-Leaving a game cancels its pending capture and presentation; it does not complete the move. Undo/Restart are disabled during attacks. Resizing updates the stage labels and Skip, but in-flight artwork may keep its original timeline coordinates. See [the acceptance requirements](TEST_PLAN.md).
+Leaving a game cancels its pending capture and presentation; it does not complete the move. Undo/Restart are disabled during attacks. Resizing updates labels and Skip in canvas coordinates and uniformly fits a shared 800 × 600 artwork space to the canvas. Both presenters keep their existing timeline coordinates inside that space, including effects created after rotation; resize does not restart or complete the capture. See [the acceptance requirements](TEST_PLAN.md).
 
 ## Implemented Attack Presenters
 ### Fire Dragon Vertical Slice (`FireDragonPresenter`)
