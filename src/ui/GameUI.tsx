@@ -100,21 +100,22 @@ export const GameUI: React.FC<GameUIProps> = ({ controller, onBackToMenu, onOpen
       className="flex min-h-screen w-full flex-col bg-[#080808] text-[#e0e0e0]"
     >
       {/* Header Bar */}
-      <header className="flex items-center justify-between border-b gold-border bg-[#121212] px-4 sm:px-6 py-3 sm:py-4 shadow-md z-10">
+      <header className="flex items-center justify-between gap-2 border-b gold-border bg-[#121212] px-4 sm:px-6 py-3 sm:py-4 shadow-md z-10">
         <button
           id="back-menu-btn"
+          aria-label="Back to menu"
           onClick={() => {
             managerRef.current?.destroy();
             onBackToMenu();
           }}
-          className="flex items-center gap-1.5 rounded-sm px-3 sm:px-4 py-2 text-xs font-bold uppercase tracking-widest btn-ghost transition-colors"
+          className="flex shrink-0 min-h-11 min-w-11 items-center justify-center gap-1.5 rounded-sm px-3 sm:px-4 py-2 text-xs font-bold uppercase tracking-widest btn-ghost transition-colors"
         >
           <ArrowLeft className="h-4 w-4" />
           <span className="hidden sm:inline">Menu</span>
         </button>
 
         {/* Turn & Status Indicator */}
-        <div id="game-status-banner" className="surface flex items-center gap-2 rounded-sm px-4 sm:px-5 py-2 border border-[#222] shadow-inner text-center">
+        <div id="game-status-banner" className="surface flex min-w-0 items-center justify-center gap-2 rounded-sm px-2 sm:px-5 py-2 border border-[#222] shadow-inner text-center">
           {status.status === 'checkmate' ? (
             <Award className="h-5 w-5 text-[#b8860b] shrink-0" />
           ) : status.inCheck ? (
@@ -122,7 +123,7 @@ export const GameUI: React.FC<GameUIProps> = ({ controller, onBackToMenu, onOpen
           ) : (
             <Crown className={`h-5 w-5 shrink-0 ${status.turn === 'w' ? 'text-[#e0e0e0]' : 'text-gray-500'}`} />
           )}
-          <span className="serif font-bold text-xs sm:text-sm md:text-base tracking-widest gold-text uppercase truncate">
+          <span className="serif font-bold text-xs sm:text-sm md:text-base tracking-widest gold-text uppercase break-words">
             {getStatusText()}
           </span>
         </div>
@@ -130,7 +131,7 @@ export const GameUI: React.FC<GameUIProps> = ({ controller, onBackToMenu, onOpen
         <button
           id="game-settings-btn"
           onClick={onOpenSettings}
-          className="rounded-sm p-2 text-xs font-bold uppercase tracking-widest btn-ghost transition-colors"
+          className="shrink-0 min-h-11 min-w-11 flex items-center justify-center rounded-sm p-2 text-xs font-bold uppercase tracking-widest btn-ghost transition-colors"
           aria-label="Settings"
         >
           <Sliders className="h-5 w-5" />
@@ -143,7 +144,7 @@ export const GameUI: React.FC<GameUIProps> = ({ controller, onBackToMenu, onOpen
           <div
             id="phaser-container"
             ref={containerRef}
-            className="surface w-full h-full max-w-4xl max-h-[78vh] min-h-[300px] rounded-sm overflow-hidden border border-[#222] shadow-2xl bg-[#050505]"
+            className="surface w-full h-[clamp(300px,calc(100svh-200px),640px)] max-w-4xl rounded-sm overflow-hidden border border-[#222] shadow-2xl bg-[#050505]"
           />
           <div className="w-full max-w-4xl px-2 py-1 text-center text-[10px] sm:text-[11px] uppercase tracking-wider text-[#718096] bg-[#121212]/80 border-t border-[#222] mt-1 rounded-b-sm">
             Temporary Vertical Slice Tokens — Final character art will replace these silhouettes in future phases.
@@ -222,12 +223,12 @@ export const GameUI: React.FC<GameUIProps> = ({ controller, onBackToMenu, onOpen
       </main>
 
       {/* Footer Controls */}
-      <footer className="flex items-center justify-center gap-4 border-t gold-border bg-[#121212] px-6 py-3 sm:py-4 shadow-lg z-10">
+      <footer className="flex items-center justify-center gap-2 sm:gap-4 border-t gold-border bg-[#121212] px-4 sm:px-6 py-3 sm:py-4 shadow-lg z-10">
         <button
           id="undo-btn"
           onClick={handleUndo}
           disabled={isAttackActive || status.isGameOver || controller.isInputLocked()}
-          className="flex items-center gap-2 rounded-sm px-6 py-2.5 font-bold text-xs uppercase tracking-[0.2em] btn-ghost shadow disabled:opacity-40 disabled:pointer-events-none transition-all active:scale-95"
+          className="flex items-center gap-2 rounded-sm min-h-11 px-4 sm:px-6 py-2.5 font-bold text-xs uppercase tracking-[0.2em] btn-ghost shadow disabled:opacity-40 disabled:pointer-events-none transition-all active:scale-95"
         >
           <Undo2 className="h-4 w-4" />
           <span>Undo</span>
@@ -237,7 +238,7 @@ export const GameUI: React.FC<GameUIProps> = ({ controller, onBackToMenu, onOpen
           id="restart-btn"
           onClick={handleRestart}
           disabled={isAttackActive}
-          className="flex items-center gap-2 rounded-sm px-6 py-2.5 font-bold text-xs uppercase tracking-[0.2em] btn-ghost shadow disabled:opacity-40 disabled:pointer-events-none transition-all active:scale-95"
+          className="flex items-center gap-2 rounded-sm min-h-11 px-4 sm:px-6 py-2.5 font-bold text-xs uppercase tracking-[0.2em] btn-ghost shadow disabled:opacity-40 disabled:pointer-events-none transition-all active:scale-95"
         >
           <RotateCcw className="h-4 w-4" />
           <span>Restart</span>

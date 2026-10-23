@@ -8,6 +8,7 @@ import { AudioController } from './audio/AudioController';
 
 export class PhaserGameManager {
   private game: Phaser.Game | null = null;
+  private resizeObserver: ResizeObserver | null = null;
   private boardScene: BoardScene | null = null;
   private attackScene: AttackScene | null = null;
   private controller: ChessGameController;
@@ -91,6 +92,18 @@ export class PhaserGameManager {
     // normalize page coordinates after navigation or scrolling.
     this.game.canvas.addEventListener('mousedown', this.refreshInputBounds, true);
     this.game.canvas.addEventListener('touchstart', this.refreshInputBounds, true);
+
+    const parent = this.game.canvas.parentElement;
+    if (parent) {
+      // A viewport event can arrive before responsive CSS has settled. Observe
+      // the actual parent size so Phaser does not retain the previous canvas.
+      this.resizeObserver = new ResizeObserver(() => {
+        if (this.destroyed) return;
+        const { width, height } = parent.getBoundingClientRect();
+        if (width > 0 && height > 0) this.game?.scale.setParentSize(width, height);
+      });
+      this.resizeObserver.observe(parent);
+    }
 
     // The canvas is created before scene input and controller subscriptions are
     // connected. Only advertise readiness after the complete integration setup.
@@ -229,6 +242,8 @@ export class PhaserGameManager {
   public destroy(): void {
     if (this.destroyed) return;
     this.destroyed = true;
+    this.resizeObserver?.disconnect();
+    this.resizeObserver = null;
     if (this.pendingAttack) AttackDirector.getInstance().abort(this.pendingAttack);
     this.pendingAttack = null;
     this.pendingPromotionRequest = null;

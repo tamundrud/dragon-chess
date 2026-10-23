@@ -10,7 +10,7 @@ To set up and run the project locally from a fresh clone:
 
 1. **Install Dependencies**:
    ```bash
-   npm install
+   npm ci
    ```
 
 2. **Start Development Server**:
@@ -33,6 +33,16 @@ To set up and run the project locally from a fresh clone:
    # Build production bundle
    npm run build
    ```
+
+To run browser coverage locally (production preview, not the development server):
+
+```bash
+npx playwright install chromium
+npm run build
+npx playwright test
+```
+
+Playwright owns port 4173 and refuses to reuse an existing server. Traces and named menu/board/settings/capture screenshots are retained in the HTML report; CI uploads browser evidence on success and failure. Managed Cloud uses its configured system-Chromium wrapper; see the current verification record in `docs/reviews/recovery-phase2.md`.
 
 ---
 
@@ -73,8 +83,10 @@ The project enforces strict separation of concerns to guarantee reliability and 
 
 ## 🐛 Known Defects & Technical Debt
 
-- **None**: All 46 automated tests pass cleanly across 4 Vitest test suites. TypeScript type checking and ESLint report zero errors or warnings.
-- **Viewport Optimization**: Tested and verified across portrait mobile (360x800, 390x844), tablet, and desktop viewports without creating duplicate Phaser instances on resize.
+- **Recovery Phase 2**: Header/status wrapping, reachable settings on short screens, canvas resizing after rotation, and responsive capture labels are covered by production-build browser tests. The unit suite contains 61 tests across 6 suites.
+- **Browser coverage**: Chromium at 360x800, 390x844, 800x360, 768x1024, and 1366x768; phone/tablet projects send touchscreen events. Emulating an iPhone viewport in Chromium does not test Safari.
+- **Human acceptance remains**: Physical iOS Safari and Android Chrome, browser chrome/safe areas, thumb scrolling and tap comfort, high-density readability, animation quality, and child usability. Short landscape screens intentionally allow vertical page scrolling to retain usable board squares. See [the test plan](docs/TEST_PLAN.md).
+- **Build warning**: The existing production JavaScript bundle exceeds Vite's 500 kB warning threshold.
 
 ---
 
