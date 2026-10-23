@@ -537,26 +537,21 @@ export class FireDragonPresenter implements AttackPresenter {
     // --- PHASE 5: COMPLETING (prepMs + strikeMs + impactMs + recoveryMs) ---
     const completeTimer = this.scene.time.delayedCall(prepMs + strikeMs + impactMs + recoveryMs, () => {
       // Beat 11: Clean return to board
+      const callback = this.onCompleteCallback;
       this.cleanup();
-      if (this.onCompleteCallback) {
-        const cb = this.onCompleteCallback;
-        this.onCompleteCallback = null;
-        cb();
-      }
+      callback?.();
     });
     this.activeTimers.push(completeTimer);
   }
 
   public skip(): void {
+    const callback = this.onCompleteCallback;
     this.cleanup();
-    if (this.onCompleteCallback) {
-      const cb = this.onCompleteCallback;
-      this.onCompleteCallback = null;
-      cb();
-    }
+    callback?.();
   }
 
   public cleanup(): void {
+    this.onCompleteCallback = null;
     this.activeTimers.forEach((timer) => timer.remove());
     this.activeTimers = [];
 
