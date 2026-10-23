@@ -103,7 +103,7 @@ Automation and agent screenshot inspection do not close these gates:
 - Judge normal/Fast/Instant/reduced-motion capture readability and comfort, especially Fire Dragon composition during rotation, plus audio unlock/mute behavior on hardware.
 - Assess long check/checkmate status messages and promotion overlays on phones using real games. Chess-rule correctness remains covered by the unit suite; these are visual/interaction acceptance checks.
 
-Current tooling outcomes and review coverage live in [the Phase 3 verification record](reviews/recovery-phase3.md). [The Phase 2 record](reviews/recovery-phase2.md) preserves earlier recovery evidence.
+Current integrated results, review coverage, risks and manual acceptance requirements live in [final recovery qualification](reviews/final-recovery-qualification.md). [The Phase 3 record](reviews/recovery-phase3.md) and [Phase 2 record](reviews/recovery-phase2.md) preserve earlier recovery evidence.
 
 No new gameplay coverage is claimed in Phase 3. Remaining automated acceptance gaps include exhaustive special-rule cases, stronger capturing-promotion assertions, phone promotion/status flows, and quantitative mobile frame-rate/memory measurements. These require separate scoped follow-up. No sound pack is shipped; hardware audio acceptance requires real assets. Rotation during an active capture fits both presenters and late effects through a shared logical artwork space. The resize regression checks rendered combatant pixels after rotation and back, along with natural completion, Skip, Undo, and recapture. It does not establish every effect boundary or animation aesthetics.
 

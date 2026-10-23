@@ -1,0 +1,32 @@
+{
+  "recorded_at": "2026-10-23T22:04:43.556425+00:00",
+  "candidate": "9899abcf6f2f810ef2d9ccaa4e0de289454d97f8",
+  "main": "c6a254fda2378e0fd4706f6afbea8d9a7e9f30b0",
+  "branch": "qualification/recovery-2026-10-23",
+  "application_test_tooling_unchanged_from_candidate": true,
+  "verified_paths": [
+    "src",
+    "e2e",
+    "package.json",
+    "package-lock.json",
+    "playwright.config.js",
+    "vite.config.ts",
+    "vitest.config.ts",
+    ".github/workflows/ci.yml"
+  ],
+  "build_assets": {
+    "dist/index.html": {
+      "bytes": 409,
+      "sha256": "3f9658860f799837da12cd34906ea3925c9255cc3c25688f91a3ebbaa31c86bf"
+    },
+    "dist/assets/index-DoHVkQAM.js": {
+      "bytes": 1788169,
+      "sha256": "269bc365083f4f05d6a4f59e06433ea6149f0197c187a8f2a8065ee6d47746f5"
+    },
+    "dist/assets/index-CLwR_7KG.css": {
+      "bytes": 21633,
+      "sha256": "3f584b4b3ad22c6b267f8f38db50883f04b7c94e618b3c7938613bd63bd790de"
+    }
+  },
+  "recovery_ci": "https://github.com/tamundrud/dragon-chess/actions/runs/40006294640"
+}

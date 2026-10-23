@@ -1,0 +1,143 @@
+{
+  "status": "complete",
+  "verdict": "Ready with fixes",
+  "scope": {
+    "base": "c6a254fda2378e0fd4706f6afbea8d9a7e9f30b0",
+    "branch": "qualification/recovery-2026-10-23",
+    "head_sha": "9899abcf6f2f810ef2d9ccaa4e0de289454d97f8",
+    "pr_url": null,
+    "files_changed": 52
+  },
+  "intent": "Qualify the integrated recovery branch for eventual main integration: capture lifecycle/input cancellation, responsive touch and rotation, fitted attack artwork, and consistent npm/CI tooling. Preserve chess.js authority and exact-once move commitment; this review is report-only and must distinguish automated evidence from physical-device and child acceptance.",
+  "intent_confidence": "explicit",
+  "reviewers": [
+    "correctness",
+    "project-standards",
+    "testing",
+    "maintainability",
+    "julik-frontend-races",
+    "adversarial",
+    "reliability",
+    "agent-native"
+  ],
+  "findings": [
+    {
+      "#": 1,
+      "autofix_class": "gated_auto",
+      "confidence": 100,
+      "evidence": [
+        "README.md:71 -- [The test plan](docs/TEST_PLAN.md) separates existing coverage from required acceptance. Remaining gates include physical iOS Safari and Android Chrome, browser bars/safe areas, tap and scroll comfort, promotion/status readability, animation quality, audible behavior with real assets, and intended-child usability. Rotating mid-capture updates the board, labels, and Skip, but in-flight artwork can retain its original coordinates until completion.",
+        "README.md:73 -- The Cloud browser run also exposed an intermittent capture-resize text-wrapping page error, reproduced on the unchanged recovery base; see the verification record for counts and evidence.",
+        "src/game/scenes/AttackScene.ts:406-408 now fits and scales the artwork container on every layout; its word-wrap width is clamped and assigned with font size in one setStyle call.",
+        "docs/reviews/board-rotation-artwork.md documents the integrated logical-space fix and 69 unit tests / 60 browser cases; docs/reviews/active-capture-resize.md documents the word-wrap fix.",
+        "provenance: 4ab948c - chore: consolidate recovery tooling and documentation (#7); README predates the later #8/#9 fixes now included in the reviewed integration diff."
+      ],
+      "file": "README.md",
+      "first_evidence": "README.md:71 -- [The test plan](docs/TEST_PLAN.md) separates existing coverage from required acceptance. Remaining gates include physical iOS Safari and Android Chrome, browser bars/safe areas, tap and scroll comfort, promotion/status readability, animation quality, audible behavior with real assets, and intended-child usability. Rotating mid-capture updates the board, labels, and Skip, but in-flight artwork can retain its original coordinates until completion.",
+      "independent_reviewers": [
+        "correctness"
+      ],
+      "line": 71,
+      "owner": "downstream-resolver",
+      "pre_existing": false,
+      "requires_verification": false,
+      "reviewers": [
+        "correctness"
+      ],
+      "severity": "P3",
+      "suggested_fix": "Replace the stale current-defect sentences and Phase 3/current-count claim with links to the final qualification record and the #8/#9 verification records; keep physical-device, aesthetic, audio and performance acceptance limitations explicit.",
+      "title": "README still lists resolved recovery defects as current",
+      "why_it_matters": "Readers assessing the recovery branch are told that rotation still leaves artwork at its original coordinates and that the capture-resize text error remains exposed, even though PRs #8 and #9 fix these paths. The same section points to Phase 3 as current and gives obsolete suite counts. Updating the section to distinguish historical evidence from the integrated qualification record removes contradictory readiness guidance without changing application behavior.",
+      "validation_status": "confirmed",
+      "validation_reason": "At reviewed revision 9899abc, a reader of README.md:69-73 receives Phase 3 counts and unresolved resize claims despite integrated AttackScene.ts:406-423 and the #8/#9 verification records documenting their fixes; the committed README directly establishes this reachable documentation contradiction."
+    }
+  ],
+  "actionable_findings": [
+    {
+      "#": 1,
+      "autofix_class": "gated_auto",
+      "confidence": 100,
+      "evidence": [
+        "README.md:71 -- [The test plan](docs/TEST_PLAN.md) separates existing coverage from required acceptance. Remaining gates include physical iOS Safari and Android Chrome, browser bars/safe areas, tap and scroll comfort, promotion/status readability, animation quality, audible behavior with real assets, and intended-child usability. Rotating mid-capture updates the board, labels, and Skip, but in-flight artwork can retain its original coordinates until completion.",
+        "README.md:73 -- The Cloud browser run also exposed an intermittent capture-resize text-wrapping page error, reproduced on the unchanged recovery base; see the verification record for counts and evidence.",
+        "src/game/scenes/AttackScene.ts:406-408 now fits and scales the artwork container on every layout; its word-wrap width is clamped and assigned with font size in one setStyle call.",
+        "docs/reviews/board-rotation-artwork.md documents the integrated logical-space fix and 69 unit tests / 60 browser cases; docs/reviews/active-capture-resize.md documents the word-wrap fix.",
+        "provenance: 4ab948c - chore: consolidate recovery tooling and documentation (#7); README predates the later #8/#9 fixes now included in the reviewed integration diff."
+      ],
+      "file": "README.md",
+      "first_evidence": "README.md:71 -- [The test plan](docs/TEST_PLAN.md) separates existing coverage from required acceptance. Remaining gates include physical iOS Safari and Android Chrome, browser bars/safe areas, tap and scroll comfort, promotion/status readability, animation quality, audible behavior with real assets, and intended-child usability. Rotating mid-capture updates the board, labels, and Skip, but in-flight artwork can retain its original coordinates until completion.",
+      "independent_reviewers": [
+        "correctness"
+      ],
+      "line": 71,
+      "owner": "downstream-resolver",
+      "pre_existing": false,
+      "requires_verification": false,
+      "reviewers": [
+        "correctness"
+      ],
+      "severity": "P3",
+      "suggested_fix": "Replace the stale current-defect sentences and Phase 3/current-count claim with links to the final qualification record and the #8/#9 verification records; keep physical-device, aesthetic, audio and performance acceptance limitations explicit.",
+      "title": "README still lists resolved recovery defects as current",
+      "why_it_matters": "Readers assessing the recovery branch are told that rotation still leaves artwork at its original coordinates and that the capture-resize text error remains exposed, even though PRs #8 and #9 fix these paths. The same section points to Phase 3 as current and gives obsolete suite counts. Updating the section to distinguish historical evidence from the integrated qualification record removes contradictory readiness guidance without changing application behavior.",
+      "validation_status": "confirmed",
+      "validation_reason": "At reviewed revision 9899abc, a reader of README.md:69-73 receives Phase 3 counts and unresolved resize claims despite integrated AttackScene.ts:406-423 and the #8/#9 verification records documenting their fixes; the committed README directly establishes this reachable documentation contradiction."
+    }
+  ],
+  "triage_groups": [],
+  "pre_existing_findings": [],
+  "requirements_completeness": null,
+  "learnings": [],
+  "agent_native_gaps": [],
+  "deployment_notes": [],
+  "residual_risks": [
+    "All five committed browser projects use Chromium, including the iPhone/iPad device descriptors; passing this matrix cannot establish Safari/WebKit, physical safe-area/browser-bar behavior, thumb comfort, child usability, or mobile frame-rate/memory acceptance.",
+    "The rotation pixel assertions require more than 40 matching attacker and defender pixels in selected bands after a separately rendered status label. They detect disappearance of the primary combatants but do not prove full silhouette/effect containment or animation aesthetics throughout the timeline; shared-coordinate unit checks and visual acceptance remain complementary evidence."
+  ],
+  "testing_gaps": [
+    "The new responsive GameUI status layout is exercised with normal turn banners, while browser promotion selection/cancellation and long check/checkmate banners remain untested. docs/TEST_PLAN.md explicitly retains those phone interaction and visual acceptance gates.",
+    "e2e/mobile.spec.js enables Instant and reduced motion together, so its capture bypasses the presenter. The browser suite does not establish a real animated reduced-motion or Fast capture across rotation; FireDragonPresenter unit tests only establish selected reduced-motion effects and callback behavior.",
+    "AttackDirector's changed skip/finishCleanup paths catch presenter exceptions, but no unit scenario makes presenter.skip or presenter.cleanup throw and verifies exact-once commitment/cancellation plus released input. Current normal and stale-callback tests cover the successful cleanup paths."
+  ],
+  "coverage": {
+    "depth": "full",
+    "notes": [
+      "Review scope is integrated recovery application/tooling main c6a254f..9899abc; root-owned qualification documentation is excluded.",
+      "AGENTS.md is the instruction-file criteria fallback for all changed paths; no CODING_STANDARDS.md exists.",
+      "No Compound Packs or learnings corpus was configured.",
+      "Seven structured reviewers and agent-facing documentation reviewer completed; all are separate local contexts on the inherited session model, not cross-model review.",
+      "No tests were run by this review; root independently owns current local verification and production browser matrix.",
+      "Physical device, child usability, audio asset/hardware, animation aesthetics, and quantitative performance acceptance are not closed by this review.",
+      "Cross-model pass: not run; only the Codex CLI is installed and no different-provider route is available. The in-process adversarial reviewer covered the lens; this is not different-model corroboration.",
+      "Settlement suppression was not evaluated because no unambiguous implementation plan was discovered for this integrated scope.",
+      "No anchor suppression, quote demotion, malformed findings, or mode-aware demotion occurred; first_evidence_backfilled=0.",
+      "The agent-facing documentation reviewer independently noted the same README freshness issue; no separate agent capability gap was found.",
+      "The sole retained P3 documentation correction lacks cross-model corroboration and is selected for validation.",
+      "One independent validation batch returned within its bound: confirmed=1, rejected=0, unresolved=0, malformed=0, failed=0, shortcut-skipped=0; no protected-subject reclassification.",
+      "The review applied no changes. Original snapshot finding #1 remains recorded; a separate independent follow-up confirms the caller's later README correction resolves its stale wording, subject to the final qualification link target being delivered."
+    ],
+    "suppressed_by_confidence": {},
+    "mode_aware_demotions": 0,
+    "first_evidence_backfilled": 0,
+    "quote_demotions": 0,
+    "failed_reviewers": [],
+    "validator": {
+      "confirmed": 1,
+      "rejected": 0,
+      "unresolved": 0,
+      "malformed": 0,
+      "failed": 0,
+      "shortcut_skipped": 0
+    },
+    "scope_exclusions": [
+      "docs/plans/2026-10-23-final-recovery-qualification-plan.md"
+    ]
+  },
+  "peer": {
+    "outcome": "in-process-fallback",
+    "coverage": "Cross-model pass: not run; only the Codex CLI is installed and no different-provider route is available. The in-process adversarial reviewer covered the lens; this is not different-model corroboration."
+  },
+  "verdict_reason": "No application defect was retained. Correct the P3 README evidence contradiction in the reviewed snapshot; the caller's later correction was checked separately. This code-review verdict does not close current browser verification, physical-device, intended-child, audio, visual-quality, or performance acceptance gates.",
+  "artifact_path": "/tmp/compound-engineering-1000/ce-code-review/20261023-final-recovery",
+  "run_id": "20261023-final-recovery"
+}

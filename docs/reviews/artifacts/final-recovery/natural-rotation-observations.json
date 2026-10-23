@@ -1,0 +1,50 @@
+[
+  {
+    "presenter": "generic",
+    "orientation": "landscape",
+    "file": "generic-landscape.png",
+    "stateBeforeScreenshot": "preparing",
+    "stateAfterScreenshot": "preparing",
+    "canvasCount": 1,
+    "errors": []
+  },
+  {
+    "presenter": "generic",
+    "orientation": "portrait",
+    "file": "generic-portrait.png",
+    "stateBeforeScreenshot": "attacking",
+    "stateAfterScreenshot": "recovering",
+    "canvasCount": 1,
+    "errors": []
+  },
+  {
+    "presenter": "generic",
+    "finalStatus": "BLACK'S TURN (OBSIDIAN CLAN)",
+    "canvasCount": 1,
+    "errors": []
+  },
+  {
+    "presenter": "fire-dragon",
+    "orientation": "landscape",
+    "file": "fire-dragon-landscape.png",
+    "stateBeforeScreenshot": "preparing",
+    "stateAfterScreenshot": "attacking",
+    "canvasCount": 1,
+    "errors": []
+  },
+  {
+    "presenter": "fire-dragon",
+    "orientation": "portrait",
+    "file": "fire-dragon-portrait.png",
+    "stateBeforeScreenshot": "recovering",
+    "stateAfterScreenshot": "idle",
+    "canvasCount": 1,
+    "errors": []
+  },
+  {
+    "presenter": "fire-dragon",
+    "finalStatus": "BLACK'S TURN (OBSIDIAN CLAN)",
+    "canvasCount": 1,
+    "errors": []
+  }
+]

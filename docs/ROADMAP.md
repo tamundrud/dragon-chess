@@ -1,6 +1,6 @@
 # Roadmap
 
-The original development phases describe implementation milestones. They do not establish completed visual, performance, physical-device, or child acceptance. See [TEST_PLAN.md](TEST_PLAN.md) for those gates and [the current verification record](reviews/recovery-phase3.md) for evidence.
+The original development phases describe implementation milestones. They do not establish completed visual, performance, physical-device, or child acceptance. See [TEST_PLAN.md](TEST_PLAN.md) for those gates and [final recovery qualification](reviews/final-recovery-qualification.md) for integrated evidence and merge readiness. Earlier phase records remain historical.
 
 ## Original Phases 1-4: implemented vertical slice
 

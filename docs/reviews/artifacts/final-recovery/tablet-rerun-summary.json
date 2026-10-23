@@ -1,0 +1,13 @@
+{
+  "candidate": "9899abcf6f2f810ef2d9ccaa4e0de289454d97f8",
+  "scope": "unchanged tablet generic capture resize and Skip, repeat-each=3, workers=1",
+  "stats": {
+    "startTime": "2026-10-23T22:26:12.397Z",
+    "duration": 150271.04799999998,
+    "expected": 3,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "replaces_full_matrix_failure": false
+}

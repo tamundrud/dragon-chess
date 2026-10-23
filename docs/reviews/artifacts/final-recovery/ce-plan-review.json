@@ -1,0 +1,39 @@
+{
+  "status": "complete",
+  "mode": "non-interactive",
+  "document": "/workspace/dragon-chess/docs/plans/2026-10-23-final-recovery-qualification-plan.md",
+  "document_type": "plan",
+  "document_sha256": "e059e968447307019b5afbb13be1c65e5fbdb748badc2fc2ea9a015a86661045",
+  "findings": [],
+  "applied_fixes": [],
+  "proposed_fixes": [],
+  "decisions": [],
+  "fyi": [],
+  "residual_concerns": [],
+  "deferred_questions": [],
+  "coverage": {
+    "completed": [
+      "coherence",
+      "feasibility",
+      "design-lens",
+      "scope-guardian",
+      "adversarial"
+    ],
+    "failed": [],
+    "pack_roots": [],
+    "warnings": [],
+    "errors": [],
+    "models": "Separate local contexts inherited session model; no cross-model corroboration.",
+    "peer": {
+      "outcome": "in-process-fallback",
+      "adversarial": "not run; no different-provider CLI installed",
+      "whole-doc": "not run; no different-provider CLI installed"
+    }
+  },
+  "correction_followup": {
+    "README": "Current wording resolves original P3 stale evidence/resize prose; full integration receipt preserves original finding.",
+    "ROADMAP": "Current evidence pointer now targets final qualification; historical implementation acceptance caveat retained.",
+    "TEST_PLAN": "Current integrated evidence pointer corrected; manual and automated gaps preserved.",
+    "limits": "Read-only contradiction/scope followup, no runtime rerun; pending final qualification report not reviewed as complete."
+  }
+}
