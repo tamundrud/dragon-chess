@@ -4,9 +4,11 @@ import { AttackDirector } from '../animation/AttackDirector';
 import { CharacterRegistry } from '../characters/CharacterRegistry';
 import { AudioController } from '../audio/AudioController';
 import { FireDragonPresenter } from '../animation/FireDragonPresenter';
+import { ATTACK_ART_WIDTH, ATTACK_ART_HEIGHT, fitAttackArtwork } from '../animation/attackLayout';
 
 export class AttackScene extends Phaser.Scene implements AttackPresenter {
   private overlayGraphics!: Phaser.GameObjects.Graphics;
+  private artworkContainer!: Phaser.GameObjects.Container;
   private stageContainer!: Phaser.GameObjects.Container;
   private statusText!: Phaser.GameObjects.Text;
   private attackerText!: Phaser.GameObjects.Text;
@@ -30,6 +32,7 @@ export class AttackScene extends Phaser.Scene implements AttackPresenter {
     this.stageContainer = this.add.container(0, 0);
     this.stageContainer.setVisible(false);
 
+    this.artworkContainer = this.add.container(0, 0);
     this.attackerContainer = this.add.container(0, 0);
     this.defenderContainer = this.add.container(0, 0);
     this.impactEffectContainer = this.add.container(0, 0);
@@ -101,10 +104,9 @@ export class AttackScene extends Phaser.Scene implements AttackPresenter {
       AttackDirector.getInstance().skip();
     });
 
+    this.artworkContainer.add([this.attackerContainer, this.defenderContainer, this.impactEffectContainer]);
     this.stageContainer.add([
-      this.attackerContainer,
-      this.defenderContainer,
-      this.impactEffectContainer,
+      this.artworkContainer,
       this.statusText,
       this.attackerText,
       this.defenderText,
@@ -115,7 +117,7 @@ export class AttackScene extends Phaser.Scene implements AttackPresenter {
 
     this.fireDragonPresenter = new FireDragonPresenter(
       this,
-      this.stageContainer,
+      this.artworkContainer,
       this.statusText,
       this.attackerText,
       this.defenderText
@@ -160,8 +162,8 @@ export class AttackScene extends Phaser.Scene implements AttackPresenter {
     const attackerName = attacker ? attacker.displayName : 'Attacker';
     const defenderName = defender ? defender.displayName : 'Defender';
 
-    const width = this.scale.width;
-    const height = this.scale.height;
+    const width = ATTACK_ART_WIDTH;
+    const height = ATTACK_ART_HEIGHT;
 
     this.attackerText.setText(`Attacker: ${attackerName}\n[ TEMPORARY ATTACKER ART ]`);
     this.defenderText.setText(`Defender: ${defenderName}\n[ TEMPORARY DEFENDER ART ]`);
@@ -401,6 +403,9 @@ export class AttackScene extends Phaser.Scene implements AttackPresenter {
   }
 
   private layoutStage(width: number, height: number): void {
+    const artwork = fitAttackArtwork(width, height);
+    this.artworkContainer.setPosition(artwork.x, artwork.y);
+    this.artworkContainer.setScale(artwork.scale);
     const compact = width < 600;
     const statusFontSize = compact ? 16 : 24;
     // Rotation can briefly report a near-zero width. Keep room for the labels'
