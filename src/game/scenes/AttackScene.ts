@@ -402,12 +402,21 @@ export class AttackScene extends Phaser.Scene implements AttackPresenter {
 
   private layoutStage(width: number, height: number): void {
     const compact = width < 600;
-    this.statusText.setFontSize(compact ? 16 : 24);
-    this.statusText.setWordWrapWidth(width * 0.9, true);
+    const statusFontSize = compact ? 16 : 24;
+    // Rotation can briefly report a near-zero width. Keep room for the labels'
+    // emoji glyphs, and update font/wrap together so neither renders with stale
+    // dimensions from the previous layout.
+    this.statusText.setStyle({
+      fontSize: statusFontSize,
+      wordWrap: { width: Math.max(width * 0.9, statusFontSize * 2), useAdvancedWrap: true },
+    });
     this.statusText.setPosition(width / 2, height * 0.22);
     for (const [text, x] of [[this.attackerText, 0.25], [this.defenderText, 0.75]] as const) {
-      text.setFontSize(compact ? 12 : 18);
-      text.setWordWrapWidth(width * 0.44, true);
+      const fontSize = compact ? 12 : 18;
+      text.setStyle({
+        fontSize,
+        wordWrap: { width: Math.max(width * 0.44, fontSize * 2), useAdvancedWrap: true },
+      });
       text.setPosition(width * x, height * 0.72);
     }
     this.skipContainer.setPosition(width / 2, height * 0.9);

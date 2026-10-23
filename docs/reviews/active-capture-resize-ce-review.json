@@ -1,0 +1,124 @@
+{
+  "status": "complete",
+  "verdict": "Ready with fixes",
+  "scope": {
+    "base": "4ab948ccd391d7dc07ff24768352dbbe87b81ff0",
+    "branch": "fix/active-capture-resize-wrap",
+    "head_sha": "4ab948ccd391d7dc07ff24768352dbbe87b81ff0",
+    "pr_url": null,
+    "files_changed": 4
+  },
+  "intent": "Prevent Phaser advanced word-wrap errors during active-capture resize, including transient 4px parent sizes and recovery across the compact breakpoint. Preserve authoritative chess state, capture completion, Skip, Undo, cleanup, and navigation. Add production-browser regression coverage for generic and Fire Dragon presenters; document evidence and limitations; deliver a draft PR against recovery/2026-10-22 without merge/deploy. Existing Phase 2/3 plans provide background; no new explicit implementation plan applies.",
+  "intent_confidence": "explicit",
+  "reviewers": [
+    "correctness",
+    "project-standards",
+    "testing"
+  ],
+  "findings": [
+    {
+      "#": 1,
+      "autofix_class": "gated_auto",
+      "confidence": 75,
+      "evidence": [
+        "e2e/attack_resize.spec.js:44 --       await page.clock.runFor(6000);",
+        "e2e/attack_resize.spec.js:40-45 taps Skip conditionally but does not assert completion until after the unconditional six-second playback advance; lines 56-58 repeat this for Escape.",
+        "src/game/animation/AttackRegistry.ts:24-28 defines Fire Dragon timings of 800ms preparation, 800ms strike, and 1000ms recovery; FireDragonPresenter.ts:160-163 derives its natural timeline from these values, shorter than the six-second assertion delay.",
+        "e2e/game.spec.js:58-60 and 108-110 advance only 32ms after Skip before asserting idle, demonstrating the existing immediate-completion assertion pattern. The existing resized Skip case uses only the generic capture."
+      ],
+      "file": "e2e/attack_resize.spec.js",
+      "first_evidence": "e2e/attack_resize.spec.js:44 --       await page.clock.runFor(6000);",
+      "independent_reviewers": [
+        "testing"
+      ],
+      "line": 44,
+      "owner": "downstream-resolver",
+      "pre_existing": false,
+      "requires_verification": true,
+      "reviewers": [
+        "testing"
+      ],
+      "severity": "P2",
+      "suggested_fix": "Inside the Skip branch, advance the paused clock by 32ms and assert idle plus black's turn immediately after tapCanvas, following e2e/game.spec.js. Do the same after Escape at line 56. Retain the subsequent 6000ms advance and final state assertions to detect stale timers; keep the full advance for natural completion cases.",
+      "title": "Assert Skip completion before natural playback finishes",
+      "why_it_matters": "The new Skip cases still pass if the restored canvas ignores the Skip tap: advancing six seconds allows both presenters to finish naturally before any completion assertion. The same issue affects the Escape check after recapture. This leaves Skip after the forced 4px recovery, especially the Fire Dragon path absent from the existing resize Skip test, unverified. Assert completion after a short frame advance, then advance past the original timeline to verify cleanup.",
+      "validation_status": "confirmed",
+      "validation_reason": "If Skip or Escape is ignored after resize or recapture, the new tests in e2e/attack_resize.spec.js:40-58 still advance 6000ms before asserting completion, allowing the natural completion callbacks in AttackScene.ts:308-314 and FireDragonPresenter.ts:538-542 to satisfy the same assertions for the registry timings; the test itself reaches these input paths, and incidence of an ignored input was not measured."
+    }
+  ],
+  "actionable_findings": [
+    {
+      "#": 1,
+      "autofix_class": "gated_auto",
+      "confidence": 75,
+      "evidence": [
+        "e2e/attack_resize.spec.js:44 --       await page.clock.runFor(6000);",
+        "e2e/attack_resize.spec.js:40-45 taps Skip conditionally but does not assert completion until after the unconditional six-second playback advance; lines 56-58 repeat this for Escape.",
+        "src/game/animation/AttackRegistry.ts:24-28 defines Fire Dragon timings of 800ms preparation, 800ms strike, and 1000ms recovery; FireDragonPresenter.ts:160-163 derives its natural timeline from these values, shorter than the six-second assertion delay.",
+        "e2e/game.spec.js:58-60 and 108-110 advance only 32ms after Skip before asserting idle, demonstrating the existing immediate-completion assertion pattern. The existing resized Skip case uses only the generic capture."
+      ],
+      "file": "e2e/attack_resize.spec.js",
+      "first_evidence": "e2e/attack_resize.spec.js:44 --       await page.clock.runFor(6000);",
+      "independent_reviewers": [
+        "testing"
+      ],
+      "line": 44,
+      "owner": "downstream-resolver",
+      "pre_existing": false,
+      "requires_verification": true,
+      "reviewers": [
+        "testing"
+      ],
+      "severity": "P2",
+      "suggested_fix": "Inside the Skip branch, advance the paused clock by 32ms and assert idle plus black's turn immediately after tapCanvas, following e2e/game.spec.js. Do the same after Escape at line 56. Retain the subsequent 6000ms advance and final state assertions to detect stale timers; keep the full advance for natural completion cases.",
+      "title": "Assert Skip completion before natural playback finishes",
+      "why_it_matters": "The new Skip cases still pass if the restored canvas ignores the Skip tap: advancing six seconds allows both presenters to finish naturally before any completion assertion. The same issue affects the Escape check after recapture. This leaves Skip after the forced 4px recovery, especially the Fire Dragon path absent from the existing resize Skip test, unverified. Assert completion after a short frame advance, then advance past the original timeline to verify cleanup.",
+      "validation_status": "confirmed",
+      "validation_reason": "If Skip or Escape is ignored after resize or recapture, the new tests in e2e/attack_resize.spec.js:40-58 still advance 6000ms before asserting completion, allowing the natural completion callbacks in AttackScene.ts:308-314 and FireDragonPresenter.ts:538-542 to satisfy the same assertions for the registry timings; the test itself reaches these input paths, and incidence of an ignored input was not measured."
+    }
+  ],
+  "triage_groups": [],
+  "pre_existing_findings": [],
+  "requirements_completeness": null,
+  "learnings": [],
+  "agent_native_gaps": [],
+  "deployment_notes": [],
+  "residual_risks": [],
+  "testing_gaps": [],
+  "coverage": {
+    "depth": "full",
+    "notes": [
+      "Full depth required by binary screenshot files; 17 executable non-test changed lines.",
+      "Root AGENTS.md used as instruction-file criteria fallback.",
+      "Correctness, standards, and testing reviewed independently in fresh same-family contexts. No cross-model, specialist, learnings, or deployment review ran.",
+      "Cross-model pass not selected: small synchronous text layout change; no persistence, external boundary, concurrency wiring, or test infrastructure changes.",
+      "Settlement suppression was not evaluated because no plan was discovered.",
+      "Quote gate demotions: 0; first_evidence_backfilled: 1.",
+      "No confidence suppressions, malformed findings, malformed returns, mode-aware demotions, or failed reviewers.",
+      "The correctness testing-gap observation duplicates primary finding #1 and was not repeated in the soft bucket. Same-family agreement does not increase confidence.",
+      "Validator shortcut-skipped: 0; no quote-anchored cross-model corroboration was available. One actionable P2 finding selected for one validator batch.",
+      "One validator batch returned within the bound: confirmed 1, rejected 0, unresolved 0, malformed 0, failed 0, shortcut-skipped 0. Finding #1 is an unprotected test-assertion gap; no protected-subject reclassification was needed.",
+      "The validator confirmed #1 from inspected code; incidence of ignored Skip or Escape input was not measured. No production-code defect was found.",
+      "Stage 5c skipped: agent report-only mode, apply_local false; no project files changed."
+    ],
+    "suppressed_by_confidence": {},
+    "mode_aware_demotions": 0,
+    "first_evidence_backfilled": 1,
+    "quote_gate_demotions": 0,
+    "failed_reviewers": [],
+    "validator": {
+      "outcome": "verdicts",
+      "batches": 1,
+      "confirmed": 1,
+      "rejected": 0,
+      "unresolved": 0,
+      "malformed": 0,
+      "failed": 0,
+      "shortcut_skipped": 0,
+      "protected_subject_reclassifications": 0
+    }
+  },
+  "artifact_path": "/tmp/compound-engineering-1000/ce-code-review/20261023-active-capture-resize",
+  "run_id": "20261023-active-capture-resize",
+  "verdict_reason": "Strengthen #1 before relying on the resize regression: assert completion after 32ms for Skip and Escape, then advance 6000ms to detect stale callbacks. The review found no production-code defect."
+}
