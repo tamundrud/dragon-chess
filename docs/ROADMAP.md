@@ -19,7 +19,7 @@ The original claims of completed phone validation, visual-quality verification, 
 
 ## Remaining acceptance
 
-Physical iOS Safari/Android Chrome, safe areas/browser bars, high-density readability, thumb comfort, child usability, promotion/status overlays, and animation aesthetics remain open. Rotation during a capture can leave artwork at original timeline coordinates until completion. Audible behavior requires real sound assets and hardware acceptance. These are not closed by Chromium emulation or passing unit tests.
+Physical iOS Safari/Android Chrome, safe areas/browser bars, high-density readability, thumb comfort, child usability, promotion/status overlays, and animation aesthetics remain open. Capture artwork now fits the canvas during rotation using a shared logical space; composition and readability still need physical-device acceptance. Audible behavior requires real sound assets and hardware acceptance. These are not closed by Chromium emulation or passing unit tests.
 
 ## Deferred product work
 
