@@ -8,7 +8,10 @@
 - React only for surrounding UI where useful.
 - Vitest.
 - Local storage.
-- No backend for the vertical slice.
+- No backend or API keys for the vertical slice.
+- Node 24.x / npm 11.x for tooling; npm lockfile and `.nvmrc` drive clean installs and CI.
+- Playwright tests the production preview with installed Chromium; Cloud may select system Chromium through its optional external wrapper.
+- Vitest composes the shared Vite plugins and resolution settings, then adds its jsdom test configuration.
 
 ## Separation of concerns
 Keep separate:
@@ -83,11 +86,14 @@ Must not own chess rules.
 - Audio settings.
 - Local persistence.
 
-## Vertical Slice Implementation (Completed)
+## Current Vertical Slice Implementation
 - **FireDragonPresenter**: Implements the `AttackPresenter` interface for `fire_stream_attack`. Renders procedural dragon graphics, flame cones, ember particles, and defender reaction silhouettes across all 6 attack lifecycle phases.
 - **Single Entry Point**: Captures in `ChessGameController` are routed through `PhaserGameManager.handleMoveRequest()`, which initiates `AttackDirector.startAttack()`. The move commit to `chess.js` occurs via the callback when the attack reaches the `completing` phase.
+- **Cancellation**: Leaving a game aborts the presentation, removes callbacks/timers, and does not commit the pending capture. Destroy also disconnects the board parent ResizeObserver.
 - **State Protection**: When an attack starts, `ChessGameController.setInputLocked(true)` prevents duplicate moves or UI actions (undo/restart) until the lifecycle completes.
+- **Presenter Routing**: `AttackScene` registers with `AttackDirector` and delegates Fire Dragon captures to `FireDragonPresenter`. Other attack definitions use generic temporary art and motion; registry entries do not imply dedicated choreography.
+- **Audio Status**: `AudioController.playSound()` checks preferences/unlock state and plays optional MP3 cues through HTML Audio with missing-file/rejection tolerance. No sound pack is shipped.
 - **Data-Driven Registries**: Both `CharacterRegistry` and `AttackRegistry` provide clean decoupling between piece types, character identities, and presentation choreography.
 
 ## Export & Continued Work
-- The architecture supports seamless extension by adding new `AttackPresenter` implementations for remaining pieces (e.g., Viking Warriors, Obsidian Clan) without touching core chess engine rules or React overlays.
+- The architecture supports extension by adding and routing new `AttackPresenter` implementations for remaining pieces (e.g., Viking Warriors, Obsidian Clan) without touching core chess engine rules or React overlays.

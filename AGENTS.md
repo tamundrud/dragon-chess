@@ -22,9 +22,9 @@ The primary user is an 8-year-old child who likes chess and dragons.
 
 ## Dependencies
 
-- Use npm wherever `package-lock.json` exists, even if another lockfile is also present. Do not migrate package managers or rewrite lockfiles as setup work.
+- Use Node 24.x and npm 11.x (`.nvmrc` and `package.json`). npm is the only supported package manager; `package-lock.json` is the sole lockfile. Use clean installs without opportunistic dependency upgrades.
 - **Codex Cloud only:** when available, run `bash /workspace/dragon-chess-refresh-deps.sh "$PWD"` from the repository root before checks and after branch changes. It refreshes dependencies when the manifests or Node runtime differ, otherwise it reuses the matching installation.
-- **Other environments or missing Cloud helper:** use `npm ci --include=dev` from the repository root. Refresh after branch changes that alter `package.json` or `package-lock.json`, or if the installation is missing or stale. Follow the selected branch’s setup instructions if it has no npm lockfile; do not generate one just to install. Report install failures without silently upgrading dependencies.
+- **Other environments or missing Cloud helper:** use `npm ci --include=dev` from the repository root. Refresh after branch changes that alter `package.json` or `package-lock.json`, or if the installation is missing or stale. Report install failures without silently upgrading dependencies.
 
 ## Compound Engineering
 
@@ -44,7 +44,8 @@ For application changes, run from the repository root and report current results
 
 - For gameplay or UI changes, build first, then run appropriate Playwright coverage from `e2e/`. Include capture/skip/cleanup scenarios for attack changes, and phone portrait/landscape plus desktop coverage for UI changes. Capture useful screenshots or traces and link accessible artifacts in the PR.
 - **Codex Cloud only:** when present, use `npx playwright test --config=/workspace/dragon-chess-playwright.config.mjs` (optionally selecting relevant tests). This saved wrapper uses system Chromium at `/usr/bin/chromium` and captures screenshots/traces. Do not assume Playwright’s bundled browser is installed. If the wrapper or browser is unavailable, report the limitation before choosing a supported alternative.
-- **Outside Cloud:** use `npx playwright test` with the repository configuration and a browser installed for that environment. Do not change repository browser configuration merely to match Cloud.
+- **Outside Cloud:** use `npm run test:e2e:install` once to install Chromium and OS dependencies, then `npm run build` and `npm run test:e2e` with the repository configuration and a browser installed for that environment. Do not change repository browser configuration merely to match Cloud.
+- Current tooling and verification evidence: [Phase 3 record](docs/reviews/recovery-phase3.md). No environment file or API key is required.
 - Automated assertions and captured artifacts are not manual visual acceptance. Inspect relevant views against `docs/TEST_PLAN.md` when possible; report what was visually inspected and what still needs human acceptance, especially animation quality and phone usability.
 - Documentation-only changes may use `git diff --check`, path/command checks, and a contradiction/scope review instead of local application runs. CI requirements still apply. State skipped checks and reasons; historical results are not current verification.
 
@@ -65,10 +66,10 @@ For application changes, run from the repository root and report current results
 
 1. **Adding New Attack Presenters**:
    - Implement the `AttackPresenter` interface (see `FireDragonPresenter.ts` for reference).
-   - Register the presenter in `AttackDirector.registerPresenter()`.
+   - `AttackScene` is the presenter registered with `AttackDirector`. Route dedicated presenters from `AttackScene.playAttack()` as it does for `FireDragonPresenter`; registry data alone uses the generic presentation.
    - Ensure `skip()` and `cleanup()` remove all temporary Phaser containers, graphics, tweens, and timers.
    - Never mutate `chess.js` state inside a presenter.
 2. **Replacing Temporary Art**:
-   - The vertical slice uses procedural Phaser vector graphics. When replacing with illustrated sprite sheets or textures, load them in `PhaserGameManager.preload()` or scene loaders and reference by key in presenters.
+   - The vertical slice uses procedural Phaser vector graphics. When replacing with illustrated sprite sheets or textures, add loading to the relevant Phaser scene’s `preload()` and reference texture keys in presenters (`PhaserGameManager` currently defines no `preload()` method).
 3. **Audio Handling**:
-   - All sound calls must go through `AudioController.getInstance().playSound()`, which safely tolerates missing audio files or autoplay restrictions.
+   - All sound calls must go through `AudioController.getInstance().playSound()`, which uses HTML Audio and tolerates missing files or autoplay rejection. No sound pack is shipped; audible output still needs asset and hardware acceptance.
