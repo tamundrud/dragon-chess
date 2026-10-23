@@ -18,13 +18,19 @@ export class PhaserGameManager {
   private pendingPromotionRequest: ChessMoveRequest | null = null;
   private onReadyCallback: (() => void) | null = null;
   private isReady = false;
+  private destroyed = false;
+  private pendingAttack: (() => void) | null = null;
+  private readonly handleReady = () => this.setupScenes();
+  private readonly refreshInputBounds = () => {
+    if (!this.destroyed) this.game?.scale.updateBounds();
+  };
 
   constructor(controller: ChessGameController) {
     this.controller = controller;
   }
 
   public init(containerId: string): void {
-    if (this.game) {
+    if (this.destroyed || this.game) {
       return;
     }
 
@@ -43,13 +49,11 @@ export class PhaserGameManager {
 
     this.game = new Phaser.Game(config);
 
-    this.game.events.on(Phaser.Core.Events.READY, () => {
-      this.setupScenes();
-    });
+    this.game.events.once(Phaser.Core.Events.READY, this.handleReady);
   }
 
   private setupScenes(): void {
-    if (!this.game) return;
+    if (this.destroyed || !this.game || this.isReady) return;
 
     this.boardScene = this.game.scene.getScene('BoardScene') as BoardScene;
     this.attackScene = this.game.scene.getScene('AttackScene') as AttackScene;
@@ -83,6 +87,11 @@ export class PhaserGameManager {
       this.handleMoveRequest(request);
     });
 
+    // Phaser polls canvas bounds; refresh before its native input listeners
+    // normalize page coordinates after navigation or scrolling.
+    this.game.canvas.addEventListener('mousedown', this.refreshInputBounds, true);
+    this.game.canvas.addEventListener('touchstart', this.refreshInputBounds, true);
+
     // The canvas is created before scene input and controller subscriptions are
     // connected. Only advertise readiness after the complete integration setup.
     this.isReady = true;
@@ -90,6 +99,7 @@ export class PhaserGameManager {
   }
 
   public onReady(callback: () => void): () => void {
+    if (this.destroyed) return () => {};
     this.onReadyCallback = callback;
     if (this.isReady) callback();
 
@@ -99,7 +109,7 @@ export class PhaserGameManager {
   }
 
   private handleMoveRequest(request: ChessMoveRequest): void {
-    if (this.controller.isInputLocked() || AttackDirector.getInstance().getState() !== 'idle') {
+    if (this.destroyed || this.controller.isInputLocked() || AttackDirector.getInstance().getState() !== 'idle') {
       return;
     }
 
@@ -158,16 +168,26 @@ export class PhaserGameManager {
     // 2. Identify captures and present attack scene if applicable
     if (prepared.captured) {
       const director = AttackDirector.getInstance();
-      const started = director.startAttack(prepared, () => {
+      const complete = () => {
+        if (this.destroyed || this.pendingAttack !== complete) return;
+        this.pendingAttack = null;
         // Authoritative commit exactly once after attack scene completes or skips
         this.controller.setInputLocked(false);
         if (this.boardScene) {
           this.boardScene.getInputController().setLocked(false);
         }
         this.controller.commitMove(request);
+      };
+      this.pendingAttack = complete;
+      const started = director.startAttack(prepared, complete, () => {
+        if (this.pendingAttack !== complete) return;
+        this.pendingAttack = null;
+        this.controller.setInputLocked(false);
+        this.boardScene?.getInputController().setLocked(false);
       });
 
       if (!started) {
+        this.pendingAttack = null;
         // If director rejected concurrent start, unlock input without committing the move
         this.controller.setInputLocked(false);
         if (this.boardScene) {
@@ -185,14 +205,15 @@ export class PhaserGameManager {
   }
 
   public onPromotionRequired(callback: (request: ChessMoveRequest, turn: PieceColor) => void): () => void {
+    if (this.destroyed) return () => {};
     this.onPromotionCallback = callback;
     return () => {
-      this.onPromotionCallback = null;
+      if (this.onPromotionCallback === callback) this.onPromotionCallback = null;
     };
   }
 
   public completePromotion(piece: PieceType): void {
-    if (!this.pendingPromotionRequest) return;
+    if (this.destroyed || !this.pendingPromotionRequest) return;
     const req = { ...this.pendingPromotionRequest, promotion: piece };
     this.pendingPromotionRequest = null;
     this.handleMoveRequest(req);
@@ -206,13 +227,30 @@ export class PhaserGameManager {
   }
 
   public destroy(): void {
+    if (this.destroyed) return;
+    this.destroyed = true;
+    if (this.pendingAttack) AttackDirector.getInstance().abort(this.pendingAttack);
+    this.pendingAttack = null;
+    this.pendingPromotionRequest = null;
+    this.onPromotionCallback = null;
+    this.controller.setInputLocked(false);
+    this.boardScene?.getInputController().setLocked(false);
     if (this.unsubscribeChess) this.unsubscribeChess();
     if (this.unsubscribeInputMove) this.unsubscribeInputMove();
     if (this.unsubscribeInputSelect) this.unsubscribeInputSelect();
     if (this.game) {
+      this.game.canvas?.removeEventListener('mousedown', this.refreshInputBounds, true);
+      this.game.canvas?.removeEventListener('touchstart', this.refreshInputBounds, true);
+      this.game.events.off(Phaser.Core.Events.READY, this.handleReady);
+      // Phaser destruction is deferred to a frame. Stop scenes synchronously so
+      // an old overlay cannot remain registered during a Strict Mode remount.
+      this.game.scene.getScenes(true).forEach((scene) => this.game?.scene.stop(scene));
       this.game.destroy(true);
       this.game = null;
     }
+    this.unsubscribeChess = null;
+    this.unsubscribeInputMove = null;
+    this.unsubscribeInputSelect = null;
     this.boardScene = null;
     this.attackScene = null;
     this.isReady = false;

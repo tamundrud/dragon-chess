@@ -16,6 +16,7 @@ export class AttackScene extends Phaser.Scene implements AttackPresenter {
   private defenderContainer!: Phaser.GameObjects.Container;
   private impactEffectContainer!: Phaser.GameObjects.Container;
   private fireDragonPresenter!: FireDragonPresenter;
+  private cleanedUp = true;
   private onCompleteCallback: (() => void) | null = null;
 
   constructor() {
@@ -23,6 +24,7 @@ export class AttackScene extends Phaser.Scene implements AttackPresenter {
   }
 
   create(): void {
+    this.cleanedUp = false;
     this.overlayGraphics = this.add.graphics();
     this.stageContainer = this.add.container(0, 0);
     this.stageContainer.setVisible(false);
@@ -37,18 +39,14 @@ export class AttackScene extends Phaser.Scene implements AttackPresenter {
     // Register this scene as the presenter for AttackDirector
     AttackDirector.getInstance().registerPresenter(this);
 
-    // Allow keyboard skipping via ESCAPE or SPACE when attack is active
-    this.input.keyboard?.on('keydown-ESCAPE', () => {
-      if (this.stageContainer.visible) {
-        AttackDirector.getInstance().skip();
-      }
-    });
-    this.input.keyboard?.on('keydown-SPACE', () => {
-      if (this.stageContainer.visible) {
-        AttackDirector.getInstance().skip();
-      }
-    });
+    this.events.once(Phaser.Scenes.Events.SHUTDOWN, this.handleSceneCleanup, this);
+    this.events.once(Phaser.Scenes.Events.DESTROY, this.handleSceneCleanup, this);
+    this.input.keyboard?.on('keydown-ESC', this.handleSkipKey, this);
+    this.input.keyboard?.on('keydown-SPACE', this.handleSkipKey, this);
+  }
 
+  private handleSkipKey(): void {
+    if (this.stageContainer.visible) AttackDirector.getInstance().skip();
   }
 
   private setupStageUI(): void {
@@ -329,6 +327,8 @@ export class AttackScene extends Phaser.Scene implements AttackPresenter {
   }
 
   public cleanup(): void {
+    this.onCompleteCallback = null;
+    if (this.cleanedUp) return;
     if (this.fireDragonPresenter) {
       this.fireDragonPresenter.cleanup();
     }
@@ -346,9 +346,9 @@ export class AttackScene extends Phaser.Scene implements AttackPresenter {
     if (this.attackerContainer) this.attackerContainer.removeAll(true);
     if (this.defenderContainer) this.defenderContainer.removeAll(true);
     if (this.impactEffectContainer) this.impactEffectContainer.removeAll(true);
-    this.cameras.main.resetFX();
-    this.cameras.main.setZoom(1);
-    this.cameras.main.setAngle(0);
+    this.cameras.main?.resetFX();
+    this.cameras.main?.setZoom(1);
+    this.cameras.main?.setAngle(0);
   }
 
   private spawnImpactEffect(x: number, y: number): void {
@@ -399,8 +399,19 @@ export class AttackScene extends Phaser.Scene implements AttackPresenter {
     }
   }
 
-  destroy(): void {
+  private handleSceneCleanup(): void {
+    if (this.cleanedUp) return;
     AttackDirector.getInstance().unregisterPresenter(this);
     this.cleanup();
+    this.cleanedUp = true;
+    this.events.off(Phaser.Scenes.Events.SHUTDOWN, this.handleSceneCleanup, this);
+    this.events.off(Phaser.Scenes.Events.DESTROY, this.handleSceneCleanup, this);
+    this.scale.off('resize', this.handleResize, this);
+    this.input.keyboard?.off('keydown-ESC', this.handleSkipKey, this);
+    this.input.keyboard?.off('keydown-SPACE', this.handleSkipKey, this);
+  }
+
+  destroy(): void {
+    this.handleSceneCleanup();
   }
 }

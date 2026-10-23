@@ -1,0 +1,183 @@
+import { EventEmitter } from 'node:events';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { ChessGameController } from '../chess/ChessGameController';
+import { InputController } from '../game/input/InputController';
+import { AttackDirector } from '../game/animation/AttackDirector';
+import { AttackPresenter } from '../game/animation/attackTypes';
+import { PhaserGameManager } from '../game/PhaserGameManager';
+import { SettingsStore } from '../settings/SettingsStore';
+
+// Mock only the Phaser host; use real manager, input, chess, and director.
+vi.mock('../game/scenes/BoardScene', () => ({ BoardScene: class {} }));
+vi.mock('../game/scenes/AttackScene', () => ({ AttackScene: class {} }));
+vi.mock('phaser', () => ({ default: {
+  AUTO: 0, Scale: { RESIZE: 0, CENTER_BOTH: 0 }, Core: { Events: { READY: 'ready' } },
+  Game: class {
+    events = host.events;
+    canvas = host.canvas;
+    scale = { updateBounds: host.updateBounds };
+    scene = {
+      getScene: () => host.board,
+      isSleeping: () => false, isActive: () => true,
+      getScenes: () => [], stop: vi.fn(),
+    };
+    destroy = host.destroy;
+  },
+} }));
+const host = vi.hoisted(() => ({
+  events: null as unknown as EventEmitter,
+  board: null as unknown as {
+    getInputController: () => InputController;
+    updateBoardState: ReturnType<typeof vi.fn>;
+    updateSelection: ReturnType<typeof vi.fn>;
+  },
+  destroy: vi.fn(),
+  canvas: null as unknown as HTMLCanvasElement,
+  updateBounds: vi.fn(),
+}));
+
+describe('PhaserGameManager lifecycle', () => {
+  const director = AttackDirector.getInstance();
+  const managers: PhaserGameManager[] = [];
+  let complete: () => void;
+  let presenter: AttackPresenter;
+
+  function mount(controller = new ChessGameController(), ready = true) {
+    const input = new InputController();
+    host.events = new EventEmitter();
+    host.canvas = document.createElement('canvas');
+    host.board = { getInputController: () => input, updateBoardState: vi.fn(), updateSelection: vi.fn() };
+    const manager = new PhaserGameManager(controller);
+    managers.push(manager);
+    manager.init('test');
+    if (ready) host.events.emit('ready');
+    const move = (from: string, to: string) => {
+      input.handleSquareSelect(from);
+      input.handleSquareSelect(to);
+    };
+    return { manager, controller, input, move, events: host.events, board: host.board, canvas: host.canvas };
+  }
+
+  function capture() {
+    const game = mount();
+    game.move('e2', 'e4');
+    game.move('d7', 'd5');
+    game.move('e4', 'd5');
+    expect(game.controller.isInputLocked()).toBe(true);
+    return game;
+  }
+
+  beforeEach(() => {
+    vi.useFakeTimers();
+    SettingsStore.getInstance().reset();
+    presenter = {
+      playAttack: (_ctx, _def, _settings, _phase, callback) => { complete = callback; },
+      skip: () => complete(), cleanup: vi.fn(),
+    };
+    director.registerPresenter(presenter);
+    host.destroy.mockClear();
+    host.updateBounds.mockReset();
+  });
+
+  afterEach(() => {
+    managers.splice(0).forEach((manager) => manager.destroy());
+    director.abort();
+    director.unregisterPresenter(presenter);
+    vi.useRealTimers();
+  });
+
+  it('leaving cancels the pending move, releases locks and allows a new game', () => {
+    const old = capture();
+    const fen = old.controller.getFen();
+    const staleComplete = complete;
+    old.manager.destroy();
+    expect(old.controller.getFen()).toBe(fen);
+    expect(old.controller.isInputLocked()).toBe(false);
+    expect(old.input.isLocked()).toBe(false);
+    expect(director.getState()).toBe('idle');
+    const next = capture();
+    old.manager.destroy();
+    staleComplete();
+    old.move('g1', 'f3');
+    expect(next.controller.isInputLocked()).toBe(true);
+    expect(director.getState()).toBe('preparing');
+    expect(old.controller.getFen()).toBe(fen);
+    complete();
+    expect(next.controller.getPieceAt('d5')?.color).toBe('w');
+  });
+
+  it.each(['natural', 'skip'])('%s completion commits once through the manager', (mode) => {
+    const game = capture();
+    const commit = vi.spyOn(game.controller, 'commitMove');
+    if (mode === 'skip') director.skip();
+    else complete();
+    complete();
+    director.skip();
+    expect(commit).toHaveBeenCalledTimes(1);
+    expect(game.controller.isInputLocked()).toBe(false);
+    expect(game.input.isLocked()).toBe(false);
+    expect(game.controller.getPieceAt('d5')?.color).toBe('w');
+  });
+
+  it('scene presenter removal cancels the move and unlocks input', () => {
+    const game = capture();
+    const fen = game.controller.getFen();
+    director.unregisterPresenter(presenter);
+    complete();
+    expect(game.controller.getFen()).toBe(fen);
+    expect(game.controller.isInputLocked()).toBe(false);
+    expect(game.input.isLocked()).toBe(false);
+  });
+
+  it('clears promotion callbacks and subscriptions on repeated destroy', () => {
+    const controller = new ChessGameController('8/P7/8/8/8/8/8/4K2k w - - 0 1');
+    const game = mount(controller);
+    const promote = vi.fn();
+    game.manager.onPromotionRequired(promote);
+    game.move('a7', 'a8');
+    expect(promote).toHaveBeenCalledTimes(1);
+    const fen = controller.getFen();
+    game.manager.destroy();
+    game.manager.destroy();
+    game.manager.completePromotion('q');
+    game.move('a7', 'a8');
+    expect(controller.getFen()).toBe(fen);
+    expect(promote).toHaveBeenCalledTimes(1);
+    expect(host.destroy).toHaveBeenCalledTimes(1);
+    game.board.updateBoardState.mockClear();
+    controller.reset();
+    expect(game.board.updateBoardState).not.toHaveBeenCalled();
+  });
+
+  it('refreshes moved canvas bounds before Phaser input and removes native listeners on destroy', () => {
+    const game = mount(undefined, false);
+    const order: string[] = [];
+    // Phaser installs its bubble listener during boot, before manager readiness.
+    game.canvas.addEventListener('mousedown', () => order.push('phaser'));
+    game.canvas.addEventListener('touchstart', () => order.push('phaser'));
+    host.updateBounds.mockImplementation(() => order.push('bounds'));
+    game.events.emit('ready');
+    game.canvas.dispatchEvent(new MouseEvent('mousedown'));
+    game.canvas.dispatchEvent(new Event('touchstart'));
+    expect(order).toEqual(['bounds', 'phaser', 'bounds', 'phaser']);
+    game.manager.destroy();
+    order.length = 0;
+    game.canvas.dispatchEvent(new MouseEvent('mousedown'));
+    game.canvas.dispatchEvent(new Event('touchstart'));
+    expect(order).toEqual(['phaser', 'phaser']);
+  });
+
+  it('ignores delayed ready events and init after destruction', () => {
+    const game = mount(undefined, false);
+    const ready = vi.fn();
+    game.manager.onReady(ready);
+    const delayedReady = game.events.listeners('ready')[0];
+    game.manager.destroy();
+    delayedReady();
+    game.events.emit('ready');
+    game.manager.init('test');
+    game.manager.onReady(ready);
+    expect(ready).not.toHaveBeenCalled();
+    expect(game.events.listenerCount('ready')).toBe(0);
+  });
+});

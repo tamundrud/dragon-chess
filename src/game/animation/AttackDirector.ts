@@ -15,8 +15,11 @@ export class AttackDirector {
   private currentDefinition: AttackDefinition | null = null;
   private listeners: Set<AttackLifecycleListener> = new Set();
   private timerIds: Set<number | NodeJS.Timeout> = new Set();
+  private onAbortCallback: (() => void) | null = null;
   private onCompleteCallback: AttackCompletionCallback | null = null;
   private presenter: AttackPresenter | null = null;
+  private activePresenter: AttackPresenter | null = null;
+  private sequence = 0;
 
   private constructor() {}
 
@@ -35,6 +38,7 @@ export class AttackDirector {
     if (this.presenter === presenter) {
       this.presenter = null;
     }
+    if (this.activePresenter === presenter) this.abort();
   }
 
   public getState(): AttackLifecycleState {
@@ -53,11 +57,19 @@ export class AttackDirector {
    * Starts an attack sequence for a capture or special move.
    * Prevents overlapping concurrent attacks.
    */
-  public startAttack(move: ChessMoveResult, onComplete: AttackCompletionCallback): boolean {
+  public startAttack(move: ChessMoveResult, onComplete: AttackCompletionCallback, onAbort?: () => void): boolean {
     if (this.state !== 'idle') {
       console.warn('Concurrent attack requested while director is not idle. Rejecting.');
       return false;
     }
+
+    const sequence = ++this.sequence;
+    const isCurrent = () => this.sequence === sequence;
+    const complete = () => {
+      if (!isCurrent()) return;
+      this.transitionTo('completing');
+      if (isCurrent()) this.finishCleanup();
+    };
 
     const settings = SettingsStore.getInstance().get();
     const characterReg = CharacterRegistry.getInstance();
@@ -79,32 +91,32 @@ export class AttackDirector {
     };
     this.currentDefinition = attackDef;
     this.onCompleteCallback = onComplete;
+    this.onAbortCallback = onAbort ?? null;
 
     // Handle Instant mode or disabled animation immediately
     if (!settings.animationEnabled || settings.animationMode === 'instant') {
-      this.completeImmediately();
+      complete();
       return true;
     }
 
     // Begin lifecycle
     this.transitionTo('preparing');
+    if (!isCurrent()) return true;
 
     const durationScale = settings.animationMode === 'fast' ? 0.35 : 1.0;
     const reducedMotion = settings.reducedMotion;
 
     // If an AttackPresenter (like AttackScene) is registered, delegate timeline and animation timing to it.
     if (this.presenter) {
-      this.presenter.playAttack(
+      this.activePresenter = this.presenter;
+      this.activePresenter.playAttack(
         this.currentContext,
         attackDef,
         { durationScale, reducedMotion },
         (phase: AttackLifecycleState) => {
-          this.transitionTo(phase);
+          if (isCurrent()) this.transitionTo(phase);
         },
-        () => {
-          this.transitionTo('completing');
-          this.finishCleanup();
-        }
+        complete
       );
       return true;
     }
@@ -120,29 +132,28 @@ export class AttackDirector {
     const recoveryDuration = Math.max(100, Math.floor(attackDef.recoveryDuration * (reducedMotion ? 0.5 : durationScale)));
 
     this.scheduleTimeout(() => {
-      if (this.state === 'preparing') {
+      if (isCurrent() && this.state === 'preparing') {
         this.transitionTo('attacking');
         if (attackDef.soundCueIds[1]) audio.playSound(attackDef.soundCueIds[1]);
       }
     }, prepDuration);
 
     this.scheduleTimeout(() => {
-      if (this.state === 'attacking') {
+      if (isCurrent() && this.state === 'attacking') {
         this.transitionTo('impact');
         if (attackDef.soundCueIds[2]) audio.playSound(attackDef.soundCueIds[2]);
       }
     }, prepDuration + strikeDuration);
 
     this.scheduleTimeout(() => {
-      if (this.state === 'impact') {
+      if (isCurrent() && this.state === 'impact') {
         this.transitionTo('recovering');
       }
     }, prepDuration + strikeDuration + Math.min(400, Math.floor(attackDef.impactTime * durationScale * 0.4)));
 
     this.scheduleTimeout(() => {
-      if (this.state === 'recovering') {
-        this.transitionTo('completing');
-        this.finishCleanup();
+      if (isCurrent() && this.state === 'recovering') {
+        complete();
       }
     }, prepDuration + strikeDuration + recoveryDuration + 200);
 
@@ -158,28 +169,45 @@ export class AttackDirector {
     }
     this.clearScheduledTimeouts();
     AudioController.getInstance().stopAll();
-    if (this.presenter) {
+    const sequence = this.sequence;
+    if (this.activePresenter) {
       try {
-        this.presenter.skip();
-        return;
+        this.activePresenter.skip();
       } catch (e) {
         console.warn('Presenter skip failed, falling back to direct cleanup:', e);
       }
     }
+    if (sequence !== this.sequence) return;
     this.transitionTo('completing');
-    this.finishCleanup();
+    if (sequence === this.sequence) this.finishCleanup();
   }
 
-  private completeImmediately(): void {
-    this.state = 'completing';
-    this.notifyListeners();
+  /** Cancel presentation without committing. An owner may cancel only its own attack. */
+  public abort(owner?: AttackCompletionCallback): void {
+    if (owner && owner !== this.onCompleteCallback) return;
+    if (!this.onCompleteCallback && this.state === 'idle') return;
+    const onAbort = this.onAbortCallback;
+    this.onCompleteCallback = null;
     this.finishCleanup();
+    onAbort?.();
   }
 
   private finishCleanup(): void {
+    ++this.sequence;
     this.clearScheduledTimeouts();
+    AudioController.getInstance().stopAll();
     const callback = this.onCompleteCallback;
+    this.onAbortCallback = null;
     this.onCompleteCallback = null;
+    const presenter = this.activePresenter;
+    this.activePresenter = null;
+    if (presenter) {
+      try {
+        presenter.cleanup();
+      } catch (error) {
+        console.warn('Presenter cleanup failed:', error);
+      }
+    }
     this.currentContext = null;
     this.currentDefinition = null;
     this.state = 'idle';

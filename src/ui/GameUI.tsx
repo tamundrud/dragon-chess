@@ -103,7 +103,10 @@ export const GameUI: React.FC<GameUIProps> = ({ controller, onBackToMenu, onOpen
       <header className="flex items-center justify-between border-b gold-border bg-[#121212] px-4 sm:px-6 py-3 sm:py-4 shadow-md z-10">
         <button
           id="back-menu-btn"
-          onClick={onBackToMenu}
+          onClick={() => {
+            managerRef.current?.destroy();
+            onBackToMenu();
+          }}
           className="flex items-center gap-1.5 rounded-sm px-3 sm:px-4 py-2 text-xs font-bold uppercase tracking-widest btn-ghost transition-colors"
         >
           <ArrowLeft className="h-4 w-4" />
