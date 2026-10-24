@@ -15,9 +15,10 @@ test('a capture tap starts an attack instead of immediately skipping it', async 
   await expect(page.getByText("BLACK'S TURN (OBSIDIAN CLAN)")).toBeVisible();
 });
 
-async function startCapture(page) {
+async function startCapture(page, { pausedClock = false } = {}) {
   for (const square of ['e2', 'e4', 'd7', 'd5', 'e4', 'd5']) {
     await tapSquare(page, square);
+    if (pausedClock) await page.clock.runFor(32);
   }
   await expect(page.locator('#game-ui')).not.toHaveAttribute('data-attack-state', 'idle');
 }
@@ -48,10 +49,8 @@ test('leaving during capture repeatedly allows legal moves in the next game', as
 });
 
 test('deliberate Skip completes a capture and Undo restores exactly one move', async ({ page }) => {
-  await page.clock.install();
-  await openGame(page);
-  await startCapture(page);
-  await page.clock.pauseAt(new Date());
+  await openGame(page, { pausedClock: true });
+  await startCapture(page, { pausedClock: true });
   const canvas = page.locator('#phaser-container canvas');
   const box = await canvas.boundingBox();
   if (!box) throw new Error('Missing canvas');
@@ -94,10 +93,8 @@ test('leaving a Fire Dragon capture cancels its nested presentation timeline', a
 
 test('touch Skip remains reachable after resizing an active capture', async ({ page, isMobile }, testInfo) => {
   test.skip(!isMobile, 'Touch capture resize runs on emulated phones and tablet.');
-  await page.clock.install();
-  await openGame(page);
-  await startCapture(page);
-  await page.clock.pauseAt(new Date());
+  await openGame(page, { pausedClock: true });
+  await startCapture(page, { pausedClock: true });
   const original = page.viewportSize();
   await page.setViewportSize({ width: original.height, height: original.width });
   await page.clock.runFor(600);

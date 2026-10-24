@@ -51,12 +51,13 @@ for (const [presenter, moves, from, to] of [
   for (const finish of ['complete', 'Skip']) {
     test(`${presenter} capture survives a transient narrow resize and ${finish}`, async ({ page }, testInfo) => {
       test.setTimeout(180_000);
-      await page.clock.install();
-      await openGame(page);
-      for (const square of moves) await tapSquare(page, square);
+      await openGame(page, { pausedClock: true });
+      for (const square of moves) {
+        await tapSquare(page, square);
+        await page.clock.runFor(32);
+      }
       const ui = page.locator('#game-ui');
       await expect(ui).not.toHaveAttribute('data-attack-state', 'idle');
-      await page.clock.pauseAt(new Date());
       const original = page.viewportSize();
       await page.setViewportSize({ width: original.height, height: original.width });
       await page.clock.runFor(100);

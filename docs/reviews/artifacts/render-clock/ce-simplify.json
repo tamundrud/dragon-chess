@@ -1,0 +1,18 @@
+{
+  "status": "complete",
+  "reviewers": [
+    "reuse",
+    "quality",
+    "efficiency",
+    "test-value",
+    "comments"
+  ],
+  "findings": [],
+  "applied": 0,
+  "protected_proof_tests": [
+    "e2e/attack_resize.spec.js",
+    "e2e/game.spec.js",
+    "e2e/helpers.js"
+  ],
+  "verification": "No edits; root owns current typecheck, lint and production checks."
+}
