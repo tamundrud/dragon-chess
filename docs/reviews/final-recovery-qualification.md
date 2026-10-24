@@ -1,5 +1,7 @@
 # Final recovery qualification
 
+**Historical 2026-10-23 record.** For the refreshed PR #10 candidate after merged PR #11, use [the 2026-10-24 reassessment](recovery-post-pr11-reassessment.md) and [manual acceptance checklist](recovery-manual-acceptance.md). The failures and results below remain unchanged historical evidence; their readiness conclusion is superseded by that reassessment.
+
 Date: 2026-10-23. [Qualification plan](../plans/2026-10-23-final-recovery-qualification-plan.md).
 
 **Outcome: not ready to merge.** A current tablet render-check failure and matching retried failures in exact-tip Ubuntu CI leave visual/regression qualification unresolved. A draft PR is suitable for review and tracking these gates; it must remain draft pending resolution and acceptance decisions.

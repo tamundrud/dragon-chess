@@ -1,5 +1,7 @@
 # Roadmap
 
+For the refreshed recovery candidate after merged PR #11, see [the current reassessment](reviews/recovery-post-pr11-reassessment.md) and [practical manual gates](reviews/recovery-manual-acceptance.md). The original qualification remains historical.
+
 The original development phases describe implementation milestones. They do not establish completed visual, performance, physical-device, or child acceptance. See [TEST_PLAN.md](TEST_PLAN.md) for those gates and [final recovery qualification](reviews/final-recovery-qualification.md) for integrated evidence and merge readiness. Earlier phase records remain historical.
 
 ## Original Phases 1-4: implemented vertical slice

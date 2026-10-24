@@ -1,5 +1,7 @@
 # Test Plan
 
+Current recovery review: [post-PR #11 reassessment](reviews/recovery-post-pr11-reassessment.md). Execute [the manual acceptance checklist](reviews/recovery-manual-acceptance.md) to record actual device/product results; all its manual gates are currently NOT RUN.
+
 ## Required chess acceptance coverage
 
 The following is a target checklist, not a claim that every item has a strong automated assertion. Current tests are in `src/tests/chess_rules.test.ts`; they exercise representative pieces, kingside castling, en passant, quiet queen promotion, capturing knight promotion, check/mate/stalemate, insufficient material, Undo, and Restart. Test names do not establish exhaustive queenside castling, all promotion choices, repetition, or fifty-move coverage.
