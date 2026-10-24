@@ -1,0 +1,130 @@
+{
+  "base": "9899abcf6f2f810ef2d9ccaa4e0de289454d97f8",
+  "playwright": "1.54.1",
+  "symptom": "No RAF after resize during small clock advances",
+  "failed_samples": 15,
+  "sample_status_pixels": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "last_events_before_stall": [
+    {
+      "kind": "raf",
+      "time": 3115,
+      "width": 896,
+      "height": 568,
+      "draws": 432,
+      "frames": 81,
+      "newDraws": 6,
+      "status": 2602
+    },
+    {
+      "kind": "raf",
+      "time": 5807,
+      "width": 896,
+      "height": 568,
+      "draws": 438,
+      "frames": 82,
+      "newDraws": 6,
+      "status": 2602
+    },
+    {
+      "kind": "set-width",
+      "time": 3063,
+      "width": 896,
+      "height": 568,
+      "draws": 438,
+      "frames": 82,
+      "value": 736
+    },
+    {
+      "kind": "set-height",
+      "time": 3063,
+      "width": 736,
+      "height": 568,
+      "draws": 438,
+      "frames": 82,
+      "value": 640
+    },
+    {
+      "kind": "resize-observer",
+      "time": 3063,
+      "width": 736,
+      "height": 640,
+      "draws": 438,
+      "frames": 82
+    }
+  ],
+  "recovery": {
+    "before": {
+      "now": 3643,
+      "frames": 82,
+      "timers": [
+        {
+          "type": "AnimationFrame",
+          "callAt": 5808
+        }
+      ]
+    },
+    "advance": 2197,
+    "after": {
+      "now": 5840,
+      "frames": 85,
+      "events": [
+        {
+          "kind": "resize-observer",
+          "time": 3063,
+          "width": 736,
+          "height": 640,
+          "draws": 438,
+          "frames": 82
+        },
+        {
+          "kind": "raf",
+          "time": 5808,
+          "width": 736,
+          "height": 640,
+          "draws": 444,
+          "frames": 83,
+          "newDraws": 6,
+          "status": 2613
+        },
+        {
+          "kind": "raf",
+          "time": 5824,
+          "width": 736,
+          "height": 640,
+          "draws": 450,
+          "frames": 84,
+          "newDraws": 6,
+          "status": 2613
+        },
+        {
+          "kind": "raf",
+          "time": 5840,
+          "width": 736,
+          "height": 640,
+          "draws": 456,
+          "frames": 85,
+          "newDraws": 6,
+          "status": 2613
+        }
+      ],
+      "phase": "preparing"
+    }
+  },
+  "production_changed": false
+}

@@ -17,10 +17,23 @@ export async function activate(locator, options = {}) {
   else await locator.click(options);
 }
 
-export async function openGame(page) {
+export async function openGame(page, { pausedClock = false } = {}) {
+  if (pausedClock) {
+    // Pause before app startup. Pausing an auto-advancing clock mid-RAF can
+    // leave its next frame ahead of the clock after an in-flight tick ends.
+    await page.clock.install({ time: new Date('2026-01-01T00:00:00Z') });
+    await page.clock.pauseAt(new Date('2026-01-01T00:00:01Z'));
+  }
   await page.goto('/');
   await activate(page.getByRole('button', { name: 'New Game' }));
-  await expect(page.locator('#game-ui')).toHaveAttribute('data-game-ready', 'true');
+  if (pausedClock) {
+    await expect.poll(async () => {
+      await page.clock.runFor(32);
+      return page.locator('#game-ui').getAttribute('data-game-ready');
+    }).toBe('true');
+  } else {
+    await expect(page.locator('#game-ui')).toHaveAttribute('data-game-ready', 'true');
+  }
 }
 
 export async function tapCanvas(page, position) {
