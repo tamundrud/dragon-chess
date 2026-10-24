@@ -1,0 +1,31 @@
+Exact recovery-tip Ubuntu CI: workflow succeeded, with retried browser failures.
+
+2026-10-23T18:51:48.9020861Z     Error: expect(received).toBe(expected) // Object.is equality
+2026-10-23T18:51:48.9022604Z 
+2026-10-23T18:51:48.9023169Z     Expected: true
+2026-10-23T18:51:48.9023864Z     Received: false
+2026-10-23T18:51:48.9024338Z 
+2026-10-23T18:51:48.9024633Z     Call Log:
+2026-10-23T18:51:48.9025277Z     - Timeout 5000ms exceeded while waiting on the predicate
+2026-10-23T18:51:48.9025807Z 
+2026-10-23T18:51:48.9026450Z        7 |   // status label to render, then judge artwork independently (no artwork retry).
+2026-10-23T18:51:48.9027252Z        8 |   let counts;
+2026-10-23T18:51:48.9027849Z     >  9 |   await expect.poll(async () => {
+2026-10-23T18:51:48.9028465Z          |   ^
+2026-10-23T18:51:48.9029036Z       10 |     await page.clock.runFor(32);
+2026-10-23T18:51:48.9033728Z       11 |     const clip = await page.locator('#phaser-container canvas').boundingBox();
+2026-10-23T18:51:48.9040720Z       12 |     const png = await page.screenshot({ clip });
+2026-10-23T18:51:48.9041903Z         at expectCombatantsVisible (/home/runner/work/dragon-chess/dragon-chess/e2e/attack_resize.spec.js:9:3)
+2026-10-23T18:51:48.9043363Z         at /home/runner/work/dragon-chess/dragon-chess/e2e/attack_resize.spec.js:64:7
+2026-10-23T18:51:48.9044062Z 
+2026-10-23T18:51:48.9044998Z     attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+2026-10-23T18:51:48.9046984Z     test-results/attack_resize-generic-capt-c6a19-ient-narrow-resize-and-Skip-chromium/test-failed-1.png
+
+2026-10-23T19:02:00.0350858Z   3 flaky
+2026-10-23T19:02:00.0352046Z     [chromium] › e2e/attack_resize.spec.js:64:5 › generic capture survives a transient narrow resize and Skip 
+2026-10-23T19:02:00.0364225Z     [phone-360-portrait] › e2e/attack_resize.spec.js:64:5 › generic capture survives a transient narrow resize and Skip 
+2026-10-23T19:02:00.0366172Z     [phone-390-portrait] › e2e/attack_resize.spec.js:64:5 › generic capture survives a transient narrow resize and Skip 
+2026-10-23T19:02:00.0367070Z   2 skipped
+2026-10-23T19:02:00.0367414Z   55 passed (12.9m)
+2026-10-23T19:02:00.7788180Z ##[group]Run actions/upload-artifact@v4
+2026-10-23T19:02:00.7788727Z with:

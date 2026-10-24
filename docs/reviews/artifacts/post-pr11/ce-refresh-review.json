@@ -1,0 +1,140 @@
+{
+  "status": "complete",
+  "verdict": "Ready to merge",
+  "verdict_reason": "No retained defects in the newly integrated #11 delta against previously qualified PR #10. This verdict covers this delta code-review gate only; it does not authorize merge/deployment or establish full recovery-to-main, screenshot, physical-device or product acceptance.",
+  "scope": {
+    "mode": "branch-remote",
+    "base": "c4a81f4aa75d7352f0501b7edc87a762487aace6",
+    "branch": "qualification/recovery-2026-10-23",
+    "head_sha": "baf6baad8c04edf67f447620a14555bf5733c8c0",
+    "pr_url": null,
+    "files_changed": 19
+  },
+  "intent": "Refresh draft recovery PR #10 after merged #11, verify clock startup/frame driving and strict flaky gate against previous qualification without application changes; reconcile rendering, screenshot, physical-device and product acceptance limitations.",
+  "intent_confidence": "explicit",
+  "reviewers": [
+    "correctness",
+    "project-standards",
+    "testing",
+    "adversarial"
+  ],
+  "findings": [],
+  "actionable_findings": [],
+  "triage_groups": [],
+  "pre_existing_findings": [],
+  "requirements_completeness": {
+    "plan": "docs/plans/2026-10-24-fix-render-clock-plan.md",
+    "source": "explicit",
+    "status": "met within reviewed delta; verification evidence is recorded rather than rerun by reviewers",
+    "requirements": [
+      {
+        "id": "R1",
+        "requirement": "Paused clock before startup; explicitly drive readiness/input; preserve pixel/state/error checks",
+        "status": "met",
+        "evidence": "e2e/helpers.js pauses before navigation and drives readiness in 32ms steps; attack_resize.spec.js drives each move and preserves existing assertions."
+      },
+      {
+        "id": "R2",
+        "requirement": "Migrate clocked Skip callers and reject flaky CI without application/dependency changes",
+        "status": "met",
+        "evidence": "e2e/game.spec.js migrates both clocked Skip callers; playwright.config.js adds failOnFlakyTests for CI while preserving retries. No application, manifest or lockfile changes appear in the delta."
+      },
+      {
+        "id": "R3",
+        "requirement": "Production matrix, repeats, negative controls and unchanged-build evidence",
+        "status": "met",
+        "evidence": "docs/reviews/recovery-render-clock.md and committed summaries record the five-project production matrix (58 pass, 2 intentional skips, 0 flaky), four additional Skip executions, blank-render/artwork/flaky-gate negative controls, and byte-identical built assets. These are recorded evidence, not fresh execution by this review."
+      },
+      {
+        "id": "R4",
+        "requirement": "Record diagnosis, evidence, review coverage and remaining acceptance limits",
+        "status": "met",
+        "evidence": "The plan, TEST_PLAN link, investigation record, review receipts and artifacts document diagnosis, scope, evidence and acceptance limits, including the blank second full-page attachment."
+      }
+    ],
+    "implementation_units": [],
+    "unrequested_behavior_rules": [],
+    "scope_note": "The supplied plan has no extracted implementation-unit IDs. The reverse check found no unrequested observable behavior rule. Draft-PR delivery and parent-owned current checks are outside this report stage; physical and product acceptance are explicitly left open as planned."
+  },
+  "learnings": [],
+  "agent_native_gaps": [],
+  "deployment_notes": [],
+  "residual_risks": [
+    "The reviewed docs/reviews/recovery-render-clock.md retains a blank phone-360 Fire Dragon-Skip-rotated-back full-page attachment despite the preceding independent pixel check passing. Its capture/compositor cause remains unresolved. This second capture is unsuitable as visual acceptance evidence; passing representative pixel assertions do not certify every attachment or rendered frame."
+  ],
+  "testing_gaps": [
+    "All five configured browser projects use Chromium emulation. Physical iOS Safari/Android, safe areas/browser bars, high-density/thumb readability, short-landscape scrolling, child usability, promotion/status UI, motion/art quality, actual audio assets/hardware, and quantitative frame-rate/memory acceptance remain open under docs/TEST_PLAN.md and docs/reviews/recovery-render-clock.md."
+  ],
+  "coverage": {
+    "depth": "full",
+    "notes": [
+      "Review covers only newly integrated #11 delta against previously qualified PR #10, not a fresh full integrated code review against main. Historical integration receipt remains historical.",
+      "AGENTS.md supplies the instruction-file fallback criteria for all changed paths.",
+      "Current unit/static/build checks and production regression execution are parent-owned separate evidence; reviewers do not certify physical devices or every screenshot.",
+      "Source access for all reviewed paths uses the supplied reviewed commit in /workspace/dragon-chess-reassessment.",
+      "No cross-model peer was started for branch-remote scope; a separately dispatched local adversarial reviewer covered the lens. These reviewers share the serving model family, so this is not cross-model corroboration.",
+      "All four selected reviewers returned usable structured artifacts; no reviewer failed or exceeded its bound.",
+      "No primary or pre-existing findings survived synthesis; no findings were suppressed by confidence, demoted to soft buckets, or discarded as malformed.",
+      "Quote gate demotions: 0; first_evidence_backfilled: 0. Source-detail map is empty because all four reviewer finding arrays are empty.",
+      "No settlement conflicts were found; the explicit plan contains no supplied settled decisions.",
+      "Validator shortcut-skipped: 0. No finding was eligible for a cross-model shortcut; no findings remain for the one validator batch, so no validator launch is required.",
+      "Residual risks and testing gaps were deduplicated and checked against the reviewed commit documentation and Chromium-only configuration. Historical verification recorded there is not a fresh run by this merge stage.",
+      "Validator outcome: empty-batch; no findings selected, no validator launched, no unresolved verification gates. Confirmed 0, rejected 0, unresolved 0, malformed 0, failed 0, shortcut-skipped 0.",
+      "Requirements completeness checked against the reviewed plan and delta. Evidence artifacts document historical fix verification; this report stage ran no tests, builds or browser checks. Draft delivery is outside this delta review and no merge or deployment is authorized."
+    ],
+    "reviewer_justifications": [
+      {
+        "reviewer": "correctness",
+        "tier": "session",
+        "reason": "always-on"
+      },
+      {
+        "reviewer": "project-standards",
+        "tier": "mid",
+        "reason": "AGENTS governs every changed file"
+      },
+      {
+        "reviewer": "testing",
+        "tier": "mid",
+        "reason": "test harness and config changed"
+      },
+      {
+        "reviewer": "adversarial",
+        "tier": "session",
+        "reason": "silent-pass harness and CI fidelity"
+      }
+    ],
+    "failed_reviewers": [],
+    "bound_exceeded": [],
+    "suppressed_by_confidence": {},
+    "malformed_findings": 0,
+    "malformed_returns": 0,
+    "first_evidence_backfilled": 0,
+    "quote_gate_demotions": 0,
+    "mode_aware_demotions": 0,
+    "settled_conflicts_suppressed": 0,
+    "compound_packs": {
+      "roots": [],
+      "errors": [],
+      "warnings": []
+    },
+    "validation": {
+      "outcome": "empty-batch",
+      "reason": "No findings selected; no validator launched.",
+      "confirmed": 0,
+      "rejected": 0,
+      "unresolved": 0,
+      "malformed": 0,
+      "failed": 0,
+      "shortcut_skipped": 0,
+      "protected_subject_reclassifications": 0
+    },
+    "local_apply": "Skipped: mode.apply_local is false; agent mode is report-only and the workspace is not the reviewed head."
+  },
+  "peer": {
+    "outcome": "in-process-fallback",
+    "coverage": "No cross-model peer was started for branch-remote scope; a separately dispatched local adversarial reviewer covered the lens. These reviewers share the serving model family, so this is not cross-model corroboration."
+  },
+  "artifact_path": "/tmp/compound-engineering-1000/ce-code-review/recovery-refresh-20261024",
+  "run_id": "recovery-refresh-20261024"
+}

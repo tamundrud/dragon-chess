@@ -1,0 +1,8 @@
+{
+  "status": "verified_by_inspection",
+  "finding_1": "Resolved. Lines 44-46 assert idle and black's turn after only 32ms following Skip; lines 69-71 do the same after Escape. The subsequent 6000ms advances retain stale-callback checks, so natural completion can no longer mask ignored input.",
+  "clock_wait": "The natural-completion branch now advances the paused clock in 200ms steps and polls for idle with a 90-second bound. The 180-second test timeout accommodates that bound and surrounding work. It still requires actual completion, black's turn, a single canvas, successful Undo, and recapture; the change addresses Phaser frame-delta smoothing without removing behavioral assertions.",
+  "remaining_concerns": [
+    "Corrected 20-case browser matrix results remain pending; this follow-up performed read-only inspection and did not execute tests."
+  ]
+}
