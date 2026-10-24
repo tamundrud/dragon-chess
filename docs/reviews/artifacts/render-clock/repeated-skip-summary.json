@@ -1,0 +1,57 @@
+{
+  "command": "CI=1 DRAGON_CHESS_ARTIFACTS=/workspace/dragon-chess-artifacts/render-investigation/repeated-skip npx --no-install playwright test --config=/workspace/dragon-chess-playwright.config.mjs --grep \"generic capture.*Skip\" --project=chromium --project=phone-360-portrait --project=phone-390-portrait --project=tablet --workers=2 --retries=0",
+  "stats": {
+    "startTime": "2026-10-24T06:09:09.884Z",
+    "duration": 157240.503,
+    "expected": 4,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "cases": [
+    {
+      "title": "generic capture survives a transient narrow resize and Skip",
+      "project": "chromium",
+      "status": "expected",
+      "attempts": [
+        {
+          "status": "passed",
+          "retry": 0
+        }
+      ]
+    },
+    {
+      "title": "generic capture survives a transient narrow resize and Skip",
+      "project": "phone-360-portrait",
+      "status": "expected",
+      "attempts": [
+        {
+          "status": "passed",
+          "retry": 0
+        }
+      ]
+    },
+    {
+      "title": "generic capture survives a transient narrow resize and Skip",
+      "project": "phone-390-portrait",
+      "status": "expected",
+      "attempts": [
+        {
+          "status": "passed",
+          "retry": 0
+        }
+      ]
+    },
+    {
+      "title": "generic capture survives a transient narrow resize and Skip",
+      "project": "tablet",
+      "status": "expected",
+      "attempts": [
+        {
+          "status": "passed",
+          "retry": 0
+        }
+      ]
+    }
+  ]
+}

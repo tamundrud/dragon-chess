@@ -9,13 +9,13 @@ interface StartMenuProps {
 export const StartMenu: React.FC<StartMenuProps> = ({ onStartGame, onOpenSettings }) => {
   return (
     <div id="start-menu" className="flex min-h-screen w-full flex-col items-center justify-center bg-[#080808] p-4 text-[#e0e0e0]">
-      <div className="surface w-full max-w-md rounded-sm p-8 text-center shadow-2xl">
+      <div className="surface w-full max-w-md rounded-sm p-5 sm:p-8 text-center shadow-2xl">
         {/* Title Badge */}
         <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-sm bg-[#151515] border border-[#b8860b]/30 shadow-inner">
           <Flame className="h-8 w-8 text-[#b8860b] animate-pulse" />
         </div>
         
-        <h1 className="serif text-4xl font-bold tracking-widest gold-text uppercase">
+        <h1 className="serif text-3xl sm:text-4xl font-bold tracking-widest gold-text uppercase">
           DRAGON CHESS
         </h1>
         <p className="mt-2 text-xs tracking-[0.2em] text-gray-500 uppercase font-mono">

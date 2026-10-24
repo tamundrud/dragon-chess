@@ -65,9 +65,9 @@ describe('FireDragonPresenter Unit Tests', () => {
       },
       time: {
         delayedCall: vi.fn().mockImplementation((delay, cb) => {
-          setTimeout(cb, delay);
+          const timer = setTimeout(cb, delay);
           return {
-            remove: vi.fn(),
+            remove: vi.fn(() => clearTimeout(timer)),
           };
         }),
       },
@@ -159,6 +159,27 @@ describe('FireDragonPresenter Unit Tests', () => {
     playSoundSpy.mockRestore();
   });
 
+  it('keeps late effects in logical space and expands impact around the defender', () => {
+    Object.assign(scene.scale, { width: 360, height: 800 });
+    presenter.playAttack(
+      { moveFrom: 'f3', moveTo: 'e5', attackerCharacterId: 'fire_dragon', defenderCharacterId: 'rival_generic', attackDefinitionId: 'fire_stream_attack' },
+      { id: 'fire_stream_attack', displayName: 'Fire', description: '', totalDuration: 2600, anticipationDuration: 800, strikeDuration: 800, impactTime: 1600, recoveryDuration: 1000, soundCueIds: [], effectIds: [], screenShake: false, hitPause: false },
+      { durationScale: 1, reducedMotion: true },
+      () => {},
+      vi.fn()
+    );
+    // The canvas rotates before flame/impact timers fire. These effects must
+    // still use the same space as the existing combatants.
+    Object.assign(scene.scale, { width: 800, height: 360 });
+    vi.advanceTimersByTime(1600);
+    const flash = vi.mocked(scene.add.graphics).mock.results.map(result => result.value)
+      .find(graphics => vi.mocked(graphics.fillCircle).mock.calls.some(call => call[2] === 65));
+    expect(flash).toBeDefined();
+    expect(flash.setPosition).toHaveBeenCalledWith(600, 288);
+    expect(flash.fillCircle).toHaveBeenCalledWith(0, 0, 65);
+    expect(stageContainer.add).toHaveBeenCalledWith(flash);
+  });
+
   it('skips attack cleanly and calls onComplete immediately', () => {
     const context: AttackContext = {
       moveFrom: 'g1',
@@ -195,6 +216,23 @@ describe('FireDragonPresenter Unit Tests', () => {
     presenter.skip();
     expect(completed).toBe(true);
     expect(scene.cameras.main.resetFX).toHaveBeenCalled();
+  });
+
+  it('cleanup cancels timers and completion even when repeated', () => {
+    const complete = vi.fn();
+    presenter.playAttack(
+      { moveFrom: 'g1', moveTo: 'f3', attackerCharacterId: 'fire_dragon', defenderCharacterId: 'rival_generic', attackDefinitionId: 'fire_stream_attack' },
+      { id: 'fire_stream_attack', displayName: 'Fire', description: '', totalDuration: 2600, anticipationDuration: 800, strikeDuration: 800, impactTime: 1600, recoveryDuration: 1000, soundCueIds: [], effectIds: [], screenShake: false, hitPause: false },
+      { durationScale: 1, reducedMotion: false },
+      () => {},
+      complete
+    );
+    presenter.cleanup();
+    presenter.cleanup();
+    presenter.skip();
+    vi.runAllTimers();
+    expect(complete).not.toHaveBeenCalled();
+    expect(vi.getTimerCount()).toBe(0);
   });
 
   it('respects reducedMotion by suppressing camera shake and intense tweens', () => {

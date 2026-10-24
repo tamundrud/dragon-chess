@@ -2,10 +2,11 @@ import Phaser from 'phaser';
 import { AttackContext, AttackDefinition, AttackLifecycleState, AttackPresenter } from './attackTypes';
 import { AudioController } from '../audio/AudioController';
 import { CharacterRegistry } from '../characters/CharacterRegistry';
+import { ATTACK_ART_WIDTH, ATTACK_ART_HEIGHT } from './attackLayout';
 
 export class FireDragonPresenter implements AttackPresenter {
   private scene: Phaser.Scene;
-  private stageContainer: Phaser.GameObjects.Container;
+  private artworkContainer: Phaser.GameObjects.Container;
   private statusText: Phaser.GameObjects.Text;
   private attackerText: Phaser.GameObjects.Text;
   private defenderText: Phaser.GameObjects.Text;
@@ -17,13 +18,13 @@ export class FireDragonPresenter implements AttackPresenter {
 
   constructor(
     scene: Phaser.Scene,
-    stageContainer: Phaser.GameObjects.Container,
+    artworkContainer: Phaser.GameObjects.Container,
     statusText: Phaser.GameObjects.Text,
     attackerText: Phaser.GameObjects.Text,
     defenderText: Phaser.GameObjects.Text
   ) {
     this.scene = scene;
-    this.stageContainer = stageContainer;
+    this.artworkContainer = artworkContainer;
     this.statusText = statusText;
     this.attackerText = attackerText;
     this.defenderText = defenderText;
@@ -46,8 +47,8 @@ export class FireDragonPresenter implements AttackPresenter {
     const attackerName = attacker ? attacker.displayName : 'Fire Dragon';
     const defenderName = defender ? defender.displayName : 'Defender';
 
-    const width = this.scene.scale.width;
-    const height = this.scene.scale.height;
+    const width = ATTACK_ART_WIDTH;
+    const height = ATTACK_ART_HEIGHT;
 
     this.attackerText.setText(`Attacker: ${attackerName}\n[ FIRE DRAGON STORYBOOK ART ]`);
     this.defenderText.setText(`Defender: ${defenderName}\n[ DEFENDER SILHOUETTE REACT ]`);
@@ -59,7 +60,7 @@ export class FireDragonPresenter implements AttackPresenter {
 
     // Build layered storybook Fire Dragon
     const dragonContainer = this.scene.add.container(dragonX, dragonY);
-    this.stageContainer.add(dragonContainer);
+    this.artworkContainer.add(dragonContainer);
     this.tempObjects.push(dragonContainer);
 
     // Wings layer (back)
@@ -127,7 +128,7 @@ export class FireDragonPresenter implements AttackPresenter {
 
     // Build layered Defender
     const defenderContainer = this.scene.add.container(defenderX, defenderY);
-    this.stageContainer.add(defenderContainer);
+    this.artworkContainer.add(defenderContainer);
     this.tempObjects.push(defenderContainer);
 
     const defNormal = this.scene.add.graphics();
@@ -226,7 +227,7 @@ export class FireDragonPresenter implements AttackPresenter {
             ember.fillRoundedRect(-4, -4, 8, 8, 2);
           }
           ember.setPosition(dragonX + 45, dragonY - 35);
-          this.stageContainer.add(ember);
+          this.artworkContainer.add(ember);
           this.tempObjects.push(ember);
 
           const tEmber = this.scene.tweens.add({
@@ -279,7 +280,7 @@ export class FireDragonPresenter implements AttackPresenter {
 
       // Beat 6 & 7: Directed flame travel (Bright core, softer outer flame, embers, trailing smoke)
       const flameContainer = this.scene.add.container(dragonX + 50, dragonY - 35);
-      this.stageContainer.add(flameContainer);
+      this.artworkContainer.add(flameContainer);
       this.tempObjects.push(flameContainer);
 
       const targetDist = defenderX - (dragonX + 50);
@@ -333,7 +334,7 @@ export class FireDragonPresenter implements AttackPresenter {
                 part.fillCircle(0, 0, Phaser.Math.Between(3, 6));
               }
               part.setPosition(currentX, dragonY - 35 + Phaser.Math.Between(-20, 20));
-              this.stageContainer.add(part);
+              this.artworkContainer.add(part);
               this.tempObjects.push(part);
 
               const tPart = this.scene.tweens.add({
@@ -368,11 +369,12 @@ export class FireDragonPresenter implements AttackPresenter {
       defSilhouette.setVisible(true);
 
       const impactFlash = this.scene.add.graphics();
+      impactFlash.setPosition(defenderX, defenderY);
       impactFlash.fillStyle(0xff8c00, 0.95);
-      impactFlash.fillCircle(defenderX, defenderY, 65);
+      impactFlash.fillCircle(0, 0, 65);
       impactFlash.fillStyle(0xffff00, 0.8);
-      impactFlash.fillCircle(defenderX, defenderY, 40);
-      this.stageContainer.add(impactFlash);
+      impactFlash.fillCircle(0, 0, 40);
+      this.artworkContainer.add(impactFlash);
       this.tempObjects.push(impactFlash);
 
       const tFlash = this.scene.tweens.add({
@@ -393,7 +395,7 @@ export class FireDragonPresenter implements AttackPresenter {
           spark.fillStyle(0xfde047, 1);
           spark.fillCircle(0, 0, Phaser.Math.Between(4, 8));
           spark.setPosition(defenderX, defenderY);
-          this.stageContainer.add(spark);
+          this.artworkContainer.add(spark);
           this.tempObjects.push(spark);
 
           const angleRad = Phaser.Math.DegToRad(s * 30 + Phaser.Math.Between(-15, 15));
@@ -417,7 +419,7 @@ export class FireDragonPresenter implements AttackPresenter {
           cloud.fillStyle(0x4b5563, 0.85);
           cloud.fillCircle(0, 0, Phaser.Math.Between(25, 45));
           cloud.setPosition(defenderX + Phaser.Math.Between(-20, 20), defenderY + Phaser.Math.Between(-20, 20));
-          this.stageContainer.add(cloud);
+          this.artworkContainer.add(cloud);
           this.tempObjects.push(cloud);
 
           const tCloud = this.scene.tweens.add({
@@ -513,7 +515,7 @@ export class FireDragonPresenter implements AttackPresenter {
             puff.fillStyle(0x9ca3af, 0.7);
             puff.fillCircle(0, 0, 8);
             puff.setPosition(dragonX + 55, dragonY - 45);
-            this.stageContainer.add(puff);
+            this.artworkContainer.add(puff);
             this.tempObjects.push(puff);
 
             const tPuff = this.scene.tweens.add({
@@ -537,26 +539,21 @@ export class FireDragonPresenter implements AttackPresenter {
     // --- PHASE 5: COMPLETING (prepMs + strikeMs + impactMs + recoveryMs) ---
     const completeTimer = this.scene.time.delayedCall(prepMs + strikeMs + impactMs + recoveryMs, () => {
       // Beat 11: Clean return to board
+      const callback = this.onCompleteCallback;
       this.cleanup();
-      if (this.onCompleteCallback) {
-        const cb = this.onCompleteCallback;
-        this.onCompleteCallback = null;
-        cb();
-      }
+      callback?.();
     });
     this.activeTimers.push(completeTimer);
   }
 
   public skip(): void {
+    const callback = this.onCompleteCallback;
     this.cleanup();
-    if (this.onCompleteCallback) {
-      const cb = this.onCompleteCallback;
-      this.onCompleteCallback = null;
-      cb();
-    }
+    callback?.();
   }
 
   public cleanup(): void {
+    this.onCompleteCallback = null;
     this.activeTimers.forEach((timer) => timer.remove());
     this.activeTimers = [];
 

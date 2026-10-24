@@ -4,18 +4,22 @@ import { AttackDirector } from '../animation/AttackDirector';
 import { CharacterRegistry } from '../characters/CharacterRegistry';
 import { AudioController } from '../audio/AudioController';
 import { FireDragonPresenter } from '../animation/FireDragonPresenter';
+import { ATTACK_ART_WIDTH, ATTACK_ART_HEIGHT, fitAttackArtwork } from '../animation/attackLayout';
 
 export class AttackScene extends Phaser.Scene implements AttackPresenter {
   private overlayGraphics!: Phaser.GameObjects.Graphics;
+  private artworkContainer!: Phaser.GameObjects.Container;
   private stageContainer!: Phaser.GameObjects.Container;
   private statusText!: Phaser.GameObjects.Text;
   private attackerText!: Phaser.GameObjects.Text;
   private defenderText!: Phaser.GameObjects.Text;
+  private skipContainer!: Phaser.GameObjects.Container;
   private skipButtonText!: Phaser.GameObjects.Text;
   private attackerContainer!: Phaser.GameObjects.Container;
   private defenderContainer!: Phaser.GameObjects.Container;
   private impactEffectContainer!: Phaser.GameObjects.Container;
   private fireDragonPresenter!: FireDragonPresenter;
+  private cleanedUp = true;
   private onCompleteCallback: (() => void) | null = null;
 
   constructor() {
@@ -23,10 +27,12 @@ export class AttackScene extends Phaser.Scene implements AttackPresenter {
   }
 
   create(): void {
+    this.cleanedUp = false;
     this.overlayGraphics = this.add.graphics();
     this.stageContainer = this.add.container(0, 0);
     this.stageContainer.setVisible(false);
 
+    this.artworkContainer = this.add.container(0, 0);
     this.attackerContainer = this.add.container(0, 0);
     this.defenderContainer = this.add.container(0, 0);
     this.impactEffectContainer = this.add.container(0, 0);
@@ -37,24 +43,14 @@ export class AttackScene extends Phaser.Scene implements AttackPresenter {
     // Register this scene as the presenter for AttackDirector
     AttackDirector.getInstance().registerPresenter(this);
 
-    // Allow keyboard skipping via ESCAPE or SPACE when attack is active
-    this.input.keyboard?.on('keydown-ESCAPE', () => {
-      if (this.stageContainer.visible) {
-        AttackDirector.getInstance().skip();
-      }
-    });
-    this.input.keyboard?.on('keydown-SPACE', () => {
-      if (this.stageContainer.visible) {
-        AttackDirector.getInstance().skip();
-      }
-    });
+    this.events.once(Phaser.Scenes.Events.SHUTDOWN, this.handleSceneCleanup, this);
+    this.events.once(Phaser.Scenes.Events.DESTROY, this.handleSceneCleanup, this);
+    this.input.keyboard?.on('keydown-ESC', this.handleSkipKey, this);
+    this.input.keyboard?.on('keydown-SPACE', this.handleSkipKey, this);
+  }
 
-    // Allow click anywhere on overlay to skip
-    this.input.on('pointerdown', () => {
-      if (this.stageContainer.visible) {
-        AttackDirector.getInstance().skip();
-      }
-    });
+  private handleSkipKey(): void {
+    if (this.stageContainer.visible) AttackDirector.getInstance().skip();
   }
 
   private setupStageUI(): void {
@@ -99,7 +95,7 @@ export class AttackScene extends Phaser.Scene implements AttackPresenter {
       color: '#888888',
     }).setOrigin(0.5);
 
-    const skipContainer = this.add.container(width / 2, height * 0.85, [skipBg, this.skipButtonText]);
+    const skipContainer = this.skipContainer = this.add.container(width / 2, height * 0.85, [skipBg, this.skipButtonText]);
     skipContainer.setSize(120, 40);
     skipContainer.setInteractive(new Phaser.Geom.Rectangle(-60, -20, 120, 40), Phaser.Geom.Rectangle.Contains);
     
@@ -108,19 +104,20 @@ export class AttackScene extends Phaser.Scene implements AttackPresenter {
       AttackDirector.getInstance().skip();
     });
 
+    this.artworkContainer.add([this.attackerContainer, this.defenderContainer, this.impactEffectContainer]);
     this.stageContainer.add([
-      this.attackerContainer,
-      this.defenderContainer,
-      this.impactEffectContainer,
+      this.artworkContainer,
       this.statusText,
       this.attackerText,
       this.defenderText,
       skipContainer,
     ]);
 
+    this.layoutStage(width, height);
+
     this.fireDragonPresenter = new FireDragonPresenter(
       this,
-      this.stageContainer,
+      this.artworkContainer,
       this.statusText,
       this.attackerText,
       this.defenderText
@@ -165,8 +162,8 @@ export class AttackScene extends Phaser.Scene implements AttackPresenter {
     const attackerName = attacker ? attacker.displayName : 'Attacker';
     const defenderName = defender ? defender.displayName : 'Defender';
 
-    const width = this.scale.width;
-    const height = this.scale.height;
+    const width = ATTACK_ART_WIDTH;
+    const height = ATTACK_ART_HEIGHT;
 
     this.attackerText.setText(`Attacker: ${attackerName}\n[ TEMPORARY ATTACKER ART ]`);
     this.defenderText.setText(`Defender: ${defenderName}\n[ TEMPORARY DEFENDER ART ]`);
@@ -335,6 +332,8 @@ export class AttackScene extends Phaser.Scene implements AttackPresenter {
   }
 
   public cleanup(): void {
+    this.onCompleteCallback = null;
+    if (this.cleanedUp) return;
     if (this.fireDragonPresenter) {
       this.fireDragonPresenter.cleanup();
     }
@@ -352,9 +351,9 @@ export class AttackScene extends Phaser.Scene implements AttackPresenter {
     if (this.attackerContainer) this.attackerContainer.removeAll(true);
     if (this.defenderContainer) this.defenderContainer.removeAll(true);
     if (this.impactEffectContainer) this.impactEffectContainer.removeAll(true);
-    this.cameras.main.resetFX();
-    this.cameras.main.setZoom(1);
-    this.cameras.main.setAngle(0);
+    this.cameras.main?.resetFX();
+    this.cameras.main?.setZoom(1);
+    this.cameras.main?.setAngle(0);
   }
 
   private spawnImpactEffect(x: number, y: number): void {
@@ -397,16 +396,50 @@ export class AttackScene extends Phaser.Scene implements AttackPresenter {
   private handleResize(gameSize: Phaser.Structs.Size): void {
     this.cameras.main.setViewport(0, 0, gameSize.width, gameSize.height);
     this.stageContainer.setPosition(0, 0);
-    this.statusText.setPosition(gameSize.width / 2, gameSize.height * 0.22);
-    this.attackerText.setPosition(gameSize.width * 0.25, gameSize.height * 0.72);
-    this.defenderText.setPosition(gameSize.width * 0.75, gameSize.height * 0.72);
+    this.layoutStage(gameSize.width, gameSize.height);
     if (this.stageContainer.visible) {
       this.drawOverlay();
     }
   }
 
-  destroy(): void {
+  private layoutStage(width: number, height: number): void {
+    const artwork = fitAttackArtwork(width, height);
+    this.artworkContainer.setPosition(artwork.x, artwork.y);
+    this.artworkContainer.setScale(artwork.scale);
+    const compact = width < 600;
+    const statusFontSize = compact ? 16 : 24;
+    // Rotation can briefly report a near-zero width. Keep room for the labels'
+    // emoji glyphs, and update font/wrap together so neither renders with stale
+    // dimensions from the previous layout.
+    this.statusText.setStyle({
+      fontSize: statusFontSize,
+      wordWrap: { width: Math.max(width * 0.9, statusFontSize * 2), useAdvancedWrap: true },
+    });
+    this.statusText.setPosition(width / 2, height * 0.22);
+    for (const [text, x] of [[this.attackerText, 0.25], [this.defenderText, 0.75]] as const) {
+      const fontSize = compact ? 12 : 18;
+      text.setStyle({
+        fontSize,
+        wordWrap: { width: Math.max(width * 0.44, fontSize * 2), useAdvancedWrap: true },
+      });
+      text.setPosition(width * x, height * 0.72);
+    }
+    this.skipContainer.setPosition(width / 2, height * 0.9);
+  }
+
+  private handleSceneCleanup(): void {
+    if (this.cleanedUp) return;
     AttackDirector.getInstance().unregisterPresenter(this);
     this.cleanup();
+    this.cleanedUp = true;
+    this.events.off(Phaser.Scenes.Events.SHUTDOWN, this.handleSceneCleanup, this);
+    this.events.off(Phaser.Scenes.Events.DESTROY, this.handleSceneCleanup, this);
+    this.scale.off('resize', this.handleResize, this);
+    this.input.keyboard?.off('keydown-ESC', this.handleSkipKey, this);
+    this.input.keyboard?.off('keydown-SPACE', this.handleSkipKey, this);
+  }
+
+  destroy(): void {
+    this.handleSceneCleanup();
   }
 }

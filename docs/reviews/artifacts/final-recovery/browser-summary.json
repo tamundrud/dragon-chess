@@ -1,0 +1,821 @@
+{
+  "candidate": "9899abcf6f2f810ef2d9ccaa4e0de289454d97f8",
+  "stats": {
+    "startTime": "2026-10-23T21:59:41.077Z",
+    "duration": 1573429.808,
+    "expected": 57,
+    "skipped": 2,
+    "unexpected": 1,
+    "flaky": 0
+  },
+  "projects": {
+    "chromium": {
+      "expected": 10,
+      "skipped": 2
+    },
+    "phone-360-portrait": {
+      "expected": 12
+    },
+    "phone-390-portrait": {
+      "expected": 12
+    },
+    "phone-landscape": {
+      "expected": 12
+    },
+    "tablet": {
+      "expected": 11,
+      "unexpected": 1
+    }
+  },
+  "cases": [
+    {
+      "title": "generic capture survives a transient narrow resize and complete",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "duration": 62198,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "generic capture survives a transient narrow resize and Skip",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "duration": 56548,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "Fire Dragon capture survives a transient narrow resize and complete",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "duration": 69226,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "Fire Dragon capture survives a transient narrow resize and Skip",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "duration": 60604,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "generic capture survives a transient narrow resize and complete",
+      "project": "phone-360-portrait",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "duration": 38061,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "generic capture survives a transient narrow resize and Skip",
+      "project": "phone-360-portrait",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "duration": 34417,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "Fire Dragon capture survives a transient narrow resize and complete",
+      "project": "phone-360-portrait",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "duration": 41971,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "Fire Dragon capture survives a transient narrow resize and Skip",
+      "project": "phone-360-portrait",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "duration": 36667,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "generic capture survives a transient narrow resize and complete",
+      "project": "phone-390-portrait",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "duration": 37777,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "generic capture survives a transient narrow resize and Skip",
+      "project": "phone-390-portrait",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "duration": 29695,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "Fire Dragon capture survives a transient narrow resize and complete",
+      "project": "phone-390-portrait",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "duration": 36777,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "Fire Dragon capture survives a transient narrow resize and Skip",
+      "project": "phone-390-portrait",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "duration": 33194,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "generic capture survives a transient narrow resize and complete",
+      "project": "phone-landscape",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "duration": 32414,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "generic capture survives a transient narrow resize and Skip",
+      "project": "phone-landscape",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "duration": 29769,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "Fire Dragon capture survives a transient narrow resize and complete",
+      "project": "phone-landscape",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "duration": 35793,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "Fire Dragon capture survives a transient narrow resize and Skip",
+      "project": "phone-landscape",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "duration": 30673,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "generic capture survives a transient narrow resize and complete",
+      "project": "tablet",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "duration": 48156,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "generic capture survives a transient narrow resize and Skip",
+      "project": "tablet",
+      "status": "unexpected",
+      "results": [
+        {
+          "status": "failed",
+          "retry": 0,
+          "duration": 13056,
+          "errors": [
+            {
+              "location": {
+                "file": "/workspace/dragon-chess/e2e/attack_resize.spec.js",
+                "column": 3,
+                "line": 9
+              },
+              "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\nCall Log:\n- Timeout 5000ms exceeded while waiting on the predicate\n\n   7 |   // status label to render, then judge artwork independently (no artwork retry).\n   8 |   let counts;\n>  9 |   await expect.poll(async () => {\n     |   ^\n  10 |     await page.clock.runFor(32);\n  11 |     const clip = await page.locator('#phaser-container canvas').boundingBox();\n  12 |     const png = await page.screenshot({ clip });\n    at expectCombatantsVisible (/workspace/dragon-chess/e2e/attack_resize.spec.js:9:3)\n    at /workspace/dragon-chess/e2e/attack_resize.spec.js:64:7"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Fire Dragon capture survives a transient narrow resize and complete",
+      "project": "tablet",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "duration": 66223,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "Fire Dragon capture survives a transient narrow resize and Skip",
+      "project": "tablet",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "duration": 49998,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "a capture tap starts an attack instead of immediately skipping it",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "duration": 14421,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "leaving during capture repeatedly allows legal moves in the next game",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "duration": 58788,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "deliberate Skip completes a capture and Undo restores exactly one move",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "duration": 9176,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "leaving a Fire Dragon capture cancels its nested presentation timeline",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "duration": 31352,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "touch Skip remains reachable after resizing an active capture",
+      "project": "chromium",
+      "status": "skipped",
+      "results": [
+        {
+          "status": "skipped",
+          "retry": 0,
+          "duration": 492,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "a capture tap starts an attack instead of immediately skipping it",
+      "project": "phone-360-portrait",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "duration": 11430,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "leaving during capture repeatedly allows legal moves in the next game",
+      "project": "phone-360-portrait",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "duration": 43746,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "deliberate Skip completes a capture and Undo restores exactly one move",
+      "project": "phone-360-portrait",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "duration": 9008,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "leaving a Fire Dragon capture cancels its nested presentation timeline",
+      "project": "phone-360-portrait",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "duration": 17536,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "touch Skip remains reachable after resizing an active capture",
+      "project": "phone-360-portrait",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "duration": 6847,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "a capture tap starts an attack instead of immediately skipping it",
+      "project": "phone-390-portrait",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "duration": 9142,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "leaving during capture repeatedly allows legal moves in the next game",
+      "project": "phone-390-portrait",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "duration": 29007,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "deliberate Skip completes a capture and Undo restores exactly one move",
+      "project": "phone-390-portrait",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "duration": 3704,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "leaving a Fire Dragon capture cancels its nested presentation timeline",
+      "project": "phone-390-portrait",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "duration": 18091,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "touch Skip remains reachable after resizing an active capture",
+      "project": "phone-390-portrait",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "duration": 7767,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "a capture tap starts an attack instead of immediately skipping it",
+      "project": "phone-landscape",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "duration": 9304,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "leaving during capture repeatedly allows legal moves in the next game",
+      "project": "phone-landscape",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "duration": 28710,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "deliberate Skip completes a capture and Undo restores exactly one move",
+      "project": "phone-landscape",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "duration": 3386,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "leaving a Fire Dragon capture cancels its nested presentation timeline",
+      "project": "phone-landscape",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "duration": 17575,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "touch Skip remains reachable after resizing an active capture",
+      "project": "phone-landscape",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "duration": 4320,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "a capture tap starts an attack instead of immediately skipping it",
+      "project": "tablet",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "duration": 14025,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "leaving during capture repeatedly allows legal moves in the next game",
+      "project": "tablet",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "duration": 48753,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "deliberate Skip completes a capture and Undo restores exactly one move",
+      "project": "tablet",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "duration": 5721,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "leaving a Fire Dragon capture cancels its nested presentation timeline",
+      "project": "tablet",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "duration": 26915,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "touch Skip remains reachable after resizing an active capture",
+      "project": "tablet",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "duration": 10578,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "menu, game and settings fit the viewport with reachable controls",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "duration": 9844,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "legal moves, Undo, Restart and settings remain usable",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "duration": 34635,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "touch input survives portrait and landscape rotation without a second canvas",
+      "project": "chromium",
+      "status": "skipped",
+      "results": [
+        {
+          "status": "skipped",
+          "retry": 0,
+          "duration": 561,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "menu, game and settings fit the viewport with reachable controls",
+      "project": "phone-360-portrait",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "duration": 9640,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "legal moves, Undo, Restart and settings remain usable",
+      "project": "phone-360-portrait",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "duration": 22627,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "touch input survives portrait and landscape rotation without a second canvas",
+      "project": "phone-360-portrait",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "duration": 9432,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "menu, game and settings fit the viewport with reachable controls",
+      "project": "phone-390-portrait",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "duration": 9291,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "legal moves, Undo, Restart and settings remain usable",
+      "project": "phone-390-portrait",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "duration": 23332,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "touch input survives portrait and landscape rotation without a second canvas",
+      "project": "phone-390-portrait",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "duration": 13542,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "menu, game and settings fit the viewport with reachable controls",
+      "project": "phone-landscape",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "duration": 8388,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "legal moves, Undo, Restart and settings remain usable",
+      "project": "phone-landscape",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "duration": 22545,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "touch input survives portrait and landscape rotation without a second canvas",
+      "project": "phone-landscape",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "duration": 9986,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "menu, game and settings fit the viewport with reachable controls",
+      "project": "tablet",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "duration": 10740,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "legal moves, Undo, Restart and settings remain usable",
+      "project": "tablet",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "duration": 37085,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "touch input survives portrait and landscape rotation without a second canvas",
+      "project": "tablet",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "duration": 17435,
+          "errors": []
+        }
+      ]
+    }
+  ]
+}

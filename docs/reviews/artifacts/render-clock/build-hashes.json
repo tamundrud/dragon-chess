@@ -1,0 +1,14 @@
+{
+  "dist/index.html": {
+    "bytes": 409,
+    "sha256": "3f9658860f799837da12cd34906ea3925c9255cc3c25688f91a3ebbaa31c86bf"
+  },
+  "dist/assets/index-DoHVkQAM.js": {
+    "bytes": 1788169,
+    "sha256": "269bc365083f4f05d6a4f59e06433ea6149f0197c187a8f2a8065ee6d47746f5"
+  },
+  "dist/assets/index-CLwR_7KG.css": {
+    "bytes": 21633,
+    "sha256": "3f584b4b3ad22c6b267f8f38db50883f04b7c94e618b3c7938613bd63bd790de"
+  }
+}

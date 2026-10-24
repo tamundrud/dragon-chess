@@ -1,0 +1,49 @@
+{
+  "baseline": {
+    "startTime": "2026-10-24T05:27:01.671Z",
+    "duration": 20250.416,
+    "expected": 0,
+    "skipped": 14,
+    "unexpected": 1,
+    "flaky": 0
+  },
+  "paused-clock-smoke": {
+    "startTime": "2026-10-24T05:35:16.450Z",
+    "duration": 104996.575,
+    "expected": 2,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "blank-result": {
+    "startTime": "2026-10-24T05:38:40.036Z",
+    "duration": 9706.614,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  },
+  "pre-artwork-result": {
+    "startTime": "2026-10-24T05:39:15.862Z",
+    "duration": 6023.540999999999,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  },
+  "ci-guard-control": {
+    "startTime": "2026-10-24T05:41:03.339Z",
+    "duration": 6111.8820000000005,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 1
+  },
+  "observed_exit_codes": {
+    "baseline": 1,
+    "paused-clock-smoke": 0,
+    "blank-result": 1,
+    "pre-artwork-result": 1,
+    "ci-guard-control": 1
+  }
+}
