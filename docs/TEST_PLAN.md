@@ -110,3 +110,5 @@ No new gameplay coverage is claimed in Phase 3. Remaining automated acceptance g
 Phase 3 verification additionally reproduced an intermittent `wordWrapWidth < a single character` page error during the phone-390 capture-resize case on both the task and unchanged recovery base. The page-error fixture correctly fails on it. See the Phase 3 record for exact historical counts; no assertion was weakened there. The follow-up [active-capture resize record](reviews/active-capture-resize.md) documents the fix and current regression evidence.
 
 Current artwork rotation results and remaining acceptance limits: [board rotation verification](reviews/board-rotation-artwork.md).
+
+The [render-clock investigation](reviews/recovery-render-clock.md) diagnoses the intermittent tablet and CI render-readiness failures from recovery PR #10. Clocked browser cases pause before application startup and explicitly drive readiness/input; pixel thresholds, error guards and capture-state assertions remain intact. CI rejects flaky classifications even when retries eventually pass. Historical failures remain in their original verification records.
