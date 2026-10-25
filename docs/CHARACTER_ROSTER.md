@@ -1,64 +1,58 @@
-# Character roster — tribe-grounded casting and design brief
+# Character roster — tribes, book evidence, and provisional dragons
 
-**Status (2026-10-25):** Human King/Queen/Bishop casting and Toothless/Killer bishop assignments are selected. **All eight rook/knight dragon slots are open.** The prior Wodensfang/Green Death/Furious/Luna/Windwalker/Stormfly/One Eye/Typhoon table was **rejected by the owner** because it mixed dragons with no direct affiliation to their assigned tribe. A named dragon appearing in the books is **not** sufficient evidence of tribe membership. Do not implement that rejected roster.
+**Status — October 25, 2026:** The tribe identities, Kings, Queens, Bishops and warrior pawns are selected. The rook/knight casting below is a **NEW PROPOSAL, NOT YET OWNER-APPROVED**. Earlier cross-tribe proposals featuring Green Death, Stormfly, Furious, Luna and unrelated named dragons are rejected and must not be revived by implementation.
 
-## Rules for casting
+## Casting principles
 
-1. **White = Hairy Hooligans; Black = Meatheads.** Each dragon must have a **direct book-grounded connection to its own tribe** (owned/trained by a tribe member, or explicitly used/kept by the tribe at its location). Being a book character, being friendly with Hiccup, or existing on a nearby island is not sufficient.
-2. Prefer individually named, directly associated dragons. **If too few exist, use canon dragon species demonstrably kept/used by that tribe**, displayed as unnamed individuals rather than inventing a supposedly canonical name.
-3. Do not repeat an individual dragon name between the sides. Keep Toothless and Killer in their already-assigned bishop slots.
-4. **No additional Monstrous Nightmares**, because Killer already represents that species; this applies to both tribes.
-5. **Both rooks must breathe fire**, and their species or specific book-supported fire power must be confirmed before their animated attack is committed. Not every species is fire-breathing; avoid taking film/TV powers as book canon.
-6. All sixteen pieces on each side retain ordinary chess rules. Each tribe's pieces must be distinguishable on a 360px phone.
+1. **White = Hairy Hooligans (Berk); Black = Meathead clan (Meathead Island).** Dragon characters should have a direct connection to their faction whenever documented. The user has now authorized **plausible book-world Meathead ownership for suitable fire-breathing dragon species** when no tribe-owned named individual is documented. Label that extrapolation honestly.
+2. Prefer **distinct named book dragons**. If there are too few Meathead-associated named dragons, use **unnamed individuals of real book species**; do not invent supposedly canonical individual names.
+3. All four rooks are **fire-breathing dragons**, justified by the actual **books**, not screen adaptation powers. The two tribes do not reuse the same **individual names**.
+4. **Monstrous Nightmares are permitted when useful/necessary**, including the established Hooligan individuals Fireworm and Hookfang; use an *additional* Meathead Monstrous Nightmare only as a **last resort**, since Killer already fills one bishop slot.
+5. White and Black pawns are barbarian Viking warriors. Every token needs clear piece-type shape plus faction markings at 360px phone width. Standard chess rules remain unchanged.
+6. Character/dragon appearance and attacks are based on **Cressida Cowell's books**, not DreamWorks adaptations. **No candidate artwork is final**.
 
-## Owner-selected pieces
+## Selected roles and proposed dragon assignments
 
-| Chess role | White: Hairy Hooligans | Black: Meatheads | Status |
+| Chess role | White — Hairy Hooligans | Black — Meatheads | Evidence / approval |
 | --- | --- | --- | --- |
-| King (1) | **Stoick the Vast** | **Mogadon the Meathead** | Selected |
-| Queen (1) | **Valhallarama** | **Hairy Scary Librarian** | Selected; Librarian is male in the books |
-| Bishop (2) | **Hiccup Horrendous Haddock III**, **Toothless** | **Thuggory**, **Killer** | Selected; Killer is Thuggory's Monstrous Nightmare |
-| Rook (2) | **Unassigned** — two directly Hooligan-associated fire-breathing dragons | **Unassigned** — two directly Meathead-associated fire-breathing dragons | OPEN; fire is a required ability |
-| Knight (2) | **Unassigned** — two directly Hooligan-associated dragons | **Unassigned** — two directly Meathead-associated dragons | OPEN; species fallback allowed |
-| Pawn (8) | Barbarian Hooligan warriors | Barbarian Meathead warriors | Selected archetype |
+| King (1) | **Stoick the Vast** | **Mogadon the Meathead** | **Selected** |
+| Queen (1) | **Valhallarama** | **Hairy Scary Librarian** | **Selected**; Librarian is a male book character |
+| Bishops (2) | **Hiccup Horrendous Haddock III**, **Toothless** | **Thuggory**, **Killer** | **Selected**; Killer is Thuggory's silver Monstrous Nightmare |
+| Rook 1 | **Fireworm** — Snotlout's Monstrous Nightmare | **Flamehuffer** — unnamed Meathead-owned representative | **Proposal**; Hooligan owner confirmed and Flamehuffer fire documented, but Meathead ownership is **plausible invention**, not attested |
+| Rook 2 | **Hookfang** — Stoick's Monstrous Nightmare | **Common or Garden Dragon** — unnamed Meathead-owned representative | **Proposal**; Stoick connection confirmed and Common or Garden fire documented, but Meathead ownership is **plausible invention**, not attested |
+| Knight 1 | **Windwalker** — Hiccup's riding dragon | **Driller-Dragon** — unnamed Meathead library guard | **Proposal**; direct Hiccup and library links |
+| Knight 2 | **One Eye** — sabre-toothed dragon working with Hiccup/Hooligan trainees | **Poisonous Piffleworm** — unnamed library inhabitant | **Proposal**; One Eye is a *temporary ally*, not permanently Hooligan-owned; Piffleworms really inhabit Meathead library |
+| Pawns (8) | Barbarian Hooligan warriors | Barbarian Meathead warriors | **Selected archetype** |
 
-## Research — directly associated dragon options (not an approved lineup)
+### Why these dragons
 
-### Hairy Hooligans — stronger direct connections
+- **Fireworm** is Snotlout's flame-red Monstrous Nightmare and is described setting Fishlegs's workbooks on fire (Book 3). A directly book-grounded Hooligan fire rook.
+- **Hookfang** is **Stoick's** hunting dragon in the *books* (not Snotlout's, as in screen adaptations), another Monstrous Nightmare with species-level ability to breathe fire. Distinctive silhouette, temperament and flame animation should separate the two white rooks visually.
+- **Windwalker** is Hiccup's riding dragon; **One Eye** is a Sabre-Tooth Driver Dragon who helps Hiccup and the trainees. One Eye later develops his own allegiances. **Fallback if strict ownership is required:** **Newtsbreath**, Stoick's Gronckle, replaces One Eye as knight (not as an unverified fire-breathing rook).
+- **Flamehuffer** is a fire-jet-breathing book species found in the Berk Dragon Nursery. No direct Meathead ownership is documented. This is a reasonable invented Meathead trainee's dragon based on the two tribes' shared dragon-initiation tradition, not a claim of canonical custody.
+- **Common or Garden Dragon** is a widespread trainable book species with documented ordinary fire-breathing; no named Meathead individual is verified. The game may portray an unnamed Meathead-owned representative.
+- **Driller-Dragons** explicitly guard the Meathead Public Library. **Poisonous Piffleworms** are actual small poisonous library inhabitants. Either can be used as a *faction-associated token* without implying that Mogadon personally trains it. Their attack choreography should be drilling/poison, **not unverified flames**.
+- **Killer**, the already-cast Meathead bishop, is a silver Monstrous Nightmare. Avoid any additional black Monstrous Nightmare unless other fire-breathing rook candidates prove unsuitable.
+- **Seaslug is excluded** by owner request. Green Death, Stormfly, Furious, Luna, Wodensfang and other characters without adequate tribe connections must not be used simply because they appear in the books.
+- All four proposed rook/knight identities are **different across sides**. Where a position is a species, it is **not a newly coined proper name**.
 
-| Dragon | Connection | Constraint |
-| --- | --- | --- |
-| **Windwalker** | Hiccup's riding dragon; Hairy Hooligan faction | Especially suitable to explore as a fast knight; “Windwalker” is the species/identity used in the book, not an invented individual name |
-| **Newtsbreath** (Gronckle) | One of chief Stoick's hunting dragons | Book-specific fire attack for this named individual not independently confirmed |
-| **Seaslug** (Gronckle) | Dogsbreath the Duhbrain's dragon | Book-specific fire attack for this named individual not independently confirmed |
-| **Horrorcow** (Basic Brown) | Fishlegs's hunting dragon | Cowardly/comic and nonaggressive; stronger fit as a quirky knight than a dramatic fire-breathing rook |
-| **Bullheart** | Another dragon associated with Stoick | Dragon appearance/species/attacks need primary-book verification before assignment |
+## Reference notes (secondary sources, check primary book art before asset production)
 
-**Exclude** Stormfly (Camicazi is a Bog-Burglar, not a Hooligan), Green Death (enemy of Berk), and dragons merely allied with Hiccup who are not established Hooligan tribe dragons. Exclude Fireworm and Hookfang because both are Monstrous Nightmares.
+| Evidence | Reference |
+| --- | --- |
+| Fireworm is Snotlout's dragon and sets workbooks on fire | [Fireworm — books](https://howtotrainyourdragon.fandom.com/wiki/Fireworm_(Books)) |
+| Hookfang is Stoick's hunting dragon; Monstrous Nightmares breathe fire | [Hookfang — books](https://howtotrainyourdragon.fandom.com/wiki/Hookfang_(Books)), [Monstrous Nightmare — books](https://howtotrainyourdragon.fandom.com/wiki/Monstrous_Nightmare_(Books)) |
+| Hiccup and One Eye work together | [One Eye](https://howtotrainyourdragon.fandom.com/wiki/One_Eye) |
+| Stoick has Newtsbreath, Hookfang and Bullheart | [Stoick — books](https://howtotrainyourdragon.fandom.com/wiki/Stoick_the_Vast_(Books)) |
+| Meathead trainees bring dragons to the joint initiation | [Meathead Tribe — books](https://howtotrainyourdragon.fandom.com/wiki/Meathead_Tribe_(Books)), [Dragon Initiation Programme](https://howtotrainyourdragon.fandom.com/wiki/Dragon_Initiation_Programme) |
+| Fire capabilities of the two proposed Meathead rook species | [Flamehuffer](https://howtotrainyourdragon.fandom.com/wiki/Flamehuffer), [Common or Garden Dragon — books](https://howtotrainyourdragon.fandom.com/wiki/Common_or_Garden_Dragon_(Books)) |
+| Meathead library's Driller-Dragons and Piffleworms | [Meathead Public Library](https://howtotrainyourdragon.fandom.com/wiki/Meathead_Public_Library), [Driller-Dragon](https://howtotrainyourdragon.fandom.com/wiki/Driller-Dragon), [Poisonous Piffleworm](https://howtotrainyourdragon.fandom.com/wiki/Poisonous_Piffleworm) |
 
-### Meatheads — strong location/tribe links, sparse individual names
+## Open review decisions and implementation boundary
 
-- **Killer** is a verified named Meathead dragon, but is **already cast as Bishop**. I could not verify four *additional* individually named Meathead dragons from available book references.
-- The **Meathead Public Library** on Meathead Island is guarded or inhabited by **Driller-Dragons**, **Red-Hot Itchyworms** and **Poisonous Piffleworms**. These are genuine *species-level* Meathead-location connections, not individually named pets.
-- **Driller-Dragons** have a direct guard function at the library and may suit a knight or specialized non-fire attack.
-- **Poisonous Piffleworms** attack with venomous bites; **Red-Hot Itchyworms** use bites/heat. Their documented abilities do **not** establish dragon fire-breathing; do not assign them as fire-breathing rooks by assumption.
-- The book describes Meathead boys owning/bringing dragons to the dragon initiation trial, but I have **not yet verified a fire-breathing non-Nightmare species individually tied to Meatheads**. Thus the two Meathead rook slots **must stay unresolved** until a suitable book-backed species is found (or the user explicitly approves a carefully labeled exception).
+- Owner must approve/replace the **eight dragon assignments**; this document does not automatically authorize character art or code updates.
+- In particular, review **One Eye vs Newtsbreath** for white knight 2; **Flamehuffer and Common or Garden** as plausible Meathead fire-breathing rooks; and a **Piffleworm** being small enough to require an enlarged chess token silhouette.
+- Test all proposed pieces at actual phone scale, then approve one expressive fire-rook capture for implementation, preserving `chess.js`, single-commit capture lifecycle, Skip/reduced-motion and mobile layout.
+- The **current code** still has white knights mapped to a procedural generic Fire Dragon and mostly placeholder tokens/presenters. Do not confuse this proposed roster with implemented functionality.
 
-## Reference evidence and confidence
-
-Secondary references reviewed on 2026-10-25; confirm against the user's books before final character art:
-- [Meathead tribe (books)](https://howtotrainyourdragon.fandom.com/wiki/Meathead_Tribe_(Books)) and [Killer](https://howtotrainyourdragon.fandom.com/wiki/Killer)
-- [Meathead Public Library](https://howtotrainyourdragon.fandom.com/wiki/Meathead_Public_Library), [Driller-Dragon](https://howtotrainyourdragon.fandom.com/wiki/Driller-Dragon), [Poisonous Piffleworm](https://howtotrainyourdragon.fandom.com/wiki/Poisonous_Piffleworm), [Red-Hot Itchyworm](https://howtotrainyourdragon.fandom.com/wiki/Red-Hot_Itchyworm)
-- [Stoick's dragons](https://howtotrainyourdragon.fandom.com/wiki/Stoick_the_Vast_(Books)), [Hiccup's Windwalker](https://howtotrainyourdragon.fandom.com/wiki/Hiccup%27s_Windwalker_(Books)), [Fishlegs](https://howtotrainyourdragon.fandom.com/wiki/Fishlegs_No-Name), [Book-series characters](https://en.wikipedia.org/wiki/How_to_Train_Your_Dragon_(novel_series))
-- [Book dragon fire overview](https://howtotrainyourdragon.fandom.com/wiki/Dragon_(Books)). Species-level fire generalization is **not** evidence of a named individual's powers.
-
-## Next design decisions
-
-1. Confirm the *specific tribe-grounded selections* for all eight rook/knight slots. For the Meatheads, explicit book-used species are preferable to unrelated named dragons.
-2. Solve the Meathead **fire-breathing rook** evidence gap before signing off on a definitive roster. Do not treat poison/heat as fire without permission.
-3. Decide whether a single book species may be represented by multiple different unnamed individuals in one army. Keep no individual cross-clan duplicates.
-4. Verify the selected characters' book appearances and production references; then approve assets and one signature capture. **No registry, sprites or presentation implementation is authorized by this draft.**
-
-## Current implementation (not the desired casting)
-
-The playable build maps both white knights to a procedural generic `fire_dragon`; other characters mainly have placeholder board tokens and attack presenters. The above research is a **planning correction**, not an implementation report. See [art direction](ART_DIRECTION.md), [visual reset plan](plans/2026-10-25-book-visual-reset.md), and [architecture](ARCHITECTURE.md).
+See [the visual reset plan](plans/2026-10-25-book-visual-reset.md) and [art direction](ART_DIRECTION.md).
