@@ -45,6 +45,14 @@ The owner prefers **Concept 3: richly painted fairytale illustration**, as a **c
 
 **Next animation storyboard:** Select one of the **approved** rook dragon designs (Fireworm, Hookfang, unnamed Flamehuffer or unnamed Common or Garden) for a fire-breathing signature capture, using book-consistent fire abilities and comic timing.
 
+## Owner feedback: first original-fantasy character and attack concepts (2026-10-25)
+
+The owner likes the **overall roster-sheet look** and **especially the Fireworm capture storyboard with its colourful, explosive, firework-like attack**. Treat these as endorsed *creative references* for production exploration, **not approval of final assets, exact poses/timing, or character fidelity**.
+
+**Specific correction for the next character-art pass:** the **Hairy Scary Librarian**, cast as the Black Queen in chess, must look like a **hairy, scary male barbarian**, not a feminine queen. **Do not regenerate the whole card** just to address this now; document it for the dedicated portrait/sprite pass. The chess role and movement remain Queen.
+
+**Originality gate:** Future imagery should have original fantasy/Viking and dragon aesthetics, newly developed costumes, silhouette and staging; no direct reuse or close imitation of artwork from the books, movies, other illustrated works or prior fan art. Keep the approved character *names/casting* separate from copyrighted visual designs. For the Fireworm capture retain exuberant sparks/flame bursts and comic consequences while checking mobile legibility, photosensitive flashing, audio, Skip and reduced motion. Next gate remains a production-feasible character study + short animated prototype reviewed on a real phone.
+
 ## Phase 5: approve the visual language *before* production implementation
 
 1. **Reference/canon pass.** Assemble a short, explicit reference sheet from book-owned/user-provided pages or legitimate previews, citing which *book* character, creature, setting, or detail each reference establishes. Never use film designs as a substitute for book references.
