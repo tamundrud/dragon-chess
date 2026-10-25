@@ -1,6 +1,6 @@
 # Book-first visual reset — concept and acceptance plan
 
-**Status:** Proposed creative direction; no artwork, character mapping, or implementation approval is implied.  
+**Status:** Broad visual style selected 2026-10-25; character designs, casting, storyboard and implementation are **not** approved.  
 **Date:** 2026-10-25  
 **Base:** Integrated, playable chess prototype on `main`.
 
@@ -14,7 +14,7 @@ The intended family game is based on **Cressida Cowell's *How to Train Your Drag
 
 A child who knows the books should immediately recognize their unruly, funny, adventurous world: expressive, quirky Vikings and dragons; lively drawing; a sense of Berk; and playful, distinctive character behavior. The result should be *readable and inviting on a phone* and feel like an illustrated book come alive, rather than a dark generic fantasy game or a copy of the movies.
 
-Use the original books and their illustrations as the source of truth for character identity and atmosphere. Illustrative keywords for concept exploration: energetic ink lines, deliberately exaggerated expressions and anatomy, comic timing, map marginalia, rough parchment/wood textures, and a restrained but lively palette. These are **concept candidates**, not approved final art specifications. See `docs/ART_DIRECTION.md` for the living visual rules.
+Use the original books and their illustrations as the source of truth for character identity and atmosphere. **Owner-selected visual language:** richly coloured, animated interpretations of book characters. Use expressive hand-drawn contours, generous colour, painterly shading and vivid but readable environments, exaggerated anatomy and comic timing; mix in maps, parchment and Viking textures where useful. Do not default to a near-monochrome ink imitation or generic dark fantasy. These cues define a direction, not approval of any individual concept. See `docs/ART_DIRECTION.md` for the living visual rules. See `docs/ART_DIRECTION.md` for the living visual rules.
 
 This is a private family project. No public distribution, monetization, or official affiliation is planned. Reassess rights and asset provenance if that changes.
 
@@ -22,9 +22,9 @@ This is a private family project. No public distribution, monetization, or offic
 
 1. **Reference/canon pass.** Assemble a short, explicit reference sheet from book-owned/user-provided pages or legitimate previews, citing which *book* character, creature, setting, or detail each reference establishes. Never use film designs as a substitute for book references.
 2. **Resolve character priority.** Present a provisional chess-piece map that includes deliberate consideration of Hiccup and book Toothless. Existing Stoick/Valhallarama/Viking/Fire Dragon IDs are implementation history, not approved final casting. Determine whether two pieces of one type share a character or need unique identities; keep the chess rules unchanged.
-3. **Explore two coherent visual treatments.** Produce comparable concepts of (a) the opening screen, (b) a 360px-wide board with readable character tokens and opposing teams, and (c) a Fire Dragon capture storyboard. One treatment may be ink-first with selective color; another may be richly colored but retain playful book-like exaggeration. Do not start by generating dozens of disconnected assets.
+3. **Explore rich-colour style variants.** Produce 2–3 coherent variations **within the owner's selected richly coloured animated-storybook direction**, and compare (a) the opening screen, (b) a 360px-wide board with readable character tokens and opposing teams, and (c) one proposed book-dragon capture storyboard. Vary palette, hand-drawn linework, painted depth and motion personality; do not re-open ink-only versus coloured as the principal choice. Do not start by generating dozens of disconnected assets.
 4. **Approve animation language.** Storyboard anticipation, character action, impact, comic reaction, and recovery for **one** capture. Specify pose changes, staging, timing, effects, sound intent, reduced-motion behavior, and when the result becomes readable again. Motion must convey personality, not just translate geometric shapes.
-5. **Human visual gate.** The owner reviews concepts at actual phone size, including a short landscape layout, chooses a direction, accepts/changes the roster and storyboard, and records specific concerns. Child feedback is valuable; screenshot/CI checks cannot replace this decision.
+5. **Human visual gate.** The owner reviews variants within the already chosen rich-colour direction at actual phone size, including a short landscape layout, selects a concrete treatment, accepts/changes the roster and storyboard, and records specific concerns. Child feedback is valuable; screenshot/CI checks cannot replace this decision.
 
 **Phase 5 deliverable:** reviewed concept sheets, proposed asset/animation production approach, approved roster for the first vertical slice, and a written owner decision. Documentation and reference images may be maintained in this plan or linked from it. Keep rejected alternatives and rationale succinct.
 
@@ -58,7 +58,7 @@ The owner must watch and accept a complete **real-device** animation, including 
 
 1. Which book volume(s) / specific character depictions should anchor the visual reference?
 2. Who takes the central chess roles (particularly Hiccup and Toothless), and are duplicate character pieces acceptable?
-3. Which of the proposed visual treatments best matches the intended game?
+3. Which palette, rendering approach and character-design variant best implements the **already selected richly coloured animated-book aesthetic**?
 4. Is the first signature capture still a fire-breathing dragon attack, and which *book character* performs it?
 5. What capture length feels enjoyable at Normal speed after repeated viewing?
 
