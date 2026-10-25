@@ -31,6 +31,15 @@ The current UI's dark background, gold text, lettered token circles and procedur
 See [the visual reset plan](plans/2026-10-25-book-visual-reset.md) and [character roster](CHARACTER_ROSTER.md).
 
 
+## Approved two-tribe game presentation (2026-10-25)
+
+- **White = Hairy Hooligans** from Berk; **Black = Meathead clan**. Give both sides original, distinct banner symbols, tribal costume shapes, borders and easily differentiated warm/cool or complementary accent colours. Do not rely only on the literal white/black piece color.
+- **Kings and queens are Vikings**; the two bishops per side are named book characters and/or their dragons; **rooks and knights are dragons**; pawns are barbarian Viking warriors. Precise mapping is maintained in [character roster](CHARACTER_ROSTER.md).
+- **Rook dragons breathe fire**. The two rooks and two knights can reuse the *same book-dragon choices* across White and Black but must always read as separate tribal allegiances. Keep every type visually distinct.
+- Do not substitute an oversized movie-style Toothless for the **small book Toothless** bishop. Hiccup, Thuggory, and their dragons should follow the book-canon references, with newly illustrated interpretations rather than borrowed screen designs.
+- **Priority for phone readability:** identifiable chess-piece role, faction identity, selected/legal-move feedback, then artwork detail. Rich, atmospheric scenery should sit mostly outside the playable 8×8 board; effects should never conceal the turn or destination for more than their intended brief action.
+- The recent concept montage confirms the **environmental/UI mood**, not individual character looks, identity assignments, production-ready 64-square accuracy, or attack animation quality. Validate an actual playable-resolution design next.
+
 ## Overall style
 Use an illustrated children's storybook-fantasy look:
 - Hand-drawn energy.
