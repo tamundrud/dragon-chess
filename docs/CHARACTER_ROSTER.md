@@ -1,6 +1,6 @@
-# Character roster — tribes, book evidence, and provisional dragons
+# Character roster — approved casting, canon notes and implementation brief
 
-**Status — October 25, 2026:** The tribe identities, Kings, Queens, Bishops and warrior pawns are selected. **White Knight 2 = One Eye is now owner-selected** for diversity (2026-10-25). The other seven rook/knight assignments remain **proposals, NOT YET OWNER-APPROVED**. Earlier cross-tribe proposals featuring Green Death, Stormfly, Furious, Luna and unrelated named dragons are rejected and must not be revived by implementation.
+**Casting status — October 25, 2026: ALL 32 STARTING PIECES APPROVED BY OWNER.** Kings, Queens, Bishops, Rooks, Knights and the warrior-pawn archetypes are selected for both sides. White Knight 2 = **One Eye** (not Newtsbreath). Earlier cross-tribe proposals featuring Green Death, Stormfly, Furious, Luna and unrelated named dragons were rejected and must not be revived. **This approval is for the character/species roster and promotion behaviour, not artwork, animation, or code implementation.**
 
 ## Casting principles
 
@@ -11,17 +11,17 @@
 5. White and Black pawns are barbarian Viking warriors. Every token needs clear piece-type shape plus faction markings at 360px phone width. Standard chess rules remain unchanged.
 6. Character/dragon appearance and attacks are based on **Cressida Cowell's books**, not DreamWorks adaptations. **No candidate artwork is final**.
 
-## Selected roles and proposed dragon assignments
+## Approved starting-piece roster
 
 | Chess role | White — Hairy Hooligans | Black — Meatheads | Evidence / approval |
 | --- | --- | --- | --- |
 | King (1) | **Stoick the Vast** | **Mogadon the Meathead** | **Selected** |
 | Queen (1) | **Valhallarama** | **Hairy Scary Librarian** | **Selected**; Librarian is a male book character |
 | Bishops (2) | **Hiccup Horrendous Haddock III**, **Toothless** | **Thuggory**, **Killer** | **Selected**; Killer is Thuggory's silver Monstrous Nightmare |
-| Rook 1 | **Fireworm** — Snotlout's Monstrous Nightmare | **Flamehuffer** — unnamed Meathead-owned representative | **Proposal**; Hooligan owner confirmed and Flamehuffer fire documented, but Meathead ownership is **plausible invention**, not attested |
-| Rook 2 | **Hookfang** — Stoick's Monstrous Nightmare | **Common or Garden Dragon** — unnamed Meathead-owned representative | **Proposal**; Stoick connection confirmed and Common or Garden fire documented, but Meathead ownership is **plausible invention**, not attested |
-| Knight 1 | **Windwalker** — Hiccup's riding dragon | **Driller-Dragon** — unnamed Meathead library guard | **Proposal**; direct Hiccup and library links |
-| Knight 2 | **One Eye** — sabre-toothed dragon working with Hiccup/Hooligan trainees | **Poisonous Piffleworm** — unnamed library inhabitant | **White One Eye selected by owner**; his Hooligan connection is a temporary alliance, not permanent ownership. Black Piffleworm still proposed (documented library inhabitant) |
+| Rook 1 | **Fireworm** — Snotlout's Monstrous Nightmare | **Flamehuffer** — unnamed Meathead-owned representative | **Approved casting.** Flamehuffer fire is documented; its individual Meathead ownership is **plausible fictional casting**, not book canon |
+| Rook 2 | **Hookfang** — Stoick's Monstrous Nightmare | **Common or Garden Dragon** — unnamed Meathead-owned representative | **Approved casting.** Stoick connection and Common or Garden fire are documented; its individual Meathead ownership is **plausible fictional casting**, not book canon |
+| Knight 1 | **Windwalker** — Hiccup's riding dragon | **Driller-Dragon** — unnamed Meathead library guard | **Approved casting.** Direct Hiccup and Meathead Library connections |
+| Knight 2 | **One Eye** — sabre-toothed dragon working with Hiccup/Hooligan trainees | **Poisonous Piffleworm** — unnamed library inhabitant | **Approved casting for both sides.** One Eye has a temporary Hooligan alliance (not permanent ownership); the Piffleworm is a documented Meathead Library inhabitant |
 | Pawns (8) | Barbarian Hooligan warriors | Barbarian Meathead warriors | **Selected archetype** |
 
 ### Why these dragons
@@ -34,7 +34,7 @@
 - **Driller-Dragons** explicitly guard the Meathead Public Library. **Poisonous Piffleworms** are actual small poisonous library inhabitants. Either can be used as a *faction-associated token* without implying that Mogadon personally trains it. Their attack choreography should be drilling/poison, **not unverified flames**.
 - **Killer**, the already-cast Meathead bishop, is a silver Monstrous Nightmare. Avoid any additional black Monstrous Nightmare unless other fire-breathing rook candidates prove unsuitable.
 - **Seaslug is excluded** by owner request. Green Death, Stormfly, Furious, Luna, Wodensfang and other characters without adequate tribe connections must not be used simply because they appear in the books.
-- All four proposed rook/knight identities are **different across sides**. Where a position is a species, it is **not a newly coined proper name**.
+- All eight approved rook/knight identities are **different across sides**. Where a position is a species, it is **not a newly coined proper name**.
 
 ## Reference notes (secondary sources, check primary book art before asset production)
 
@@ -48,11 +48,19 @@
 | Fire capabilities of the two proposed Meathead rook species | [Flamehuffer](https://howtotrainyourdragon.fandom.com/wiki/Flamehuffer), [Common or Garden Dragon — books](https://howtotrainyourdragon.fandom.com/wiki/Common_or_Garden_Dragon_(Books)) |
 | Meathead library's Driller-Dragons and Piffleworms | [Meathead Public Library](https://howtotrainyourdragon.fandom.com/wiki/Meathead_Public_Library), [Driller-Dragon](https://howtotrainyourdragon.fandom.com/wiki/Driller-Dragon), [Poisonous Piffleworm](https://howtotrainyourdragon.fandom.com/wiki/Poisonous_Piffleworm) |
 
-## Open review decisions and implementation boundary
+## Pawn promotion — approved gameplay/visual identity rule
 
-- **One Eye as White Knight 2 is approved.** Owner must still approve/revise the **remaining seven dragon assignments**; this document does not authorize character art or code updates.
-- In particular, review **Flamehuffer and Common or Garden** as plausible Meathead fire-breathing rooks, and whether a **Piffleworm** requires an enlarged chess token silhouette. **Do not substitute Newtsbreath for the owner-selected One Eye.**
-- Test all proposed pieces at actual phone scale, then approve one expressive fire-rook capture for implementation, preserving `chess.js`, single-commit capture lifecycle, Skip/reduced-motion and mobile layout.
-- The **current code** still has white knights mapped to a procedural generic Fire Dragon and mostly placeholder tokens/presenters. Do not confuse this proposed roster with implemented functionality.
+- Keep **standard chess promotion**: when a pawn reaches the farthest rank, the player selects **Queen, Rook, Bishop or Knight** (never King/Pawn). This applies to captures and non-captures and follows existing `chess.js` legality and move lifecycle.
+- **Reuse that faction's approved character artwork for the selected piece class.** A new unique named character, new species, or extra themed promotion option is **not required**.
+- **Duplicate character appearances are permitted**: promoted pieces can share a design with pieces still on the board, since these are chess tokens and not a requirement that fictional individuals exist only once. The chosen piece type, not the character name, determines legal movement.
+- For classes containing two named character designs (Rook/Bishop/Knight), use a **deterministic existing same-class design**, such as the first listed in the faction roster, as the default promotion appearance; this is a presentation rule, **not a new choice in the promotion dialog**. Exact skin-selection implementation may be refined during UI production while keeping the same class and no new cast.
+- Maintain familiar phone-readable promotion controls and existing selection/cancellation/Undo rules. Any capture animation must not cause a second move commit.
+
+## Remaining visual and implementation decisions
+
+- **No further starting-piece casting decisions are required.** Preserve the selected names/species and user-approved allowances (plausibly Meathead-owned unnamed fire-breathing species; One Eye's temporary alliance).
+- Review species-scale legibility (especially the small Piffleworm), consistent tribal silhouettes and the distinctive looks of Fireworm and Hookfang (both Monstrous Nightmares).
+- Test every approved piece at actual phone scale and approve an expressive rook fire-capture storyboard before asset production; retain `chess.js`, single-commit capture lifecycle, Skip/reduced-motion and mobile layout.
+- The **current code** still has white knights mapped to a procedural generic Fire Dragon and mostly placeholder tokens/presenters. **Approved roster does not mean implemented roster.**
 
 See [the visual reset plan](plans/2026-10-25-book-visual-reset.md) and [art direction](ART_DIRECTION.md).
