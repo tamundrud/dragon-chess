@@ -24,7 +24,7 @@ The owner prefers **Concept 3: richly painted fairytale illustration**, as a **c
 
 ## Owner feedback: selected factions and casting (2026-10-25)
 
-**Decisions recorded:** White = **Hairy Hooligans**, Black = **Meathead clan**. Both use barbarian warrior pawns and dragon-based rooks/knights. Rooks **must breathe fire**. Shared rook/knight book-dragon designs across both sides are acceptable **only if tribe-coded appearance is unmistakable**.
+**Decisions recorded:** White = **Hairy Hooligans**, Black = **Meathead clan**. Both use barbarian warrior pawns and dragon-based rooks/knights. Rooks **must breathe fire**. The owner subsequently requested **four distinct named book dragons per tribe**, not the same four names mirrored. Distinct characters are preferred over species placeholders; if book-canon or fire-breathing capability makes a name unsuitable, use verified book species instead.
 
 - White King **Stoick the Vast**; Queen **Valhallarama**; two Bishops **Hiccup** and the **small book Toothless**.
 - Black King **Mogadon the Meathead**; Queen **Hairy Scary Librarian** (male book character); two Bishops **Thuggory the Meathead** and his dragon **Killer**, a silver Monstrous Nightmare.
@@ -33,16 +33,18 @@ The owner prefers **Concept 3: richly painted fairytale illustration**, as a **c
 
 **Style note:** the owner likes the last richly painted coastal-Viking UI/environment concept, but **has not approved its individual character designs**. These should be redesigned around the casting above rather than treated as licensed or finished assets.
 
+**Candidate eight-dragon roster (researched, *not yet owner-approved*):** White rooks **Wodensfang** and **Green Death**, knights **Windwalker** and **Stormfly**; Black rooks **Furious** and **Luna**, knights **One Eye** and **Typhoon**. Exclude the already-assigned Bishop dragons Toothless/Killer and every additional Monstrous Nightmare. Caveat: Green Death is antagonistic toward Hiccup, while Luna is allied with Furious. The team assignments therefore use playful game casting, **not canon tribal allegiances**. Green Death has explicitly documented green fire; fire powers for several other rook individuals are assumed from book dragon/Seadragonus characteristics rather than verified individual fire scenes. Recheck against primary book references before final animation promises. Sources and species are recorded in [the roster](../CHARACTER_ROSTER.md).
+
 **Next visual pair:** (1) an 8×8 **mobile board** with Hooligan/Meathead faction colours and identifiable human/dragon roles, with room for gameplay controls; (2) a **faction roster sheet** mapping all six chess-piece classes and highlighting the separate book characters for the bishops. Both are concept art, not source assets, UI implementation, exact canon illustrations, or a substitute for measured phone legibility.
 
-**Concept-image provenance:** The generated mobile board and faction roster mockups from this design review are *illustrative previews only*; they have not been committed as production assets. Generated labels/names attached to rook and knight dragons (for example “Stormfang,” “Blazewing,” “Cloudjumper,” or “Windrider”) are **NOT confirmed book-canon selections** and must not be written into the character registry on the strength of a generated picture. Actual book species and the four dragon roles remain to be selected. The images also do not certify a precise playable chess layout, accessible controls, or canonical portrait fidelity.
+**Concept-image provenance:** The generated mobile board and faction roster mockups from this design review are *illustrative previews only*; they have not been committed as production assets. Generated labels/names attached to rook and knight dragons (for example “Stormfang,” “Blazewing,” “Cloudjumper,” or “Windrider”) are **NOT confirmed book-canon selections** and must not be written into the character registry on the strength of a generated picture. Eight book-named dragon candidates are now proposed; character designs and assignment have not yet been owner-approved. The images also do not certify a precise playable chess layout, accessible controls, or canonical portrait fidelity.
 
 **Next animation storyboard:** after choosing specific fire-breathing rook dragons from the books, design their first signature capture. Do not silently continue treating the original generic knight Fire Dragon as a canonical character.
 
 ## Phase 5: approve the visual language *before* production implementation
 
 1. **Reference/canon pass.** Assemble a short, explicit reference sheet from book-owned/user-provided pages or legitimate previews, citing which *book* character, creature, setting, or detail each reference establishes. Never use film designs as a substitute for book references.
-2. **Complete dragon roster selection.** Preserve the already selected Hooligan and Meathead human/Bishop casting in `docs/CHARACTER_ROSTER.md`. Choose book-canon fire-breathing dragons for the rooks, and other book dragons for the knights; confirm how mirroring works across tribes. Keep the chess rules unchanged.
+2. **Approve or revise eight distinct named dragons.** Preserve the already selected Hooligan and Meathead King/Queen/Bishop casting. Review the roster's named rook/knight candidates against book appearances, faction story coherence and actual documented fire ability; avoid duplicate names and Monstrous Nightmares. Switch weak candidates to book species as needed. Keep chess rules unchanged.
 3. **Explore rich-colour style variants.** Produce 2–3 coherent variations **within the owner's selected richly coloured animated-storybook direction**, and compare (a) the opening screen, (b) a 360px-wide board with readable character tokens and opposing teams, and (c) one proposed book-dragon capture storyboard. Vary palette, hand-drawn linework, painted depth and motion personality; do not re-open ink-only versus coloured as the principal choice. Do not start by generating dozens of disconnected assets.
 4. **Approve animation language.** Storyboard anticipation, character action, impact, comic reaction, and recovery for **one** capture. Specify pose changes, staging, timing, effects, sound intent, reduced-motion behavior, and when the result becomes readable again. Motion must convey personality, not just translate geometric shapes.
 5. **Human visual gate.** The owner reviews variants within the already chosen rich-colour direction at actual phone size, including a short landscape layout, selects a concrete treatment, accepts/changes the roster and storyboard, and records specific concerns. Child feedback is valuable; screenshot/CI checks cannot replace this decision.
@@ -78,7 +80,7 @@ The owner must watch and accept a complete **real-device** animation, including 
 ## Decisions requiring owner approval
 
 1. Which book volume(s) / specific character depictions should anchor the visual reference?
-2. Which specific **book dragon designs** take the paired rook and knight slots? How do matching species differ between Hooligan and Meathead tokens?
+2. Approve/revise the **eight distinct named dragon proposals**, especially the Green Death and Luna story-allegiance tradeoff and what fire effects book canon supports.
 3. Which palette, rendering approach and character-design variant best implements the **already selected richly coloured animated-book aesthetic**?
 4. Which book **fire-breathing rook dragon** should perform the first signature capture?
 5. What capture length feels enjoyable at Normal speed after repeated viewing?
