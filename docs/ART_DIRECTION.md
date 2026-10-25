@@ -40,6 +40,13 @@ See [the visual reset plan](plans/2026-10-25-book-visual-reset.md) and [characte
 - **Priority for phone readability:** identifiable chess-piece role, faction identity, selected/legal-move feedback, then artwork detail. Rich, atmospheric scenery should sit mostly outside the playable 8×8 board; effects should never conceal the turn or destination for more than their intended brief action.
 - The recent concept montage confirms the **environmental/UI mood**, not individual character looks, production-ready 64-square accuracy, or attack animation quality. **Piece identities are approved separately in the roster.** Validate an actual playable-resolution design next.
 
+## Owner concept feedback — 2026-10-25
+
+- The newly generated **original fantasy/Viking roster sheet and six-stage Fireworm capture storyboard** are positively received as *visual concepts*, **not copied or production-ready character assets**.
+- **Hairy Scary Librarian correction (defer until individual character-art pass):** although he is the **Black Queen as a chess role**, depict him visually as a **hairy, frightening, distinctly male barbarian**, rugged and physically imposing, not as a feminine or queen-like royal portrait. Do not regenerate the entire concept sheet just for this correction.
+- **Fireworm capture sequence:** retain the exuberant, firework-like burst of flames, sparks, exaggerated comic impact, smoke and triumphant return seen in the concept. This is the user's favourite element and should guide the first signature-attack storyboard. Retain clearly legible defender, nonviolent comic tone, mobile accessibility, reduced-motion/Skip support and appropriate flash limits. **Actual animation duration, assets and full device acceptance remain pending.**
+- **Originality requirement:** produce new fantasy/Viking and dragon designs with independent shapes, costumes, colour details, scenes and choreography. Book-inspired names/roles are casting references, **not instructions to trace, copy or closely imitate any particular book illustration, film character model, fan art, card layout or storyboard frame**.
+
 ## Overall style
 Use an illustrated children's storybook-fantasy look:
 - Hand-drawn energy.
