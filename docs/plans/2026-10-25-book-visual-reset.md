@@ -35,6 +35,8 @@ The owner prefers **Concept 3: richly painted fairytale illustration**, as a **c
 
 **Next visual pair:** (1) an 8×8 **mobile board** with Hooligan/Meathead faction colours and identifiable human/dragon roles, with room for gameplay controls; (2) a **faction roster sheet** mapping all six chess-piece classes and highlighting the separate book characters for the bishops. Both are concept art, not source assets, UI implementation, exact canon illustrations, or a substitute for measured phone legibility.
 
+**Concept-image provenance:** The generated mobile board and faction roster mockups from this design review are *illustrative previews only*; they have not been committed as production assets. Generated labels/names attached to rook and knight dragons (for example “Stormfang,” “Blazewing,” “Cloudjumper,” or “Windrider”) are **NOT confirmed book-canon selections** and must not be written into the character registry on the strength of a generated picture. Actual book species and the four dragon roles remain to be selected. The images also do not certify a precise playable chess layout, accessible controls, or canonical portrait fidelity.
+
 **Next animation storyboard:** after choosing specific fire-breathing rook dragons from the books, design their first signature capture. Do not silently continue treating the original generic knight Fire Dragon as a canonical character.
 
 ## Phase 5: approve the visual language *before* production implementation
