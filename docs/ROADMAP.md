@@ -26,3 +26,16 @@ Physical iOS Safari/Android Chrome, safe areas/browser bars, high-density readab
 ## Deferred product work
 
 Illustrated sprites and sound packs, dedicated Viking/other character presenters, and a single-player opponent require separate scope and acceptance. No roster expansion, gameplay changes, or bundle optimization is part of Recovery Phase 3.
+
+## Book-first visual development (proposed after recovery)
+
+Owner phone testing confirmed the game is broadly functional as chess but the animation quality and *How to Train Your Dragon* **book** setting are far below the target. Treat functional stability as a foundation, **not product/visual acceptance**. This is a change of priority, not a claim that the original visual vertical slice passed.
+
+1. **Phase 5 — Creative direction and visual approval (next):** book-canon reference selection, proposed chess-piece/character casting, two coherent style treatments, phone-scale board/menu concepts, and a storyboard for one signature dragon capture. Explicit owner approval is the exit criterion. [Plan](plans/2026-10-25-book-visual-reset.md).
+2. **Phase 6 — One outstanding showcase capture:** produce approved character assets, real sound and expressive pose-driven choreography for one attack. Preserve the existing chess engine and capture lifecycle; accept the result by watching it on a real phone, not merely automated tests.
+3. **Phase 7 — Complete the themed experience:** board tokens, other character attacks, menu/setting treatment, book-setting environment, and cohesive audio, using the Phase 6 quality benchmark.
+4. **Phase 8 — Family and device refinement:** assess clarity, repetition fatigue, comfort, child usability and performance across physical phones and play sessions.
+
+**Do not commission broad animation/roster implementation until Phase 5 visual direction and piece casting are approved.** Automated regression testing continues for every application change. Dedicated performance measurements and physical-device acceptance are still required.
+
+This sequence supersedes the earlier implied visual-completion claims. Previous recovery documents remain an accurate historical technical record.
