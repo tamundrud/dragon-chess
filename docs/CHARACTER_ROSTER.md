@@ -36,6 +36,12 @@
 - **Seaslug is excluded** by owner request. Green Death, Stormfly, Furious, Luna, Wodensfang and other characters without adequate tribe connections must not be used simply because they appear in the books.
 - All eight approved rook/knight identities are **different across sides**. Where a position is a species, it is **not a newly coined proper name**.
 
+## Deferred character-art correction — Hairy Scary Librarian
+
+**Owner feedback (2026-10-25):** The Black Queen's **role** stays the Hairy Scary Librarian, but **his visual design must be a hairy, scary, unmistakably male barbarian**. Do not depict a feminine queen or regal woman. His chess movement remains that of a normal queen. The previously generated concept sheet can be retained as a broad mood reference; correct the individual portrait during the character-art pass instead of regenerating the entire sheet.
+
+**Fireworm storyboard:** The owner particularly likes the energetic, firework-like fire/explosion sequence in the first concept. Preserve its lively, comic visual impact as the starting creative benchmark, subject to storyboard, flash-safety and real-phone animation review. Neither image is an approved production sprite.
+
 ## Reference notes (secondary sources, check primary book art before asset production)
 
 | Evidence | Reference |
