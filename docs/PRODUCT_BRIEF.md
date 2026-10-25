@@ -52,3 +52,11 @@ Other characters may use deliberate temporary silhouettes.
 - Technical milestones are largely implemented, but **the product's central visual promise is not yet accepted**: current pieces and generic battle art are placeholders, the Fire Dragon is procedural, and no sound pack ships.
 - The next priority is a coherent book-first visual treatment and one genuinely engaging capture animation, assessed by the owner on a real phone rather than by CI alone.
 - See [the visual reset plan](plans/2026-10-25-book-visual-reset.md) for approval gates before another animation implementation phase.
+
+## Approved family-game factions and roles (2026-10-25)
+
+- White plays as the **Hairy Hooligans** from Berk; Black as their rivals, the **Meathead clan**.
+- White king **Stoick the Vast**, queen **Valhallarama**, bishops **Hiccup** and **book Toothless**.
+- Black king **Mogadon the Meathead**, queen **Hairy Scary Librarian**, bishops **Thuggory** and his dragon **Killer**.
+- Both sides have **barbarian warrior pawns**; rooks are **fire-breathing book dragons** and knights are other **book dragons**, with dragon types potentially mirrored across factions while remaining visibly allegiance-coded.
+- The richly painted storybook fantasy **environment/UI style** is preferred; individual characters, dragon species, full board depiction and animation performance still require concept approval. [Roster](CHARACTER_ROSTER.md) is authoritative for casting and status.
