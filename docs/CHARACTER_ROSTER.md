@@ -1,6 +1,6 @@
 # Character roster — tribes, book evidence, and provisional dragons
 
-**Status — October 25, 2026:** The tribe identities, Kings, Queens, Bishops and warrior pawns are selected. The rook/knight casting below is a **NEW PROPOSAL, NOT YET OWNER-APPROVED**. Earlier cross-tribe proposals featuring Green Death, Stormfly, Furious, Luna and unrelated named dragons are rejected and must not be revived by implementation.
+**Status — October 25, 2026:** The tribe identities, Kings, Queens, Bishops and warrior pawns are selected. **White Knight 2 = One Eye is now owner-selected** for diversity (2026-10-25). The other seven rook/knight assignments remain **proposals, NOT YET OWNER-APPROVED**. Earlier cross-tribe proposals featuring Green Death, Stormfly, Furious, Luna and unrelated named dragons are rejected and must not be revived by implementation.
 
 ## Casting principles
 
@@ -21,14 +21,14 @@
 | Rook 1 | **Fireworm** — Snotlout's Monstrous Nightmare | **Flamehuffer** — unnamed Meathead-owned representative | **Proposal**; Hooligan owner confirmed and Flamehuffer fire documented, but Meathead ownership is **plausible invention**, not attested |
 | Rook 2 | **Hookfang** — Stoick's Monstrous Nightmare | **Common or Garden Dragon** — unnamed Meathead-owned representative | **Proposal**; Stoick connection confirmed and Common or Garden fire documented, but Meathead ownership is **plausible invention**, not attested |
 | Knight 1 | **Windwalker** — Hiccup's riding dragon | **Driller-Dragon** — unnamed Meathead library guard | **Proposal**; direct Hiccup and library links |
-| Knight 2 | **One Eye** — sabre-toothed dragon working with Hiccup/Hooligan trainees | **Poisonous Piffleworm** — unnamed library inhabitant | **Proposal**; One Eye is a *temporary ally*, not permanently Hooligan-owned; Piffleworms really inhabit Meathead library |
+| Knight 2 | **One Eye** — sabre-toothed dragon working with Hiccup/Hooligan trainees | **Poisonous Piffleworm** — unnamed library inhabitant | **White One Eye selected by owner**; his Hooligan connection is a temporary alliance, not permanent ownership. Black Piffleworm still proposed (documented library inhabitant) |
 | Pawns (8) | Barbarian Hooligan warriors | Barbarian Meathead warriors | **Selected archetype** |
 
 ### Why these dragons
 
 - **Fireworm** is Snotlout's flame-red Monstrous Nightmare and is described setting Fishlegs's workbooks on fire (Book 3). A directly book-grounded Hooligan fire rook.
 - **Hookfang** is **Stoick's** hunting dragon in the *books* (not Snotlout's, as in screen adaptations), another Monstrous Nightmare with species-level ability to breathe fire. Distinctive silhouette, temperament and flame animation should separate the two white rooks visually.
-- **Windwalker** is Hiccup's riding dragon; **One Eye** is a Sabre-Tooth Driver Dragon who helps Hiccup and the trainees. One Eye later develops his own allegiances. **Fallback if strict ownership is required:** **Newtsbreath**, Stoick's Gronckle, replaces One Eye as knight (not as an unverified fire-breathing rook).
+- **Windwalker** is Hiccup's riding dragon; **One Eye** is a Sabre-Tooth Driver Dragon who helps Hiccup and the trainees. One Eye later develops his own allegiances. **Owner chose One Eye over Newtsbreath** to diversify the dragons; keep this decision even though One Eye is an ally rather than a permanent tribal pet.
 - **Flamehuffer** is a fire-jet-breathing book species found in the Berk Dragon Nursery. No direct Meathead ownership is documented. This is a reasonable invented Meathead trainee's dragon based on the two tribes' shared dragon-initiation tradition, not a claim of canonical custody.
 - **Common or Garden Dragon** is a widespread trainable book species with documented ordinary fire-breathing; no named Meathead individual is verified. The game may portray an unnamed Meathead-owned representative.
 - **Driller-Dragons** explicitly guard the Meathead Public Library. **Poisonous Piffleworms** are actual small poisonous library inhabitants. Either can be used as a *faction-associated token* without implying that Mogadon personally trains it. Their attack choreography should be drilling/poison, **not unverified flames**.
@@ -50,8 +50,8 @@
 
 ## Open review decisions and implementation boundary
 
-- Owner must approve/replace the **eight dragon assignments**; this document does not automatically authorize character art or code updates.
-- In particular, review **One Eye vs Newtsbreath** for white knight 2; **Flamehuffer and Common or Garden** as plausible Meathead fire-breathing rooks; and a **Piffleworm** being small enough to require an enlarged chess token silhouette.
+- **One Eye as White Knight 2 is approved.** Owner must still approve/revise the **remaining seven dragon assignments**; this document does not authorize character art or code updates.
+- In particular, review **Flamehuffer and Common or Garden** as plausible Meathead fire-breathing rooks, and whether a **Piffleworm** requires an enlarged chess token silhouette. **Do not substitute Newtsbreath for the owner-selected One Eye.**
 - Test all proposed pieces at actual phone scale, then approve one expressive fire-rook capture for implementation, preserving `chess.js`, single-commit capture lifecycle, Skip/reduced-motion and mobile layout.
 - The **current code** still has white knights mapped to a procedural generic Fire Dragon and mostly placeholder tokens/presenters. Do not confuse this proposed roster with implemented functionality.
 
