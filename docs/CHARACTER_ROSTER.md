@@ -45,7 +45,7 @@
 | Hiccup and One Eye work together | [One Eye](https://howtotrainyourdragon.fandom.com/wiki/One_Eye) |
 | Stoick has Newtsbreath, Hookfang and Bullheart | [Stoick — books](https://howtotrainyourdragon.fandom.com/wiki/Stoick_the_Vast_(Books)) |
 | Meathead trainees bring dragons to the joint initiation | [Meathead Tribe — books](https://howtotrainyourdragon.fandom.com/wiki/Meathead_Tribe_(Books)), [Dragon Initiation Programme](https://howtotrainyourdragon.fandom.com/wiki/Dragon_Initiation_Programme) |
-| Fire capabilities of the two proposed Meathead rook species | [Flamehuffer](https://howtotrainyourdragon.fandom.com/wiki/Flamehuffer), [Common or Garden Dragon — books](https://howtotrainyourdragon.fandom.com/wiki/Common_or_Garden_Dragon_(Books)) |
+| Fire capabilities of the two selected Meathead rook species | [Flamehuffer](https://howtotrainyourdragon.fandom.com/wiki/Flamehuffer), [Common or Garden Dragon — books](https://howtotrainyourdragon.fandom.com/wiki/Common_or_Garden_Dragon_(Books)) |
 | Meathead library's Driller-Dragons and Piffleworms | [Meathead Public Library](https://howtotrainyourdragon.fandom.com/wiki/Meathead_Public_Library), [Driller-Dragon](https://howtotrainyourdragon.fandom.com/wiki/Driller-Dragon), [Poisonous Piffleworm](https://howtotrainyourdragon.fandom.com/wiki/Poisonous_Piffleworm) |
 
 ## Pawn promotion — approved gameplay/visual identity rule
