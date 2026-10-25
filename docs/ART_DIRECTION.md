@@ -4,11 +4,16 @@
 
 **Source of truth:** Cressida Cowell's *How to Train Your Dragon* **books and their illustrations**, not the film/TV designs. This is a humorous, unruly Viking-and-dragon adventure, not a generic solemn fantasy battle. Use book-specific reference material, ideally selected original pages, before locking character silhouettes, palette or scenes. Do not reinterpret Toothless as the cinematic Night Fury.
 
-Explore two coherent directions before choosing one:
-1. **Ink-led book illustration in motion:** lively irregular pen lines, exaggerated expressions, selective colour, handwritten/map-like details, and intentionally comic timing.
-2. **Coloured illustrated storybook:** stronger colour/painted texture and dimensional separation while retaining the book's playful exaggeration and character-specific silhouettes.
+**Selected direction (owner, 2026-10-25): richly coloured, animated interpretations of the BOOK characters.** This settles the broad visual approach; individual designs, palette, technique, and animation still require concept review.
 
-These are exploration options, **not pre-approved production art**. Neither requires fully copying existing copyrighted illustrations; asset provenance and future distribution must be reconsidered separately if the project scope changes.
+- Use appealing, full-colour illustrated characters with depth through painted shading, highlights, texture and expressive poses. Aim for a lively **2D animated storybook** aesthetic, not flat icons, a near-monochrome ink facsimile, or film-style 3D.
+- Preserve each character's **book identity, distinctive anatomy and comic personality**, even when taking artistic liberties with colour and animation. Consult specific book descriptions/illustrations before locking silhouettes. In particular, do not import film/TV character designs or make book Toothless a Night Fury.
+- Let inked/hand-drawn contours, imperfect shapes, lively backgrounds, parchment maps and Viking details support the colourful style; they should not constrain it to an almost black-and-white drawing.
+- Favour cheerful adventure and visual humour over the current dark, austere, generic fantasy look.
+- Explore 2–3 **variants within this chosen rich-colour direction**, varying colour palette, linework, painted texture and animation exaggeration. Do **not** treat an ink-only aesthetic as an equally open direction unless the owner reopens the decision.
+- Rendering method remains open: illustrated sprite sequences, layered 2D rigs and selective Phaser effects can be compared for expressiveness, mobile performance and maintainability. Phaser vector primitives alone are not the character art quality target.
+
+Art must be original or appropriately sourced for this family project; if distribution changes, reassess rights and asset provenance.
 
 The current UI's dark background, gold text, lettered token circles and procedural capture graphics are **implementation placeholders**, not evidence that the eventual visual direction has been reached.
 
@@ -28,17 +33,17 @@ See [the visual reset plan](plans/2026-10-25-book-visual-reset.md) and [characte
 Use an illustrated children's storybook-fantasy look:
 - Hand-drawn energy.
 - Inked outlines.
-- Light painted texture.
+- Rich, dimensional colour and painted texture.
 - Expressive silhouettes.
 - Uneven, lively shapes.
 - Humour and personality.
-- Warm fantasy atmosphere.
+- Vibrant, adventurous, comic fantasy atmosphere.
 - Strong readability.
 
 Avoid:
 - Photorealism.
 - Generic glossy mobile-game style.
-- Movie-like 3D designs.
+- Movie-like 3D designs or character appearances borrowed from screen adaptations.
 - Emoji or tiny icon pieces.
 - Flat corporate vector art.
 - Crude programmer art presented as final.
