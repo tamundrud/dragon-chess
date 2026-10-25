@@ -4,7 +4,9 @@
 
 **Source of truth:** Cressida Cowell's *How to Train Your Dragon* **books and their illustrations**, not the film/TV designs. This is a humorous, unruly Viking-and-dragon adventure, not a generic solemn fantasy battle. Use book-specific reference material, ideally selected original pages, before locking character silhouettes, palette or scenes. Do not reinterpret Toothless as the cinematic Night Fury.
 
-**Selected direction (owner, 2026-10-25): richly coloured, animated interpretations of the BOOK characters.** This settles the broad visual approach; individual designs, palette, technique, and animation still require concept review.
+**Selected direction (owner, 2026-10-25): richly coloured, animated interpretations of the BOOK characters.**
+
+**Preferred concept exploration (owner, 2026-10-25): Concept 3 — richly painted fairytale illustration.** Treat as a promising moodboard, **not final artwork or approval**. Preserve its luminous, atmospheric painted depth and richly coloured environments, but adapt them to playful **book-authentic** characters, clear 2D animation, and a legible 360px phone board. Do not let elaborate scenery obscure chess-piece identification or tap targets. Next approval gate: full-resolution portrait/landscape board and a pose-by-pose capture storyboard. This settles the broad visual approach; individual designs, palette, technique, and animation still require concept review.
 
 - Use appealing, full-colour illustrated characters with depth through painted shading, highlights, texture and expressive poses. Aim for a lively **2D animated storybook** aesthetic, not flat icons, a near-monochrome ink facsimile, or film-style 3D.
 - Preserve each character's **book identity, distinctive anatomy and comic personality**, even when taking artistic liberties with colour and animation. Consult specific book descriptions/illustrations before locking silhouettes. In particular, do not import film/TV character designs or make book Toothless a Night Fury.
