@@ -18,6 +18,10 @@ Use the original books and their illustrations as the source of truth for charac
 
 This is a private family project. No public distribution, monetization, or official affiliation is planned. Reassess rights and asset provenance if that changes.
 
+## Owner feedback: preferred concept (2026-10-25)
+
+The owner prefers **Concept 3: richly painted fairytale illustration**, as a **concept** rather than final art approval. Use it as the basis for the next detailed mockups: a full-size 360px mobile board and a single character-driven dragon-capture storyboard. Preserve colour, lighting, painterly atmosphere and a sense of adventure, while avoiding screen-adaptation designs, an overly solemn feel, or a visually crowded board. The characters, book fidelity, faction silhouettes, actual board legibility, visual rhythm, assets and animation still require explicit owner review. Concepts 1 and 2 remain rejected as the primary direction, but useful details can be borrowed if approved.
+
 ## Phase 5: approve the visual language *before* production implementation
 
 1. **Reference/canon pass.** Assemble a short, explicit reference sheet from book-owned/user-provided pages or legitimate previews, citing which *book* character, creature, setting, or detail each reference establishes. Never use film designs as a substitute for book references.
