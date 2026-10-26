@@ -27,7 +27,7 @@ export class FirewormPresenter implements AttackPresenter {
     const wing = scene.add.image(-25, -108, 'fireworm-sheet', 'wing').setDisplaySize(225, 225).setOrigin(0.5, 0.85);
     const body = scene.add.image(-37, -12, 'fireworm-sheet', 'body').setDisplaySize(290, 290);
     const bodyRestScaleY = body.scaleY;
-    const head = scene.add.image(32, -78, 'fireworm-sheet', 'head').setDisplaySize(240, 240).setOrigin(0.35, 0.8);
+    const head = scene.add.image(32, -20, 'fireworm-sheet', 'head').setDisplaySize(240, 240).setOrigin(0.4, 1);
     dragon.add([wing, body, head]);
     const target = scene.add.image(616, 390, 'fireworm-sheet', 'defender').setDisplaySize(205, 205);
     root.add([dragon, target]);
@@ -129,7 +129,7 @@ export class FirewormPresenter implements AttackPresenter {
     at(1980, () => {
       say('recovering', 'Quite pleased with himself.');
       head.setFrame('head');
-      tween({ targets: head, angle: -8, y: -88, duration: 260, yoyo: true, ease: 'Sine.easeInOut' });
+      tween({ targets: head, angle: -8, y: -30, duration: 260, yoyo: true, ease: 'Sine.easeInOut' });
       tween({ targets: wing, angle: -6, duration: 450, ease: 'Sine.easeInOut' });
       tween({ targets: target, y: 440, alpha: 0, duration: 520 });
       const ember = scene.add.ellipse(402, 270, 5, 8, 0xffca60);
