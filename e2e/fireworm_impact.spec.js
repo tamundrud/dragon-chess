@@ -30,7 +30,11 @@ for(const [defender,size]of[['pawn',215],['rook',275]])test(`${defender} faces F
     await page.getByLabel('Presentation').selectOption(presentation);await page.getByLabel('Speed').selectOption(speed);
     await activate(page.getByRole('button',{name:'Replay capture'}));
     await page.clock.runFor(650*factor);await captureScreenshot(page,info,`${defender}-${presentation}-${speed}-facing`);
-    await page.clock.runFor(930*factor);const engulfed=await fireOnBody(page,size);
+    for (const [name, delta] of [['launch',250],['approach',200],['precontact',190],['contact',80],['expanding',110]]) {
+      await page.clock.runFor(delta*factor);
+      await captureScreenshot(page,info,`${defender}-${presentation}-${speed}-${name}`);
+    }
+    await page.clock.runFor(100*factor);const engulfed=await fireOnBody(page,size);
     await captureScreenshot(page,info,`${defender}-${presentation}-${speed}-engulfed`);
     expect(engulfed,'painted fire must cover the opaque interior of the defender').toBeGreaterThan(.2);
     await page.clock.runFor(770*factor);await captureScreenshot(page,info,`${defender}-${presentation}-${speed}-defeated`);
