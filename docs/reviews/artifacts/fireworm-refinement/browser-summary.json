@@ -1,0 +1,575 @@
+{
+  "stats": {
+    "startTime": "2026-10-26T13:42:50.706Z",
+    "duration": 753170.292,
+    "expected": 42,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "source_commit": "952e894",
+  "cases": [
+    {
+      "project": "chromium",
+      "title": "complete character poses are connected transparent silhouettes",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 3562,
+          "errors": []
+        }
+      ],
+      "retained_frames": []
+    },
+    {
+      "project": "chromium",
+      "title": "board remains visibly dimmed behind a named rook and arena remains selectable",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 51212,
+          "errors": []
+        }
+      ],
+      "retained_frames": []
+    },
+    {
+      "project": "chromium",
+      "title": "actual moved Flamehuffer capture supports touch Skip, Undo, recapture and abort",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 84141,
+          "errors": []
+        }
+      ],
+      "retained_frames": []
+    },
+    {
+      "project": "chromium",
+      "title": "arena preference persists and board preference remains the reset default",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 11509,
+          "errors": []
+        }
+      ],
+      "retained_frames": []
+    },
+    {
+      "project": "phone-360-portrait",
+      "title": "complete character poses are connected transparent silhouettes",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 2761,
+          "errors": []
+        }
+      ],
+      "retained_frames": []
+    },
+    {
+      "project": "phone-360-portrait",
+      "title": "board remains visibly dimmed behind a named rook and arena remains selectable",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 28789,
+          "errors": []
+        }
+      ],
+      "retained_frames": [
+        "phone-360-portrait-foreground-board-connected-pose.png",
+        "phone-360-portrait-arena-comparison-connected-pose.png"
+      ]
+    },
+    {
+      "project": "phone-360-portrait",
+      "title": "actual moved Flamehuffer capture supports touch Skip, Undo, recapture and abort",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 61275,
+          "errors": []
+        }
+      ],
+      "retained_frames": [
+        "phone-360-portrait-actual-moved-flamehuffer-impact.png"
+      ]
+    },
+    {
+      "project": "phone-360-portrait",
+      "title": "arena preference persists and board preference remains the reset default",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 8522,
+          "errors": []
+        }
+      ],
+      "retained_frames": []
+    },
+    {
+      "project": "phone-landscape",
+      "title": "complete character poses are connected transparent silhouettes",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 2798,
+          "errors": []
+        }
+      ],
+      "retained_frames": []
+    },
+    {
+      "project": "phone-landscape",
+      "title": "board remains visibly dimmed behind a named rook and arena remains selectable",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 19663,
+          "errors": []
+        }
+      ],
+      "retained_frames": [
+        "phone-landscape-foreground-board-connected-pose.png",
+        "phone-landscape-arena-comparison-connected-pose.png"
+      ]
+    },
+    {
+      "project": "phone-landscape",
+      "title": "actual moved Flamehuffer capture supports touch Skip, Undo, recapture and abort",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 43345,
+          "errors": []
+        }
+      ],
+      "retained_frames": [
+        "phone-landscape-actual-moved-flamehuffer-impact.png"
+      ]
+    },
+    {
+      "project": "phone-landscape",
+      "title": "arena preference persists and board preference remains the reset default",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 7827,
+          "errors": []
+        }
+      ],
+      "retained_frames": []
+    },
+    {
+      "project": "chromium",
+      "title": "Fireworm moved rook capture, rotate across phases, complete",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 90088,
+          "errors": []
+        }
+      ],
+      "retained_frames": []
+    },
+    {
+      "project": "chromium",
+      "title": "Fireworm moved rook capture, rotate across phases, Skip",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 69619,
+          "errors": []
+        }
+      ],
+      "retained_frames": []
+    },
+    {
+      "project": "chromium",
+      "title": "Fireworm moved rook capture, rotate across phases, abort",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 58241,
+          "errors": []
+        }
+      ],
+      "retained_frames": []
+    },
+    {
+      "project": "chromium",
+      "title": "Fireworm actual rook capture mode=fast, reduced=false, enabled=true",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 43822,
+          "errors": []
+        }
+      ],
+      "retained_frames": []
+    },
+    {
+      "project": "chromium",
+      "title": "Fireworm actual rook capture mode=normal, reduced=true, enabled=true",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 43368,
+          "errors": []
+        }
+      ],
+      "retained_frames": []
+    },
+    {
+      "project": "chromium",
+      "title": "Fireworm actual rook capture mode=instant, reduced=false, enabled=true",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 35262,
+          "errors": []
+        }
+      ],
+      "retained_frames": []
+    },
+    {
+      "project": "chromium",
+      "title": "Fireworm actual rook capture mode=normal, reduced=false, enabled=false",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 33718,
+          "errors": []
+        }
+      ],
+      "retained_frames": []
+    },
+    {
+      "project": "chromium",
+      "title": "isolated proof supports stable replay, Skip, Fast, Instant and reduced motion",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 42417,
+          "errors": []
+        }
+      ],
+      "retained_frames": []
+    },
+    {
+      "project": "chromium",
+      "title": "cold artwork keeps gameplay unready until the attack presenter is available",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 8613,
+          "errors": []
+        }
+      ],
+      "retained_frames": []
+    },
+    {
+      "project": "chromium",
+      "title": "leaving while art loads cannot attach a stale presenter to the next game",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 42553,
+          "errors": []
+        }
+      ],
+      "retained_frames": []
+    },
+    {
+      "project": "phone-360-portrait",
+      "title": "Fireworm moved rook capture, rotate across phases, complete",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 53566,
+          "errors": []
+        }
+      ],
+      "retained_frames": [
+        "phone-360-portrait-fireworm-launch-rotated.png",
+        "phone-360-portrait-fireworm-fireworks.png"
+      ]
+    },
+    {
+      "project": "phone-360-portrait",
+      "title": "Fireworm moved rook capture, rotate across phases, Skip",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 44678,
+          "errors": []
+        }
+      ],
+      "retained_frames": []
+    },
+    {
+      "project": "phone-360-portrait",
+      "title": "Fireworm moved rook capture, rotate across phases, abort",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 60600,
+          "errors": []
+        }
+      ],
+      "retained_frames": []
+    },
+    {
+      "project": "phone-360-portrait",
+      "title": "Fireworm actual rook capture mode=fast, reduced=false, enabled=true",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 46740,
+          "errors": []
+        }
+      ],
+      "retained_frames": []
+    },
+    {
+      "project": "phone-360-portrait",
+      "title": "Fireworm actual rook capture mode=normal, reduced=true, enabled=true",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 28562,
+          "errors": []
+        }
+      ],
+      "retained_frames": []
+    },
+    {
+      "project": "phone-360-portrait",
+      "title": "Fireworm actual rook capture mode=instant, reduced=false, enabled=true",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 23946,
+          "errors": []
+        }
+      ],
+      "retained_frames": []
+    },
+    {
+      "project": "phone-360-portrait",
+      "title": "Fireworm actual rook capture mode=normal, reduced=false, enabled=false",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 24676,
+          "errors": []
+        }
+      ],
+      "retained_frames": []
+    },
+    {
+      "project": "phone-360-portrait",
+      "title": "isolated proof supports stable replay, Skip, Fast, Instant and reduced motion",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 22785,
+          "errors": []
+        }
+      ],
+      "retained_frames": []
+    },
+    {
+      "project": "phone-360-portrait",
+      "title": "cold artwork keeps gameplay unready until the attack presenter is available",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 10381,
+          "errors": []
+        }
+      ],
+      "retained_frames": []
+    },
+    {
+      "project": "phone-360-portrait",
+      "title": "leaving while art loads cannot attach a stale presenter to the next game",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 24778,
+          "errors": []
+        }
+      ],
+      "retained_frames": []
+    },
+    {
+      "project": "phone-landscape",
+      "title": "Fireworm moved rook capture, rotate across phases, complete",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 50784,
+          "errors": []
+        }
+      ],
+      "retained_frames": [
+        "phone-landscape-fireworm-fireworks.png",
+        "phone-landscape-fireworm-recovery-rotated.png"
+      ]
+    },
+    {
+      "project": "phone-landscape",
+      "title": "Fireworm moved rook capture, rotate across phases, Skip",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 22296,
+          "errors": []
+        }
+      ],
+      "retained_frames": []
+    },
+    {
+      "project": "phone-landscape",
+      "title": "Fireworm moved rook capture, rotate across phases, abort",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 19583,
+          "errors": []
+        }
+      ],
+      "retained_frames": []
+    },
+    {
+      "project": "phone-landscape",
+      "title": "Fireworm actual rook capture mode=fast, reduced=false, enabled=true",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 15330,
+          "errors": []
+        }
+      ],
+      "retained_frames": []
+    },
+    {
+      "project": "phone-landscape",
+      "title": "Fireworm actual rook capture mode=normal, reduced=true, enabled=true",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 14530,
+          "errors": []
+        }
+      ],
+      "retained_frames": []
+    },
+    {
+      "project": "phone-landscape",
+      "title": "Fireworm actual rook capture mode=instant, reduced=false, enabled=true",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 11702,
+          "errors": []
+        }
+      ],
+      "retained_frames": []
+    },
+    {
+      "project": "phone-landscape",
+      "title": "Fireworm actual rook capture mode=normal, reduced=false, enabled=false",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 12444,
+          "errors": []
+        }
+      ],
+      "retained_frames": []
+    },
+    {
+      "project": "phone-landscape",
+      "title": "isolated proof supports stable replay, Skip, Fast, Instant and reduced motion",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 10635,
+          "errors": []
+        }
+      ],
+      "retained_frames": []
+    },
+    {
+      "project": "phone-landscape",
+      "title": "cold artwork keeps gameplay unready until the attack presenter is available",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 4139,
+          "errors": []
+        }
+      ],
+      "retained_frames": []
+    },
+    {
+      "project": "phone-landscape",
+      "title": "leaving while art loads cannot attach a stale presenter to the next game",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 12471,
+          "errors": []
+        }
+      ],
+      "retained_frames": []
+    }
+  ]
+}

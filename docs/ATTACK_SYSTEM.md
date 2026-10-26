@@ -50,6 +50,14 @@ Implements the 11-beat storybook capture animation for `fire_stream_attack`:
 
 The shared 800×600 stage supports Normal (3350ms candidate), Fast (0.35×), Instant/disabled (no presentation), and reduced motion (two poses, low-motion fade, static subdued sparks, 1000ms before speed scaling). There is one impact, no camera movement or strobe, and no required audio. All timings remain subject to repeated owner phone viewing.
 
-The isolated `/?preview=fireworm` proof uses the same Phaser presenter and assets, with Replay/Skip and speed/reduced-motion controls. It does not commit chess moves. The normal game still requires legal captures; the browser fixture moves Fireworm from a1 through a3 and b3 before capturing on b4.
+The `/?preview=fireworm` proof uses the same presenter, real BoardScene and a separate ChessGameController with legal starting-position fixtures. Replay resets that fixture; completion/Skip commits its prepared capture once. It never changes the active game. Select Flamehuffer (rook) or the temporary raider (pawn), board/arena, speed and reduced motion; changes apply on Replay. The normal game still requires legal captures.
 
 See [the verification and owner-acceptance record](reviews/fireworm-animation-proof.md).
+
+## Foreground refinement (owner feedback on PR #13)
+
+Fireworm defaults to enlarged foreground combatants over the actual board, dimmed at 28% opacity. Settings retain the painted arena for comparison; each capture snapshots that choice. Complete connected ready/breath/proud illustrations replace independently transformed anatomical cutouts. The full character moves together; larger painted ribbons, a rising plume and colourful spark trails sit behind the characters. Reduced motion retains subdued fades/static sparks without emergence travel.
+
+The director carries the captured piece's actual class/colour alongside persistent identity. The a8 black rook is Flamehuffer; h8 is the distinct Common or Garden Dragon. Only Flamehuffer receives new defender art in this slice. Other unsupported targets use an explicit class/faction placeholder rather than pawn artwork. From a new game, `a2-a4 a7-a5 a1-a3 a8-a6 a3-b3 a6-b6 b3xb6` demonstrates a legal moved-rook capture and preserves identities through Undo.
+
+See [the refinement evidence and outstanding owner acceptance](reviews/fireworm-foreground-refinement.md). The earlier prototype record above remains historical.

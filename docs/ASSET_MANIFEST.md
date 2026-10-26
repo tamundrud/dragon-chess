@@ -48,7 +48,14 @@ public/assets/
 
 ## Fireworm capture prototype (2026-10-26)
 
-- `public/art/fireworm/rig.png`: original generated transparent cutout atlas; independently animated body, wing, two neck/head poses, painted flame and temporary raider defender.
+- `public/art/fireworm/rig.png`: original generated transparent cutout atlas; retained original rig source, painted flame and temporary raider defender. The refinement uses complete character poses instead of its independent anatomical cutouts.
 - `public/art/fireworm/cove.png`: original generated painted coastal stage.
 - [Production method, creative prompts and limitations](../public/art/fireworm/PROVENANCE.md). These are prototype assets with owner visual acceptance pending.
 - `firewormAssets.ts` preloads images and defines measured texture-frame bounds. `FirewormPresenter` owns its timers/tweens/objects; effects use modest coloured spark trajectories with trails and translucent smoke. No Fireworm sound cue or audio file ships.
+
+### Foreground refinement additions
+
+- `public/art/fireworm/ready.png`, `breath.png`, `proud.png`: original complete transparent Fireworm poses (1254×1254); all character parts share one actor transform.
+- `public/art/fireworm/flamehuffer.png`: original transparent non-pawn defender (1254×1254), selected only for the black Flamehuffer rook identity.
+- The cove remains the comparison arena. The default board presentation draws no painted background. Other defenders remain temporary; full-roster artwork is out of scope.
+- The prototype PNG pack is now approximately 13MB uncompressed-on-disk; loading readiness is tested, physical-phone memory/frame-rate acceptance remains open. See [refinement verification](reviews/fireworm-foreground-refinement.md) and the provenance document above.

@@ -1,0 +1,146 @@
+[
+  {
+    "name": "portrait-board-normal",
+    "viewport": {
+      "width": 360,
+      "height": 800
+    },
+    "presentation": "board",
+    "speed": "normal",
+    "target": "flamehuffer rook",
+    "wholeNaturalPlayback": true,
+    "replayAt": 2.87,
+    "endAt": 9.264,
+    "errors": [],
+    "video": "portrait-board-normal.webm",
+    "retention": "Full original browser recording, including setup, Replay and completed return; no cuts or retiming.",
+    "duration_seconds": 10.24,
+    "raw_file": "/workspace/dragon-chess-artifacts/refinement-motion/c8f139ad6dcd9325144cfb498c389025.webm"
+  },
+  {
+    "name": "portrait-board-fast",
+    "viewport": {
+      "width": 360,
+      "height": 800
+    },
+    "presentation": "board",
+    "speed": "fast",
+    "target": "flamehuffer rook",
+    "wholeNaturalPlayback": true,
+    "replayAt": 2.559,
+    "endAt": 6.223,
+    "errors": [],
+    "video": "portrait-board-fast.webm",
+    "retention": "Full original browser recording, including setup, Replay and completed return; no cuts or retiming.",
+    "duration_seconds": 6.96,
+    "raw_file": "/workspace/dragon-chess-artifacts/refinement-motion/c897269c27a70ebbb2d21f04ffe045a6.webm"
+  },
+  {
+    "name": "portrait-arena-normal",
+    "viewport": {
+      "width": 360,
+      "height": 800
+    },
+    "presentation": "arena",
+    "speed": "normal",
+    "target": "flamehuffer rook",
+    "wholeNaturalPlayback": true,
+    "replayAt": 2.615,
+    "endAt": 9.277,
+    "errors": [],
+    "video": "portrait-arena-normal.webm",
+    "retention": "Full original browser recording, including setup, Replay and completed return; no cuts or retiming.",
+    "duration_seconds": 10.6,
+    "raw_file": "/workspace/dragon-chess-artifacts/refinement-motion/b39a46c251de49070a4db833e3e05d24.webm"
+  },
+  {
+    "name": "portrait-arena-fast",
+    "viewport": {
+      "width": 360,
+      "height": 800
+    },
+    "presentation": "arena",
+    "speed": "fast",
+    "target": "flamehuffer rook",
+    "wholeNaturalPlayback": true,
+    "replayAt": 2.553,
+    "endAt": 6.597,
+    "errors": [],
+    "video": "portrait-arena-fast.webm",
+    "retention": "Full original browser recording, including setup, Replay and completed return; no cuts or retiming.",
+    "duration_seconds": 7.48,
+    "raw_file": "/workspace/dragon-chess-artifacts/refinement-motion/cf7a48e18f104a84fd4987cd18770b30.webm"
+  },
+  {
+    "name": "landscape-board-normal",
+    "viewport": {
+      "width": 800,
+      "height": 360
+    },
+    "presentation": "board",
+    "speed": "normal",
+    "target": "flamehuffer rook",
+    "wholeNaturalPlayback": true,
+    "replayAt": 2.583,
+    "endAt": 8.802,
+    "errors": [],
+    "video": "landscape-board-normal.webm",
+    "retention": "Full original browser recording, including setup, Replay and completed return; no cuts or retiming.",
+    "duration_seconds": 9.92,
+    "raw_file": "/workspace/dragon-chess-artifacts/refinement-motion/dc4d6375fc4a4b2284d42cc4cd0841a2.webm"
+  },
+  {
+    "name": "landscape-board-fast",
+    "viewport": {
+      "width": 800,
+      "height": 360
+    },
+    "presentation": "board",
+    "speed": "fast",
+    "target": "flamehuffer rook",
+    "wholeNaturalPlayback": true,
+    "replayAt": 2.507,
+    "endAt": 6.122,
+    "errors": [],
+    "video": "landscape-board-fast.webm",
+    "retention": "Full original browser recording, including setup, Replay and completed return; no cuts or retiming.",
+    "duration_seconds": 6.84,
+    "raw_file": "/workspace/dragon-chess-artifacts/refinement-motion/940b1c8ab33da3d8b75bb3dd3b19af24.webm"
+  },
+  {
+    "name": "landscape-arena-normal",
+    "viewport": {
+      "width": 800,
+      "height": 360
+    },
+    "presentation": "arena",
+    "speed": "normal",
+    "target": "flamehuffer rook",
+    "wholeNaturalPlayback": true,
+    "replayAt": 2.486,
+    "endAt": 8.984,
+    "errors": [],
+    "video": "landscape-arena-normal.webm",
+    "retention": "Full original browser recording, including setup, Replay and completed return; no cuts or retiming.",
+    "duration_seconds": 10.0,
+    "raw_file": "/workspace/dragon-chess-artifacts/refinement-motion/dd7d3a7e3969d31dbcc9a1e0b0571828.webm"
+  },
+  {
+    "name": "landscape-arena-fast",
+    "viewport": {
+      "width": 800,
+      "height": 360
+    },
+    "presentation": "arena",
+    "speed": "fast",
+    "target": "flamehuffer rook",
+    "wholeNaturalPlayback": true,
+    "replayAt": 2.603,
+    "endAt": 6.668,
+    "errors": [],
+    "video": "landscape-arena-fast.webm",
+    "retention": "Full original browser recording, including setup, Replay and completed return; no cuts or retiming.",
+    "duration_seconds": 7.72,
+    "raw_file": "/workspace/dragon-chess-artifacts/refinement-motion/8530112d730e2e2d5b1c07eb2dcbe148.webm"
+  }
+]

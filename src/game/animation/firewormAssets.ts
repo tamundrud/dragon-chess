@@ -3,6 +3,8 @@ import Phaser from 'phaser';
 export function preloadFireworm(scene: Phaser.Scene): void {
   scene.load.image('fireworm-sheet', '/art/fireworm/rig.png');
   scene.load.image('fireworm-cove', '/art/fireworm/cove.png');
+  for (const pose of ['ready', 'breath', 'proud']) scene.load.image(`fireworm-${pose}`, `/art/fireworm/${pose}.png`);
+  scene.load.image('flamehuffer', '/art/fireworm/flamehuffer.png');
 }
 
 /** Measured cutout bounds: the generator did not honour equal-cell spacing. */

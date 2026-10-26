@@ -6,6 +6,8 @@ export class CharacterRegistry {
   private characters: Map<string, CharacterDefinition> = new Map();
   private squareAssignments: Map<string, string> = new Map([
     ['a1', 'fireworm'],
+    ['a8', 'flamehuffer'],
+    ['h8', 'common_or_garden'],
     ['h1', 'hookfang'],
     ['g1', 'fire_dragon'], // Assigned to one light-side knight
   ]);
@@ -41,6 +43,16 @@ export class CharacterRegistry {
       id: 'hookfang', displayName: 'Hookfang', faction: 'light', pieceType: 'r',
       boardTokenAsset: 'token_hookfang_temp', attackStageAsset: 'stage_hookfang_temp',
       defaultAttackId: 'generic_strike', artStatus: 'temporary', personalityTags: ['proud'],
+    });
+    this.register({
+      id: 'flamehuffer', displayName: 'Flamehuffer', faction: 'dark', pieceType: 'r',
+      boardTokenAsset: 'token_flamehuffer_temp', attackStageAsset: 'flamehuffer',
+      defaultAttackId: 'rival_strike', artStatus: 'temporary', personalityTags: ['bellows_chest', 'startled'],
+    });
+    this.register({
+      id: 'common_or_garden', displayName: 'Common or Garden Dragon', faction: 'dark', pieceType: 'r',
+      boardTokenAsset: 'token_garden_temp', attackStageAsset: 'stage_garden_temp',
+      defaultAttackId: 'rival_strike', artStatus: 'temporary', personalityTags: ['unassuming'],
     });
     // Light Faction (Berk)
     this.register({

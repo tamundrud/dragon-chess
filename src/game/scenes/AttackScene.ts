@@ -1,8 +1,9 @@
 import Phaser from 'phaser';
-import { AttackContext, AttackDefinition, AttackLifecycleState, AttackPresenter } from '../animation/attackTypes';
+import { AttackContext, AttackDefinition, AttackLifecycleState, AttackPlaybackSettings, AttackPresenter } from '../animation/attackTypes';
 import { AttackDirector } from '../animation/AttackDirector';
 import { CharacterRegistry } from '../characters/CharacterRegistry';
 import { AudioController } from '../audio/AudioController';
+import { BoardScene } from './BoardScene';
 import { FirewormPresenter } from '../animation/FirewormPresenter';
 import { preloadFireworm, frameFireworm } from '../animation/firewormAssets';
 import { FireDragonPresenter } from '../animation/FireDragonPresenter';
@@ -23,6 +24,8 @@ export class AttackScene extends Phaser.Scene implements AttackPresenter {
   private firewormPresenter!: FirewormPresenter;
   private fireDragonPresenter!: FireDragonPresenter;
   private cleanedUp = true;
+  private firewormBoard = false;
+  private firewormActive = false;
   private onCompleteCallback: (() => void) | null = null;
 
   constructor() {
@@ -136,20 +139,31 @@ export class AttackScene extends Phaser.Scene implements AttackPresenter {
   public playAttack(
     context: AttackContext,
     definition: AttackDefinition,
-    settings: { durationScale: number; reducedMotion: boolean },
+    settings: AttackPlaybackSettings,
     onPhaseChange: (phase: AttackLifecycleState) => void,
     onComplete: () => void
   ): void {
     this.cleanUpAttackPresentation();
     this.onCompleteCallback = onComplete;
     this.stageContainer.setVisible(true);
+    this.firewormActive = definition.id === 'fireworm_fireworks';
+    this.firewormBoard = this.firewormActive && settings.presentation !== 'arena';
+    this.layoutStage(this.scale.width, this.scale.height);
     this.drawOverlay();
 
     if (definition.id === 'fireworm_fireworks') {
       this.attackerContainer.setVisible(false);
       this.defenderContainer.setVisible(false);
       this.impactEffectContainer.setVisible(false);
-      this.firewormPresenter.playAttack(context, definition, settings, onPhaseChange, () => {
+      const board = this.scene.get('BoardScene') as BoardScene;
+      const point = (square: string) => {
+        const p = board.getSquareCenter(square);
+        const layout = fitAttackArtwork(this.scale.width, this.scale.height);
+        return { x:(p.x - layout.x) / layout.scale, y:(p.y - layout.y) / layout.scale };
+      };
+      this.firewormPresenter.playAttack(context, definition, { ...settings,
+        origins: () => ({ attacker:point(context.moveFrom), defender:point(context.moveTo), destination:point(context.moveTo) }),
+      }, onPhaseChange, () => {
         const callback = this.onCompleteCallback;
         this.onCompleteCallback = null;
         this.cleanUpAttackPresentation();
@@ -413,7 +427,7 @@ export class AttackScene extends Phaser.Scene implements AttackPresenter {
 
   private drawOverlay(): void {
     this.overlayGraphics.clear();
-    this.overlayGraphics.fillStyle(0x080808, 0.9);
+    this.overlayGraphics.fillStyle(0x080808, this.firewormBoard ? 0.28 : 0.9);
     this.overlayGraphics.fillRect(0, 0, this.scale.width, this.scale.height);
   }
 
@@ -439,14 +453,17 @@ export class AttackScene extends Phaser.Scene implements AttackPresenter {
       fontSize: statusFontSize,
       wordWrap: { width: Math.max(width * 0.9, statusFontSize * 2), useAdvancedWrap: true },
     });
-    this.statusText.setPosition(width / 2, height * 0.22);
+    this.statusText.setPosition(width / 2, this.firewormActive ? Math.max(statusFontSize, artwork.y + 28 * artwork.scale) : height * 0.22);
+    this.statusText.setStroke('#080808', this.firewormActive ? 4 : 0);
     for (const [text, x] of [[this.attackerText, 0.25], [this.defenderText, 0.75]] as const) {
       const fontSize = compact ? 12 : 18;
       text.setStyle({
         fontSize,
         wordWrap: { width: Math.max(width * 0.44, fontSize * 2), useAdvancedWrap: true },
       });
-      text.setPosition(width * x, height * 0.72);
+      const artX = x === 0.25 ? 170 : 620;
+      text.setPosition(this.firewormActive ? artwork.x + artX * artwork.scale : width * x,
+        this.firewormActive ? Math.min(height * 0.78, artwork.y + 548 * artwork.scale) : height * 0.72);
     }
     this.skipContainer.setPosition(width / 2, height * 0.9);
   }

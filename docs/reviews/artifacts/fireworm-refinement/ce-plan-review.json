@@ -1,0 +1,67 @@
+{
+  "status": "complete",
+  "artifact_path": "/workspace/dragon-chess/docs/plans/2026-10-26-fireworm-foreground-refinement-plan.md",
+  "mode": "non-interactive",
+  "document_type": "unified-plan",
+  "fixes_applied": 0,
+  "proposed_fixes_count": 0,
+  "decisions_count": 0,
+  "fyi_count": 0,
+  "findings": [],
+  "residual_risks": [],
+  "deferred_questions": [],
+  "confidence_check": "passed \u2014 local source patterns, legal fixture, boundaries and contract support execution; no section needs strengthening",
+  "reviewers": [
+    {
+      "reviewer": "feasibility",
+      "findings": [],
+      "residual_risks": [],
+      "deferred_questions": []
+    },
+    {
+      "reviewer": "design-lens",
+      "findings": [],
+      "residual_risks": [],
+      "deferred_questions": []
+    },
+    {
+      "reviewer": "scope-guardian-reviewer",
+      "findings": [],
+      "residual_risks": [],
+      "deferred_questions": []
+    },
+    {
+      "reviewer": "adversarial-document-reviewer",
+      "findings": [],
+      "residual_risks": [],
+      "deferred_questions": []
+    }
+  ],
+  "coverage": {
+    "selected": [
+      "coherence-reviewer",
+      "feasibility-reviewer",
+      "design-lens-reviewer",
+      "scope-guardian-reviewer",
+      "adversarial-document-reviewer"
+    ],
+    "completed": 4,
+    "failed_reviewers": [
+      {
+        "reviewer": "coherence-reviewer",
+        "reason": "Provider returned Selected model is at capacity after successful dispatch; it produced no review outcome."
+      }
+    ],
+    "lead_checks": [
+      "Requirements/units/verification remain consistent with owner feedback.",
+      "Data flow inspected: authoritative target metadata must supplement generic art ID.",
+      "Full-start legal moved-rook fixture was source-researched without runtime execution.",
+      "Only the requested plan was written; no implementation or tests executed by planner."
+    ]
+  },
+  "peer": {
+    "outcome": "in-process-fallback",
+    "reason": "Only codex CLI installed; no different-provider route available. No independent cross-model review claimed."
+  },
+  "completed_at": "2026-10-26T06:38:49.073418+00:00"
+}

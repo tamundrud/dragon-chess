@@ -1,3 +1,6 @@
+import type { PieceColor, PieceType } from '../../chess/chessTypes';
+import type { AttackPresentation } from '../../settings/settingsTypes';
+
 export type AttackLifecycleState =
   | 'idle'
   | 'preparing'
@@ -28,13 +31,22 @@ export interface AttackContext {
   defenderCharacterId: string;
   attackDefinitionId: string;
   isPromotion?: boolean;
+  defenderPieceType?: PieceType;
+  defenderColor?: PieceColor;
+}
+
+export interface AttackPlaybackSettings {
+  durationScale: number;
+  reducedMotion: boolean;
+  presentation?: AttackPresentation;
+  origins?: () => { attacker: { x: number; y: number }; defender: { x: number; y: number }; destination: { x: number; y: number } };
 }
 
 export interface AttackPresenter {
   playAttack(
     context: AttackContext,
     definition: AttackDefinition,
-    settings: { durationScale: number; reducedMotion: boolean },
+    settings: AttackPlaybackSettings,
     onPhaseChange: (phase: AttackLifecycleState) => void,
     onComplete: () => void
   ): void;

@@ -1,0 +1,74 @@
+{
+  "branch": "feat/fireworm-foreground-refinement",
+  "completed_at": "2026-10-26T13:50:51.177146+00:00",
+  "cost": {
+    "host": "codex",
+    "scope": {
+      "changed_lines": 858,
+      "depth": "full",
+      "exec_nontest_lines": 504,
+      "size_band": "large",
+      "unclassified_lines": 193
+    },
+    "stages": [
+      {
+        "elapsed_seconds": 6.404,
+        "ended_at": "2026-10-26T13:42:22.914542+00:00",
+        "facts": {
+          "changed_lines": 858,
+          "depth": "full",
+          "exec_nontest_lines": 504,
+          "size_band": "large",
+          "unclassified_lines": 193
+        },
+        "stage": "scope",
+        "started_at": "2026-10-26T13:42:16.510553+00:00"
+      },
+      {
+        "elapsed_seconds": 58.196,
+        "ended_at": "2026-10-26T13:43:21.110631+00:00",
+        "reviewers": 6,
+        "stage": "select",
+        "started_at": "2026-10-26T13:42:22.914542+00:00"
+      },
+      {
+        "candidates": 1,
+        "elapsed_seconds": 156.679,
+        "ended_at": "2026-10-26T13:45:57.789598+00:00",
+        "stage": "dispatch",
+        "started_at": "2026-10-26T13:43:21.110631+00:00"
+      },
+      {
+        "candidates": 1,
+        "elapsed_seconds": 21.776,
+        "ended_at": "2026-10-26T13:47:44.211264+00:00",
+        "stage": "merge",
+        "started_at": "2026-10-26T13:47:22.435592+00:00"
+      },
+      {
+        "elapsed_seconds": 50.205,
+        "ended_at": "2026-10-26T13:48:50.781958+00:00",
+        "stage": "validate",
+        "started_at": "2026-10-26T13:48:00.576809+00:00"
+      },
+      {
+        "candidates": 1,
+        "elapsed_seconds": 73.793,
+        "ended_at": "2026-10-26T13:50:51.280032+00:00",
+        "stage": "report",
+        "started_at": "2026-10-26T13:49:37.487495+00:00"
+      }
+    ],
+    "status": "complete",
+    "totals": {
+      "artifact_bytes": 417294,
+      "candidates": 1,
+      "elapsed_seconds": 367.053,
+      "reviewers": 6
+    },
+    "truncated_events": 0
+  },
+  "head_sha": "a969d1730956a47b301ceaa5d998d8ee418ccf36",
+  "run_id": "fireworm-refinement-review-1343",
+  "verdict": "Ready with fixes"
+}

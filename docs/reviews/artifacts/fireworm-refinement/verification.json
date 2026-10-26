@@ -1,0 +1,29 @@
+{
+  "source_commit": "952e894",
+  "unit": {
+    "files": 11,
+    "passed": 102
+  },
+  "typecheck": "passed",
+  "lint": "passed",
+  "build": "passed; existing large bundle warning",
+  "browser": {
+    "passed": 42,
+    "failed": 0,
+    "skipped": 0,
+    "flaky": 0,
+    "projects": [
+      "chromium",
+      "phone-360-portrait",
+      "phone-landscape"
+    ]
+  },
+  "code_review": {
+    "status": "complete",
+    "run_id": "fireworm-refinement-review-1343",
+    "finding_1": "resolved with four position/cancellation tests"
+  },
+  "owner_visual_acceptance": "NOT RUN / NOT ACCEPTED",
+  "physical_device_performance": "unmeasured",
+  "merge_or_deploy": false
+}

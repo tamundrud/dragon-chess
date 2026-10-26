@@ -1,6 +1,9 @@
 export type AnimationMode = 'normal' | 'fast' | 'instant';
 
+export type AttackPresentation = 'board' | 'arena';
+
 export interface GameSettings {
+  attackPresentation: AttackPresentation;
   animationEnabled: boolean;
   animationMode: AnimationMode;
   reducedMotion: boolean;

@@ -1,0 +1,45 @@
+{
+  "source_commit": "952e8947a6d4e0969c93318803a57e063c4adc68",
+  "files": {
+    "dist/assets/index-BI9afnLn.css": {
+      "bytes": 22229,
+      "sha256": "ba9d8480167e2a10731b769bb00cae92c7dc873682703ce0aa6cd9256d0e36b9"
+    },
+    "dist/assets/FirewormPreview-DWXeCfaY.css": {
+      "bytes": 1503,
+      "sha256": "c513df1eddfcd7e5d69b0dc33db4ae5a8a5b2f972b6d5f4c12f769b36a513c98"
+    },
+    "dist/assets/FirewormPreview-CG2WKDI4.js": {
+      "bytes": 5939,
+      "sha256": "d36964cd9265997bc00bf7a7af394f6afc7944ba90dcac6e1fa48582d46fee19"
+    },
+    "dist/assets/index-D86TeS-T.js": {
+      "bytes": 1802287,
+      "sha256": "b8cee6aa0a9007255f0f5175484d54e907934de7f26ccc3c8fc68792f1a31404"
+    },
+    "public/art/fireworm/cove.png": {
+      "bytes": 2706061,
+      "sha256": "156aa6c14883df4e720cb53941735519d5099ad6bb08e08581f8ebf8f6689859"
+    },
+    "public/art/fireworm/rig.png": {
+      "bytes": 2600996,
+      "sha256": "46d5c87ede2fe744a12aeecc9a3e7d382c712d2feb1e14e6381183d7788a72b7"
+    },
+    "public/art/fireworm/proud.png": {
+      "bytes": 1777528,
+      "sha256": "5302161e46b38315a1056adbe34d527deaf3044d962016b67e9a362f677cd4f8"
+    },
+    "public/art/fireworm/flamehuffer.png": {
+      "bytes": 2220515,
+      "sha256": "7ed6f3823a25d49fc2f8c02518911ac7e066236c80689e19dcd75f0ad9751eca"
+    },
+    "public/art/fireworm/breath.png": {
+      "bytes": 1907407,
+      "sha256": "cac68c43b10858ea527b5445bd3d930b212998a17e182376f1aa85891dae41c7"
+    },
+    "public/art/fireworm/ready.png": {
+      "bytes": 1934325,
+      "sha256": "2b7168803dd7748b300e04ffbfee66c6465d8a00e833bae88ca23dcadbafe764"
+    }
+  }
+}

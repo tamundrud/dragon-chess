@@ -1,0 +1,245 @@
+{
+  "status": "complete",
+  "verdict": "Ready with fixes",
+  "verdict_reason": "One confirmed P2 coverage gap remains: add observable board-origin emergence and dynamic-return tests (#1). No current user-facing malfunction was established. Final rendered qualification and handoff are being completed separately; owner physical-phone visual acceptance remains pending. This code-review verdict does not authorize merge or deployment.",
+  "scope": {
+    "base": "a969d1730956a47b301ceaa5d998d8ee418ccf36",
+    "branch": "feat/fireworm-foreground-refinement",
+    "head_sha": "a969d1730956a47b301ceaa5d998d8ee418ccf36",
+    "pr_url": null,
+    "files_changed": 26,
+    "mode": "standalone",
+    "diff_a": "origin/feat/fireworm-animation-proof",
+    "diff_b": null
+  },
+  "intent": "Refine Fireworm after owner PR13 feedback: replace disconnected anatomy with coherent original complete poses; substantially enlarge breath/fireworks; foreground combat over visible dimmed actual board by default with arena comparison; illustrate and accurately identify moved a8 Flamehuffer rook. Preserve chess authority, persistent identities, exactly-once completion/Skip, zero-commit abort, accessibility and responsive mobile layouts. Owner visual acceptance is pending.",
+  "intent_confidence": "explicit",
+  "reviewers": [
+    "correctness",
+    "project-standards",
+    "testing",
+    "maintainability",
+    "adversarial",
+    "julik-frontend-races"
+  ],
+  "findings": [
+    {
+      "#": 1,
+      "autofix_class": "gated_auto",
+      "confidence": 75,
+      "evidence": [
+        "src/game/animation/FirewormPresenter.ts:94 --       if (settings.presentation !== 'arena' && settings.origins) {",
+        "src/game/animation/FirewormPresenter.ts:99 --           const destination = settings.origins!().destination;",
+        "src/tests/fireworm_presenter.test.ts:39 --     presenter.playAttack(context, definition, { durationScale, reducedMotion }, phase => phases.push(phase), done);",
+        "src/tests/fireworm_presenter.test.ts:29 --       tweens: { add: () => { const remove = vi.fn(); removedTweens.push(remove); return { remove }; } },",
+        "e2e/fireworm.spec.js rotates at preparing/attacking/recovering and asserts canvas sizing, phases, turns and completion, without actor-position assertions; e2e/fireworm_refinement.spec.js asserts h8 background pixel dimming but not emergence/return positioning. Text search over src/tests and e2e finds no supplied origins in tests."
+      ],
+      "file": "src/game/animation/FirewormPresenter.ts",
+      "first_evidence": "src/game/animation/FirewormPresenter.ts:94 --       if (settings.presentation !== 'arena' && settings.origins) {",
+      "independent_reviewers": [
+        "testing"
+      ],
+      "line": 94,
+      "owner": "downstream-resolver",
+      "pre_existing": false,
+      "requires_verification": true,
+      "reviewers": [
+        "testing"
+      ],
+      "severity": "P2",
+      "suggested_fix": "Extend fireworm_presenter.test.ts with board-mode origins and a minimal tween driver that advances onUpdate. Assert actors initially occupy the supplied source/victim points, then change the destination during return and assert the attacker reaches that updated point. Add an arena case proving origins do not move the actors, and a Skip/cleanup during return case proving no later movement or second completion.",
+      "title": "Exercise board-origin emergence and return in presenter tests",
+      "why_it_matters": "A regression that makes combatants emerge from the wrong squares or return to a stale square after rotation would pass the current automated assertions. Every presenter unit test omits origins, so neither new board-origin lifecycle branch runs; its tween mock also never executes onUpdate. The browser tests check phase completion, canvas sizing and background visibility, but never assert the actors' square-relative emergence or return positions. Supplying a changing origins callback and advancing observable actor movement would protect the board connection that this change introduces.",
+      "validation_status": "confirmed",
+      "validation_reason": "The diff adds board-origin emergence and dynamic return at FirewormPresenter.ts:67-72 and 94-101, reachable through AttackScene.ts:164-165 for non-reduced board captures, but every presenter test omits origins and its tween stub never calls onUpdate (fireworm_presenter.test.ts:29,39,50,62,75,77), while the inspected browser tests assert phases, completion and background pixels without actor positions, leaving the required board-square movement and resize-dependent destination unverified."
+    }
+  ],
+  "actionable_findings": [
+    {
+      "#": 1,
+      "autofix_class": "gated_auto",
+      "confidence": 75,
+      "evidence": [
+        "src/game/animation/FirewormPresenter.ts:94 --       if (settings.presentation !== 'arena' && settings.origins) {",
+        "src/game/animation/FirewormPresenter.ts:99 --           const destination = settings.origins!().destination;",
+        "src/tests/fireworm_presenter.test.ts:39 --     presenter.playAttack(context, definition, { durationScale, reducedMotion }, phase => phases.push(phase), done);",
+        "src/tests/fireworm_presenter.test.ts:29 --       tweens: { add: () => { const remove = vi.fn(); removedTweens.push(remove); return { remove }; } },",
+        "e2e/fireworm.spec.js rotates at preparing/attacking/recovering and asserts canvas sizing, phases, turns and completion, without actor-position assertions; e2e/fireworm_refinement.spec.js asserts h8 background pixel dimming but not emergence/return positioning. Text search over src/tests and e2e finds no supplied origins in tests."
+      ],
+      "file": "src/game/animation/FirewormPresenter.ts",
+      "first_evidence": "src/game/animation/FirewormPresenter.ts:94 --       if (settings.presentation !== 'arena' && settings.origins) {",
+      "independent_reviewers": [
+        "testing"
+      ],
+      "line": 94,
+      "owner": "downstream-resolver",
+      "pre_existing": false,
+      "requires_verification": true,
+      "reviewers": [
+        "testing"
+      ],
+      "severity": "P2",
+      "suggested_fix": "Extend fireworm_presenter.test.ts with board-mode origins and a minimal tween driver that advances onUpdate. Assert actors initially occupy the supplied source/victim points, then change the destination during return and assert the attacker reaches that updated point. Add an arena case proving origins do not move the actors, and a Skip/cleanup during return case proving no later movement or second completion.",
+      "title": "Exercise board-origin emergence and return in presenter tests",
+      "why_it_matters": "A regression that makes combatants emerge from the wrong squares or return to a stale square after rotation would pass the current automated assertions. Every presenter unit test omits origins, so neither new board-origin lifecycle branch runs; its tween mock also never executes onUpdate. The browser tests check phase completion, canvas sizing and background visibility, but never assert the actors' square-relative emergence or return positions. Supplying a changing origins callback and advancing observable actor movement would protect the board connection that this change introduces.",
+      "validation_status": "confirmed",
+      "validation_reason": "The diff adds board-origin emergence and dynamic return at FirewormPresenter.ts:67-72 and 94-101, reachable through AttackScene.ts:164-165 for non-reduced board captures, but every presenter test omits origins and its tween stub never calls onUpdate (fireworm_presenter.test.ts:29,39,50,62,75,77), while the inspected browser tests assert phases, completion and background pixels without actor positions, leaving the required board-square movement and resize-dependent destination unverified."
+    }
+  ],
+  "triage_groups": [],
+  "pre_existing_findings": [],
+  "requirements_completeness": {
+    "plan_path": "docs/plans/2026-10-26-fireworm-foreground-refinement-plan.md",
+    "plan_source": "explicit",
+    "requirements": [
+      {
+        "id": "R1",
+        "status": "met",
+        "note": "Complete connected pose assets and shared-root transitions implement the requirement; animated visual qualification remains with the parent."
+      },
+      {
+        "id": "R2",
+        "status": "met",
+        "note": "Larger mouth-following fire ribbons and colourful impact arcs are implemented; spectacle and comfort require rendered and owner assessment."
+      },
+      {
+        "id": "R3",
+        "status": "met",
+        "note": "Board-default setting, live board dimming, current square origins and arena comparison are implemented. Finding #1 covers missing position assertions."
+      },
+      {
+        "id": "R4",
+        "status": "met",
+        "note": "Moved a8 Flamehuffer has distinct rook art and identity; authoritative class/colour and explicit unsupported-art placeholders are implemented."
+      },
+      {
+        "id": "R5",
+        "status": "met",
+        "note": "Existing authority and owned lifecycle cleanup are retained with completion, Skip, abort, speed, reduced-motion and identity coverage. Position verification needs #1; final runtime qualification is separate."
+      },
+      {
+        "id": "R6",
+        "status": "met",
+        "note": "The reviewed diff stays within Fireworm presentation, one non-pawn illustration and supporting settings/tests."
+      },
+      {
+        "id": "R7",
+        "status": "partially addressed",
+        "note": "Fresh production browser scenarios are present. Retained recordings, qualification summary and final matrix are explicitly being completed by the parent outside this report scope; no missing-functionality finding is inferred."
+      }
+    ],
+    "implementation_units": [
+      {
+        "id": "U1",
+        "status": "met",
+        "note": "Connected poses, provenance and expanded effects are present; rendered acceptance is pending separately."
+      },
+      {
+        "id": "U2",
+        "status": "met",
+        "note": "Board foreground, persisted arena comparison and shared proof staging are present; add #1 position coverage."
+      },
+      {
+        "id": "U3",
+        "status": "met",
+        "note": "Defender metadata, narrow rook identities, illustration and legal moved-rook fixture are present."
+      },
+      {
+        "id": "U4",
+        "status": "partially addressed",
+        "note": "Browser scenarios and review are present. Final qualification artifacts and owner handoff remain in the parent workstream as explicitly scoped."
+      }
+    ],
+    "unrequested_behavior_rules": [],
+    "reverse_check": "Compared the plan with changed settings, scene composition, preview controls, defender handling and lifecycle integration; no additional unrequested behavior rule was identified."
+  },
+  "learnings": [],
+  "agent_native_gaps": [],
+  "deployment_notes": [],
+  "residual_risks": [],
+  "testing_gaps": [],
+  "coverage": {
+    "depth": "full",
+    "reviewer_selection": [
+      {
+        "reviewer": "correctness",
+        "tier": "session",
+        "reason": "always-on"
+      },
+      {
+        "reviewer": "project-standards",
+        "tier": "mid-tier",
+        "reason": "AGENTS.md governs all changed files"
+      },
+      {
+        "reviewer": "testing",
+        "tier": "mid-tier",
+        "reason": "tests and runtime behavior changed"
+      },
+      {
+        "reviewer": "maintainability",
+        "tier": "mid-tier",
+        "reason": "504 executable non-test lines and new helpers"
+      },
+      {
+        "reviewer": "adversarial",
+        "tier": "session",
+        "reason": "large runtime behavior diff with ordering and persistence"
+      },
+      {
+        "reviewer": "julik-frontend-races",
+        "tier": "mid-tier",
+        "reason": "timers, React/Phaser scene lifecycle and resize"
+      }
+    ],
+    "notes": [
+      "Full depth required by large executable diff and four binary source assets.",
+      "Applicable criteria: root AGENTS.md; no designated CODING_STANDARDS.md or CLAUDE.md found.",
+      "Untracked preliminary screenshots excluded from code scope.",
+      "Final production browser matrix, videos and qualification docs are being completed separately by parent; this receipt is code-review evidence, not owner visual acceptance.",
+      "Independent cross-model adversarial review did not run: only the same-family codex CLI is installed. The in-process adversarial reviewer covered the lens; no different-provider corroboration is claimed.",
+      "No findings were suppressed by confidence; no semantic duplicates, settlement conflicts, pre-existing findings, malformed findings or mode-aware demotions were found.",
+      "Quote-the-line check: first_evidence_backfilled=1; missing-quote demotions=0.",
+      "One material testing-only umbrella finding covers the new board-origin emergence/return lifecycle. Existing lifecycle tests omit origins and never execute tween onUpdate; browser tests check board visibility and lifecycle completion but do not assert actor positions.",
+      "Validator shortcut-skipped: 0. No independently verified different-family peer corroboration is available. One actionable P2 finding requires the single validator batch.",
+      "Validator batch completed with verdicts inside the collection bound: #1 confirmed. No finding was rejected, unresolved, malformed, failed or shortcut-skipped.",
+      "Report-only: no source edits, commits, builds, servers or browser tests were performed by the report leaf.",
+      "The sole finding alleges an observable movement coverage gap rather than a concurrency defect; protected_subject is null. No protected-subject reclassification was needed."
+    ],
+    "suppressed_by_confidence": {},
+    "mode_aware_demotions": 0,
+    "settlement_suppressed": 0,
+    "first_evidence_backfilled": 1,
+    "missing_quote_demotions": 0,
+    "malformed_findings": 0,
+    "malformed_returns": 0,
+    "validation": {
+      "outcome": "verdicts",
+      "confirmed": 1,
+      "rejected": 0,
+      "unresolved": 0,
+      "malformed": 0,
+      "failed": 0,
+      "shortcut_skipped": 0,
+      "protected_subject_reclassifications": 0,
+      "degraded_p0_p1": 0
+    },
+    "failed_reviewers": [],
+    "timed_out_reviewers": [],
+    "compound_packs": {
+      "roots": [],
+      "warnings": [],
+      "errors": []
+    },
+    "untracked_excluded": [
+      "docs/reviews/artifacts/fireworm-refinement/board-impact.png",
+      "docs/reviews/artifacts/fireworm-refinement/board-ready.png"
+    ]
+  },
+  "peer": {
+    "outcome": "in-process-fallback",
+    "coverage": "Independent cross-model adversarial review did not run: only the same-family codex CLI is installed. The in-process adversarial reviewer covered the lens; no different-provider corroboration is claimed."
+  },
+  "artifact_path": "/tmp/compound-engineering-1000/ce-code-review/fireworm-refinement-review-1343",
+  "run_id": "fireworm-refinement-review-1343"
+}
