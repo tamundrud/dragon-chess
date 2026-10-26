@@ -1,0 +1,73 @@
+{
+  "branch": "feat/fireworm-animation-proof",
+  "completed_at": "2026-10-26T00:38:30.263086+00:00",
+  "cost": {
+    "host": "codex",
+    "scope": {
+      "changed_lines": 686,
+      "depth": "full",
+      "exec_nontest_lines": 382,
+      "size_band": "large",
+      "unclassified_lines": ".css:16,.md:22"
+    },
+    "stages": [
+      {
+        "elapsed_seconds": 0.096,
+        "ended_at": "2026-10-26T00:29:55.308870+00:00",
+        "facts": {
+          "changed_lines": 686,
+          "depth": "full",
+          "exec_nontest_lines": 382,
+          "size_band": "large",
+          "unclassified_lines": ".css:16,.md:22"
+        },
+        "stage": "scope",
+        "started_at": "2026-10-26T00:29:55.212988+00:00"
+      },
+      {
+        "elapsed_seconds": 51.685,
+        "ended_at": "2026-10-26T00:30:46.993902+00:00",
+        "reviewers": 6,
+        "stage": "select",
+        "started_at": "2026-10-26T00:29:55.308870+00:00"
+      },
+      {
+        "candidates": 4,
+        "elapsed_seconds": 177.6,
+        "ended_at": "2026-10-26T00:33:44.593500+00:00",
+        "stage": "dispatch",
+        "started_at": "2026-10-26T00:30:46.993902+00:00"
+      },
+      {
+        "candidates": 3,
+        "elapsed_seconds": 60.836,
+        "ended_at": "2026-10-26T00:35:26.764655+00:00",
+        "stage": "merge",
+        "started_at": "2026-10-26T00:34:25.928406+00:00"
+      },
+      {
+        "elapsed_seconds": 70.496,
+        "ended_at": "2026-10-26T00:36:57.069964+00:00",
+        "stage": "validate",
+        "started_at": "2026-10-26T00:35:46.573890+00:00"
+      },
+      {
+        "elapsed_seconds": 42.401,
+        "ended_at": "2026-10-26T00:38:30.295168+00:00",
+        "stage": "report",
+        "started_at": "2026-10-26T00:37:47.894250+00:00"
+      }
+    ],
+    "status": "complete",
+    "totals": {
+      "artifact_bytes": 470912,
+      "candidates": 4,
+      "elapsed_seconds": 403.114,
+      "reviewers": 6
+    },
+    "truncated_events": 0
+  },
+  "head_sha": "d4937d234e569d977faaa2ff063fe6329bae40c9",
+  "run_id": "fireworm-20261026",
+  "verdict": "Ready with fixes"
+}

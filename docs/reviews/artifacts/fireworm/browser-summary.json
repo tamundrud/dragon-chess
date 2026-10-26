@@ -1,0 +1,743 @@
+{
+  "source_commit": "1cf8616",
+  "command": "DRAGON_CHESS_ARTIFACTS=/workspace/dragon-chess-artifacts/fireworm-verified npx playwright test --config=/workspace/dragon-chess-playwright.config.mjs --project=chromium --project=phone-360-portrait --project=phone-landscape --workers=2",
+  "stats": {
+    "startTime": "2026-10-26T00:45:26.253Z",
+    "duration": 1324085.159,
+    "expected": 64,
+    "skipped": 2,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "errors": [],
+  "tests": [
+    {
+      "title": "generic capture survives a transient narrow resize and complete",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 120969
+        }
+      ]
+    },
+    {
+      "title": "generic capture survives a transient narrow resize and Skip",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 104374
+        }
+      ]
+    },
+    {
+      "title": "Fire Dragon capture survives a transient narrow resize and complete",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 123920
+        }
+      ]
+    },
+    {
+      "title": "Fire Dragon capture survives a transient narrow resize and Skip",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 101216
+        }
+      ]
+    },
+    {
+      "title": "generic capture survives a transient narrow resize and complete",
+      "project": "phone-360-portrait",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 58205
+        }
+      ]
+    },
+    {
+      "title": "generic capture survives a transient narrow resize and Skip",
+      "project": "phone-360-portrait",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 55117
+        }
+      ]
+    },
+    {
+      "title": "Fire Dragon capture survives a transient narrow resize and complete",
+      "project": "phone-360-portrait",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 62230
+        }
+      ]
+    },
+    {
+      "title": "Fire Dragon capture survives a transient narrow resize and Skip",
+      "project": "phone-360-portrait",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 50995
+        }
+      ]
+    },
+    {
+      "title": "generic capture survives a transient narrow resize and complete",
+      "project": "phone-landscape",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 56676
+        }
+      ]
+    },
+    {
+      "title": "generic capture survives a transient narrow resize and Skip",
+      "project": "phone-landscape",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 53009
+        }
+      ]
+    },
+    {
+      "title": "Fire Dragon capture survives a transient narrow resize and complete",
+      "project": "phone-landscape",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 61875
+        }
+      ]
+    },
+    {
+      "title": "Fire Dragon capture survives a transient narrow resize and Skip",
+      "project": "phone-landscape",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 52626
+        }
+      ]
+    },
+    {
+      "title": "Fireworm moved rook capture, rotate across phases, complete",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 91857
+        }
+      ]
+    },
+    {
+      "title": "Fireworm moved rook capture, rotate across phases, Skip",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 73002
+        }
+      ]
+    },
+    {
+      "title": "Fireworm moved rook capture, rotate across phases, abort",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 74564
+        }
+      ]
+    },
+    {
+      "title": "Fireworm actual rook capture mode=fast, reduced=false, enabled=true",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 58891
+        }
+      ]
+    },
+    {
+      "title": "Fireworm actual rook capture mode=normal, reduced=true, enabled=true",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 55027
+        }
+      ]
+    },
+    {
+      "title": "Fireworm actual rook capture mode=instant, reduced=false, enabled=true",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 42174
+        }
+      ]
+    },
+    {
+      "title": "Fireworm actual rook capture mode=normal, reduced=false, enabled=false",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 41425
+        }
+      ]
+    },
+    {
+      "title": "isolated proof supports stable replay, Skip, Fast, Instant and reduced motion",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 34606
+        }
+      ]
+    },
+    {
+      "title": "cold artwork keeps gameplay unready until the attack presenter is available",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 9582
+        }
+      ]
+    },
+    {
+      "title": "leaving while art loads cannot attach a stale presenter to the next game",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 42763
+        }
+      ]
+    },
+    {
+      "title": "Fireworm moved rook capture, rotate across phases, complete",
+      "project": "phone-360-portrait",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 43282
+        }
+      ]
+    },
+    {
+      "title": "Fireworm moved rook capture, rotate across phases, Skip",
+      "project": "phone-360-portrait",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 36015
+        }
+      ]
+    },
+    {
+      "title": "Fireworm moved rook capture, rotate across phases, abort",
+      "project": "phone-360-portrait",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 36531
+        }
+      ]
+    },
+    {
+      "title": "Fireworm actual rook capture mode=fast, reduced=false, enabled=true",
+      "project": "phone-360-portrait",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 28031
+        }
+      ]
+    },
+    {
+      "title": "Fireworm actual rook capture mode=normal, reduced=true, enabled=true",
+      "project": "phone-360-portrait",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 28737
+        }
+      ]
+    },
+    {
+      "title": "Fireworm actual rook capture mode=instant, reduced=false, enabled=true",
+      "project": "phone-360-portrait",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 23399
+        }
+      ]
+    },
+    {
+      "title": "Fireworm actual rook capture mode=normal, reduced=false, enabled=false",
+      "project": "phone-360-portrait",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 23019
+        }
+      ]
+    },
+    {
+      "title": "isolated proof supports stable replay, Skip, Fast, Instant and reduced motion",
+      "project": "phone-360-portrait",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 8555
+        }
+      ]
+    },
+    {
+      "title": "cold artwork keeps gameplay unready until the attack presenter is available",
+      "project": "phone-360-portrait",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 7024
+        }
+      ]
+    },
+    {
+      "title": "leaving while art loads cannot attach a stale presenter to the next game",
+      "project": "phone-360-portrait",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 25703
+        }
+      ]
+    },
+    {
+      "title": "Fireworm moved rook capture, rotate across phases, complete",
+      "project": "phone-landscape",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 39715
+        }
+      ]
+    },
+    {
+      "title": "Fireworm moved rook capture, rotate across phases, Skip",
+      "project": "phone-landscape",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 36489
+        }
+      ]
+    },
+    {
+      "title": "Fireworm moved rook capture, rotate across phases, abort",
+      "project": "phone-landscape",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 36915
+        }
+      ]
+    },
+    {
+      "title": "Fireworm actual rook capture mode=fast, reduced=false, enabled=true",
+      "project": "phone-landscape",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 30869
+        }
+      ]
+    },
+    {
+      "title": "Fireworm actual rook capture mode=normal, reduced=true, enabled=true",
+      "project": "phone-landscape",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 28523
+        }
+      ]
+    },
+    {
+      "title": "Fireworm actual rook capture mode=instant, reduced=false, enabled=true",
+      "project": "phone-landscape",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 22466
+        }
+      ]
+    },
+    {
+      "title": "Fireworm actual rook capture mode=normal, reduced=false, enabled=false",
+      "project": "phone-landscape",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 24128
+        }
+      ]
+    },
+    {
+      "title": "isolated proof supports stable replay, Skip, Fast, Instant and reduced motion",
+      "project": "phone-landscape",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 8511
+        }
+      ]
+    },
+    {
+      "title": "cold artwork keeps gameplay unready until the attack presenter is available",
+      "project": "phone-landscape",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 7453
+        }
+      ]
+    },
+    {
+      "title": "leaving while art loads cannot attach a stale presenter to the next game",
+      "project": "phone-landscape",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 24264
+        }
+      ]
+    },
+    {
+      "title": "a capture tap starts an attack instead of immediately skipping it",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 30359
+        }
+      ]
+    },
+    {
+      "title": "leaving during capture repeatedly allows legal moves in the next game",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 79822
+        }
+      ]
+    },
+    {
+      "title": "deliberate Skip completes a capture and Undo restores exactly one move",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 7977
+        }
+      ]
+    },
+    {
+      "title": "leaving a Fire Dragon capture cancels its nested presentation timeline",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 45699
+        }
+      ]
+    },
+    {
+      "title": "touch Skip remains reachable after resizing an active capture",
+      "project": "chromium",
+      "status": "skipped",
+      "results": [
+        {
+          "status": "skipped",
+          "duration_ms": 451
+        }
+      ]
+    },
+    {
+      "title": "a capture tap starts an attack instead of immediately skipping it",
+      "project": "phone-360-portrait",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 14788
+        }
+      ]
+    },
+    {
+      "title": "leaving during capture repeatedly allows legal moves in the next game",
+      "project": "phone-360-portrait",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 49268
+        }
+      ]
+    },
+    {
+      "title": "deliberate Skip completes a capture and Undo restores exactly one move",
+      "project": "phone-360-portrait",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 6231
+        }
+      ]
+    },
+    {
+      "title": "leaving a Fire Dragon capture cancels its nested presentation timeline",
+      "project": "phone-360-portrait",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 28704
+        }
+      ]
+    },
+    {
+      "title": "touch Skip remains reachable after resizing an active capture",
+      "project": "phone-360-portrait",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 9226
+        }
+      ]
+    },
+    {
+      "title": "a capture tap starts an attack instead of immediately skipping it",
+      "project": "phone-landscape",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 15394
+        }
+      ]
+    },
+    {
+      "title": "leaving during capture repeatedly allows legal moves in the next game",
+      "project": "phone-landscape",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 46516
+        }
+      ]
+    },
+    {
+      "title": "deliberate Skip completes a capture and Undo restores exactly one move",
+      "project": "phone-landscape",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 5391
+        }
+      ]
+    },
+    {
+      "title": "leaving a Fire Dragon capture cancels its nested presentation timeline",
+      "project": "phone-landscape",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 28930
+        }
+      ]
+    },
+    {
+      "title": "touch Skip remains reachable after resizing an active capture",
+      "project": "phone-landscape",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 10162
+        }
+      ]
+    },
+    {
+      "title": "menu, game and settings fit the viewport with reachable controls",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 20523
+        }
+      ]
+    },
+    {
+      "title": "legal moves, Undo, Restart and settings remain usable",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 59489
+        }
+      ]
+    },
+    {
+      "title": "touch input survives portrait and landscape rotation without a second canvas",
+      "project": "chromium",
+      "status": "skipped",
+      "results": [
+        {
+          "status": "skipped",
+          "duration_ms": 498
+        }
+      ]
+    },
+    {
+      "title": "menu, game and settings fit the viewport with reachable controls",
+      "project": "phone-360-portrait",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 14186
+        }
+      ]
+    },
+    {
+      "title": "legal moves, Undo, Restart and settings remain usable",
+      "project": "phone-360-portrait",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 39187
+        }
+      ]
+    },
+    {
+      "title": "touch input survives portrait and landscape rotation without a second canvas",
+      "project": "phone-360-portrait",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 16993
+        }
+      ]
+    },
+    {
+      "title": "menu, game and settings fit the viewport with reachable controls",
+      "project": "phone-landscape",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 14038
+        }
+      ]
+    },
+    {
+      "title": "legal moves, Undo, Restart and settings remain usable",
+      "project": "phone-landscape",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 39545
+        }
+      ]
+    },
+    {
+      "title": "touch input survives portrait and landscape rotation without a second canvas",
+      "project": "phone-landscape",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 13510
+        }
+      ]
+    }
+  ],
+  "raw_report": "/workspace/dragon-chess-artifacts/fireworm-verified/results.json",
+  "html_report": "/workspace/dragon-chess-artifacts/fireworm-verified/html/index.html"
+}
