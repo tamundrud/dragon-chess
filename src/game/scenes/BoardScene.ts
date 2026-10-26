@@ -37,6 +37,13 @@ export class BoardScene extends Phaser.Scene {
     this.events.once(Phaser.Scenes.Events.DESTROY, this.handleSceneCleanup, this);
   }
 
+  public getSquareCenter(square: string): { x: number; y: number } {
+    return {
+      x: this.boardOffsetX + (square.charCodeAt(0) - 97 + 0.5) * this.squareSize,
+      y: this.boardOffsetY + (8 - Number(square[1]) + 0.5) * this.squareSize,
+    };
+  }
+
   private calculateBoardDimensions(): void {
     const width = this.scale.width;
     const height = this.scale.height;

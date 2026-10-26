@@ -17,7 +17,7 @@ describe('Fireworm presentation lifecycle', () => {
     function object() {
       const destroy = vi.fn(); destroyed.push(destroy);
       const value: Record<string, unknown> = { scaleX: 1, scaleY: 1, destroy };
-      for (const name of ['add','setDisplaySize','setOrigin','setAlpha','setVisible','setText','setTint','setFrame','setPosition','setRotation','fillStyle','fillCircle']) value[name] = () => value;
+      for (const name of ['add','setAngle','setScale','setDisplaySize','setOrigin','setAlpha','setVisible','setText','setTint','setFrame','setPosition','setRotation','fillStyle','fillCircle']) value[name] = () => value;
       return value;
     }
     const scene = {
@@ -77,5 +77,79 @@ describe('Fireworm presentation lifecycle', () => {
     presenter.playAttack(context, definition, { durationScale: 1, reducedMotion: true }, () => {}, current);
     vi.runAllTimers();
     expect(old).not.toHaveBeenCalled(); expect(current).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe('Fireworm board connection', () => {
+  let presenter: FirewormPresenter;
+  let actors: { x: number; y: number; scaleX: number; scaleY: number }[];
+  let motions: { advance: (fraction: number) => void; hasReturn: boolean }[];
+  beforeEach(() => {
+    vi.useFakeTimers(); actors = []; motions = [];
+    function object(x = 0, y = 0) {
+      const value = { x, y, scaleX: 1, scaleY: 1, rotation: 0,
+        setPosition(x: number, y: number) { this.x=x; this.y=y; return this; },
+        setScale(x: number, y = x) { this.scaleX=x; this.scaleY=y; return this; },
+      } as Record<string, unknown>;
+      for (const name of ['add','destroy','setAngle','setDisplaySize','setOrigin','setAlpha','setVisible','setText','setTint','setFrame','setRotation','fillStyle','fillCircle']) value[name] = () => value;
+      return value;
+    }
+    const scene = {
+      add: Object.fromEntries(['container','image','text','ellipse','rectangle','graphics'].map(name => [name, (x?: number,y?: number) => {
+        const value=object(x,y);
+        if(name==='container' && (x===245 || x===650)) actors.push(value as unknown as typeof actors[number]);
+        return value;
+      }])),
+      time: { delayedCall: (delay: number, callback: () => void) => {
+        const id=setTimeout(callback,delay); return {remove:()=>clearTimeout(id)};
+      } },
+      tweens: { add: (config: Record<string, unknown>) => {
+        let removed=false;
+        const targets=Array.isArray(config.targets)?config.targets:[config.targets];
+        const properties=['x','y','scaleX','scaleY','angle','alpha','t'].filter(key=>typeof config[key]==='number');
+        const initial=targets.map(target=>Object.fromEntries(properties.map(key=>[key,Number(target[key]??0)])));
+        motions.push({hasReturn:'t' in config && config.ease==='Cubic.easeInOut', advance:fraction=>{
+          if(removed)return;
+          targets.forEach((target,i)=>properties.forEach(key=>{target[key]=initial[i][key]+(Number(config[key])-initial[i][key])*fraction;}));
+          (config.onUpdate as (()=>void)|undefined)?.();
+        }});
+        return {remove:()=>{removed=true;}};
+      } },
+    } as unknown as Phaser.Scene;
+    presenter=new FirewormPresenter(scene,object() as unknown as Phaser.GameObjects.Container,
+      object() as unknown as Phaser.GameObjects.Text,object() as unknown as Phaser.GameObjects.Text,object() as unknown as Phaser.GameObjects.Text);
+  });
+  afterEach(()=>{presenter.cleanup();vi.useRealTimers();});
+  const origins=()=>({attacker:{x:40,y:70},defender:{x:720,y:90},destination:{x:720,y:90}});
+
+  it('emerges from the actual source/victim squares and follows a resized destination during return',()=>{
+    let destination={x:720,y:90};const done=vi.fn();
+    presenter.playAttack(context,definition,{durationScale:1,reducedMotion:false,presentation:'board',origins:()=>({...origins(),destination})},()=>{},done);
+    expect(actors.map(({x,y,scaleX})=>({x,y,scaleX}))).toEqual([{x:40,y:70,scaleX:.16},{x:720,y:90,scaleX:.16}]);
+    motions.forEach(motion=>motion.advance(1));
+    expect(actors.map(({x,y})=>({x,y}))).toEqual([{x:245,y:490},{x:650,y:490}]);
+    vi.advanceTimersByTime(2980);
+    const returning=motions.find(motion=>motion.hasReturn)!;
+    returning.advance(.5);
+    expect(actors[0]).toMatchObject({x:482.5,y:290});
+    destination={x:140,y:560};returning.advance(1);
+    expect(actors[0]).toMatchObject(destination);
+    expect(done).not.toHaveBeenCalled();vi.advanceTimersByTime(370);expect(done).toHaveBeenCalledTimes(1);
+  });
+
+  it('arena actors remain staged and never acquire board travel',()=>{
+    presenter.playAttack(context,definition,{durationScale:1,reducedMotion:false,presentation:'arena',origins},()=>{},()=>{});
+    expect(actors.map(({x,y,scaleX})=>({x,y,scaleX}))).toEqual([{x:245,y:490,scaleX:1},{x:650,y:490,scaleX:1}]);
+    vi.advanceTimersByTime(2980);
+    expect(motions.some(motion=>motion.hasReturn)).toBe(false);
+  });
+
+  it.each(['skip','cleanup'] as const)('%s during return cancels movement and never completes again',finish=>{
+    const done=vi.fn();
+    presenter.playAttack(context,definition,{durationScale:1,reducedMotion:false,presentation:'board',origins},()=>{},done);
+    vi.advanceTimersByTime(2980);const returning=motions.find(motion=>motion.hasReturn)!;
+    returning.advance(.25);const position={x:actors[0].x,y:actors[0].y};
+    presenter[finish]();returning.advance(1);vi.runAllTimers();presenter.skip();
+    expect(actors[0]).toMatchObject(position);expect(done).toHaveBeenCalledTimes(finish==='skip'?1:0);
   });
 });

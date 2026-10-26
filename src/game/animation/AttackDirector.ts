@@ -88,6 +88,8 @@ export class AttackDirector {
       defenderCharacterId: defenderChar.id,
       attackDefinitionId: attackDef.id,
       isPromotion: !!move.promotion,
+      defenderPieceType: move.captured,
+      defenderColor,
     };
     this.currentDefinition = attackDef;
     this.onCompleteCallback = onComplete;
@@ -112,7 +114,7 @@ export class AttackDirector {
       this.activePresenter.playAttack(
         this.currentContext,
         attackDef,
-        { durationScale, reducedMotion },
+        { durationScale, reducedMotion, presentation: settings.attackPresentation },
         (phase: AttackLifecycleState) => {
           if (isCurrent()) this.transitionTo(phase);
         },

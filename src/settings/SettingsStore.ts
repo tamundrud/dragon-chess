@@ -3,6 +3,7 @@ import { GameSettings, SettingsListener } from './settingsTypes';
 const STORAGE_KEY = 'dragon_chess_settings_v1';
 
 const DEFAULT_SETTINGS: GameSettings = {
+  attackPresentation: 'board',
   animationEnabled: true,
   animationMode: 'normal',
   reducedMotion: false,

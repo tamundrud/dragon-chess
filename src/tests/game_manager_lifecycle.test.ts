@@ -116,6 +116,25 @@ describe('PhaserGameManager lifecycle', () => {
     expect(game.controller.getTurn()).toBe('w');
   });
 
+  it('identifies a moved Flamehuffer rook victim with authoritative class and colour', () => {
+    const game = mount();
+    for (const [from, to] of [['a2','a4'], ['a7','a5'], ['a1','a3'], ['a8','a6'], ['a3','b3'], ['a6','b6']]) game.move(from, to);
+    const before = game.controller.getFen();
+    game.move('b3', 'b6');
+    expect(director.getCurrentContext()).toMatchObject({
+      attackerCharacterId: 'fireworm', defenderCharacterId: 'flamehuffer',
+      defenderPieceType: 'r', defenderColor: 'b',
+    });
+    expect(game.controller.getCharacterId('h8')).toBe('common_or_garden');
+    expect(game.controller.getFen()).toBe(before);
+    director.skip();
+    expect(game.controller.getCharacterId('b6')).toBe('fireworm');
+    game.controller.undo();
+    expect(game.controller.getFen()).toBe(before);
+    expect(game.controller.getCharacterId('b3')).toBe('fireworm');
+    expect(game.controller.getCharacterId('b6')).toBe('flamehuffer');
+  });
+
   it('preserves a moved Hookfang defender and restores both identities after Undo', () => {
     const game = mount(new ChessGameController('4k3/8/7r/8/8/8/8/R3K2R w KQ - 0 1'));
     game.move('h1', 'h3');

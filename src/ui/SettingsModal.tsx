@@ -73,6 +73,16 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose })
             </div>
           </div>
 
+          <div>
+            <label htmlFor="attack-presentation" className="block font-bold text-xs uppercase tracking-widest text-gray-300 mb-2">Capture presentation</label>
+            <select id="attack-presentation" value={settings.attackPresentation}
+              onChange={e => updateSettings({ attackPresentation: e.target.value as 'board' | 'arena' })}
+              className="w-full min-h-11 rounded-sm bg-[#202020] px-3 text-sm">
+              <option value="board">Foreground over board</option>
+              <option value="arena">Painted arena (comparison)</option>
+            </select>
+            <p className="mt-2 text-[11px] text-gray-400">Applies to the next Fireworm capture.</p>
+          </div>
           {/* Reduced Motion */}
           <div className="flex items-center justify-between gap-3 border-t border-[#222] pt-4">
             <div className="flex items-center gap-2">

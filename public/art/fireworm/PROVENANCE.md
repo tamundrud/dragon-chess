@@ -20,3 +20,14 @@ The environment prompt requested an original 4:3 coastal cove at sunset: teal se
 ## Acceptance and limits
 
 These assets are prototype art, not owner-approved final designs. The wing/body/head seams, pose consistency, painterly quality, originality of the depiction and book-character interpretation need owner review on a physical phone. The raider is a common temporary defender, not a full set of approved named-piece portraits. Other board tokens/characters retain placeholders. A transparent cutout rig is not a frame-by-frame animation sheet; expressive motion comes from the independently animated parts, two head poses and staged effects.
+
+## Foreground refinement assets (2026-10-26)
+
+The follow-up adds four original transparent 1254×1254 PNGs generated with OpenAI `image_gen.imagegen`. The original `rig.png` and cove remain intact for comparison; no source illustration, film model or third-party character asset was supplied.
+
+- `ready.png`: uses only our original generated rig as the image-tool reference. The prompt asks for one complete, continuously connected dragon with four planted legs, a curled tail, long neck, leather harness and attached wings, in an expressive anticipation pose. All anatomy is painted together rather than assembled from separately transformed cutouts.
+- `breath.png`: an image-tool edit of `ready.png`, preserving the character/design and foot baseline while thrusting the head/neck forward, opening the jaw and glowing throat, and bracing the wings/shoulders. No external flame is baked into the pose.
+- `proud.png`: an image-tool edit of `ready.png`, preserving proportions, harness and baseline while settling the wings, lifting the chin and giving a pleased closed-mouth expression.
+- `flamehuffer.png`: a new original image-tool generation without reference art. Prompt: a squat left-facing slate-blue/teal dragon, large bellows chest, short attached neck, round nostrils, four sturdy feet, small shoulder fins, curled tail, brass collar and teal cloth. It represents the approved unnamed Meathead Flamehuffer rook casting, not a newly invented named book character. No flames, smoke or backdrop were requested.
+
+The generated images are copied unchanged from tool outputs. Their actual size is 1254×1254 rather than the requested 1280-square size; Phaser uniformly displays each complete pose in the same 410×410 artwork box and uses a shared foot baseline. Transparent alpha and solid-silhouette connectivity are technically checked. Anatomy/design quality and pose consistency still need owner viewing, and this is not final character-art approval. Fire effects remain separately animated; no smoke conceals anatomical seams. No new sound is shipped.

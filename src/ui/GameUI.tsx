@@ -4,6 +4,8 @@ import { ChessGameController } from '../chess/ChessGameController';
 import { ChessMoveRequest, GameStatus, PieceColor } from '../chess/chessTypes';
 import { PhaserGameManager } from '../game/PhaserGameManager';
 import { AttackDirector } from '../game/animation/AttackDirector';
+import { CharacterRegistry } from '../game/characters/CharacterRegistry';
+import { resolveFirewormDefender } from '../game/animation/firewormDefender';
 import { AttackLifecycleState } from '../game/animation/attackTypes';
 
 interface GameUIProps {
@@ -16,6 +18,7 @@ export const GameUI: React.FC<GameUIProps> = ({ controller, onBackToMenu, onOpen
   const containerRef = useRef<HTMLDivElement>(null);
   const managerRef = useRef<PhaserGameManager | null>(null);
   const [status, setStatus] = useState<GameStatus>(controller.getStatus());
+  const [attackLabel, setAttackLabel] = useState('');
   const [attackState, setAttackState] = useState<AttackLifecycleState>('idle');
   const isAttackActive = attackState !== 'idle' && attackState !== 'completing';
   const [promotionReq, setPromotionReq] = useState<{ request: ChessMoveRequest; turn: PieceColor } | null>(null);
@@ -28,8 +31,10 @@ export const GameUI: React.FC<GameUIProps> = ({ controller, onBackToMenu, onOpen
     });
 
     // Subscribe to attack director to disable undo/restart during animations
-    const unsubAttack = AttackDirector.getInstance().subscribe((state) => {
+    const unsubAttack = AttackDirector.getInstance().subscribe((state, context) => {
       setAttackState(state);
+      setAttackLabel(context && state !== 'idle'
+        ? `${CharacterRegistry.getInstance().getById(context.attackerCharacterId)?.displayName ?? 'Attacker'} captures ${resolveFirewormDefender(context).label.toLowerCase()}` : '');
     });
 
     return () => {
@@ -99,6 +104,7 @@ export const GameUI: React.FC<GameUIProps> = ({ controller, onBackToMenu, onOpen
       data-attack-state={attackState}
       className="flex min-h-screen w-full flex-col bg-[#080808] text-[#e0e0e0]"
     >
+      <div role="status" aria-live="polite" className="sr-only">{attackLabel}</div>
       {/* Header Bar */}
       <header className="flex items-center justify-between gap-2 border-b gold-border bg-[#121212] px-4 sm:px-6 py-3 sm:py-4 shadow-md z-10">
         <button
