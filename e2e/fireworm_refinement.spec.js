@@ -79,7 +79,10 @@ test('actual moved Flamehuffer capture supports touch Skip, Undo, recapture and 
   await expect(page.getByRole('status')).toHaveText(/Fireworm captures flamehuffer · rook/i);
   await until(page,ui,'data-attack-state','impact');await page.clock.runFor(150);await captureScreenshot(page,info,'actual-moved-flamehuffer-impact');
   const box=await page.locator('#phaser-container canvas').boundingBox();
-  await tapCanvas(page,{x:box.width/2,y:box.height*.9});await page.clock.runFor(4000);await expectTurn(page,'black');
+  await tapCanvas(page,{x:box.width/2,y:box.height*.9});await page.clock.runFor(32);
+  await expect(ui).toHaveAttribute('data-attack-state','idle');await expectTurn(page,'black');
+  await page.clock.runFor(4000);await expectTurn(page,'black');
+  await expect(ui).toHaveAttribute('data-attack-state','idle');
   await activate(page.getByRole('button',{name:'Undo',exact:true}));await expectTurn(page,'white');
   await tapSquare(page,'b3');await page.clock.runFor(32);await tapSquare(page,'b6');await page.clock.runFor(32);
   await expect(page.getByRole('status')).toHaveText(/Fireworm captures flamehuffer · rook/i);

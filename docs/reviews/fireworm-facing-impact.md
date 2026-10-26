@@ -1,5 +1,7 @@
 # Fireworm facing and engulfment — technical verification
 
+> Historical implementation record. Fireworm visual objections are resolved by [owner approval on PR #16](../FIREWORM_BENCHMARK.md). See [current integration verification](fireworm-integration.md) for technical results.
+
 2026-10-26. Narrow follow-up to the [owner's PR #14 review](https://github.com/tamundrud/dragon-chess/pull/14#issuecomment-6421755950). Branch `fix/fireworm-defender-impact` starts at fetched `feat/fireworm-foreground-refinement`, `6981b8720274827b89863cf36c825da6ea561d80`, and targets that branch in a separate stacked draft. No merge or deployment.
 
 ## Scope and implementation

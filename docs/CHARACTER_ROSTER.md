@@ -40,7 +40,7 @@
 
 **Owner feedback (2026-10-25):** The Black Queen's **role** stays the Hairy Scary Librarian, but **his visual design must be a hairy, scary, unmistakably male barbarian**. Do not depict a feminine queen or regal woman. His chess movement remains that of a normal queen. The previously generated concept sheet can be retained as a broad mood reference; correct the individual portrait during the character-art pass instead of regenerating the entire sheet.
 
-**Fireworm storyboard:** The owner particularly likes the energetic, firework-like fire/explosion sequence in the first concept. Preserve its lively, comic visual impact as the starting creative benchmark, subject to storyboard, flash-safety and real-phone animation review. Neither image is an approved production sprite.
+**Fireworm storyboard:** The owner particularly likes the energetic, firework-like fire/explosion sequence in the first concept. Preserve its lively, comic visual impact as the starting creative benchmark, subject to storyboard, flash-safety and real-phone animation review. Neither concept image is a production sprite. The later implemented Fireworm choreography is [owner-approved](FIREWORM_BENCHMARK.md).
 
 ## Reference notes (secondary sources, check primary book art before asset production)
 
@@ -67,6 +67,6 @@
 - **No further starting-piece casting decisions are required.** Preserve the selected names/species and user-approved allowances (plausibly Meathead-owned unnamed fire-breathing species; One Eye's temporary alliance).
 - Review species-scale legibility (especially the small Piffleworm), consistent tribal silhouettes and the distinctive looks of Fireworm and Hookfang (both Monstrous Nightmares).
 - Test every approved piece at actual phone scale and approve an expressive rook fire-capture storyboard before asset production; retain `chess.js`, single-commit capture lifecycle, Skip/reduced-motion and mobile layout.
-- The **current code** still has white knights mapped to a procedural generic Fire Dragon and mostly placeholder tokens/presenters. **Approved roster does not mean implemented roster.**
+- The **current code** implements the Fireworm a1 rook with persistent named-piece identity, distinguishes Hookfang and the two black rooks, and still has white knights mapped to a procedural generic Fire Dragon with mostly placeholder tokens/presenters. **Approved roster does not mean implemented roster.**
 
 See [the visual reset plan](plans/2026-10-25-book-visual-reset.md) and [art direction](ART_DIRECTION.md).

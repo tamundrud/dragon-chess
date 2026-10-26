@@ -1,6 +1,6 @@
 # Test Plan
 
-Current recovery review: [post-PR #11 reassessment](reviews/recovery-post-pr11-reassessment.md). Execute [the manual acceptance checklist](reviews/recovery-manual-acceptance.md) to record actual device/product results; all its manual gates are currently NOT RUN.
+Current recovery review: [post-PR #11 reassessment](reviews/recovery-post-pr11-reassessment.md). Execute [the manual acceptance checklist](reviews/recovery-manual-acceptance.md) to record actual device/product results; its original manual gates remain historical. [Fireworm owner approval](FIREWORM_BENCHMARK.md) closes only that prototype’s visual objections; it does not close broader device/UX gates.
 
 ## Required chess acceptance coverage
 
@@ -117,12 +117,12 @@ The [render-clock investigation](reviews/recovery-render-clock.md) diagnoses the
 
 ## Fireworm prototype coverage
 
-See [the Fireworm verification record](reviews/fireworm-animation-proof.md) for current command results, CE findings/fixes, source artwork, recordings and screenshots. New coverage exercises named-rook identity and defender restoration, presentation-owned cleanup, cold-art readiness/cancellation, legal moved-rook captures and portrait/landscape rotation across phases. Those technical checks do not establish owner visual acceptance, physical-device smoothness or completed roster artwork.
+See [Fireworm integration verification](reviews/fireworm-integration.md) for current gate context and CE findings/fixes. [The original proof record](reviews/fireworm-animation-proof.md) preserves historical source artwork, recordings and screenshots. New coverage exercises named-rook identity and defender restoration, presentation-owned cleanup, cold-art readiness/cancellation, legal moved-rook captures and portrait/landscape rotation across phases. Those technical checks do not establish owner visual acceptance, physical-device smoothness or completed roster artwork.
 
 ### Fireworm foreground refinement
 
 `e2e/fireworm_refinement.spec.js` checks decoded source silhouette connectivity, rendered live-board dimming versus the arena, actual moved Flamehuffer identity/class, touch Skip/Undo/recapture/abort, and presentation-setting persistence/reset. Existing Fireworm cases retain rotation, completion, keyboard Skip, speed/reduced-motion, disabled animation and cold-load cancellation coverage. Source alpha connectivity and sampled board pixels are quantitative technical checks; they cannot establish expressive motion or owner visual acceptance.
 
-[Fresh refinement recordings, matrix results and CE review](reviews/fireworm-foreground-refinement.md) supplement the original prototype evidence. The owner must still inspect whole Normal/Fast sequences, transitions, fire scale and repeated-play comfort on physical portrait/landscape phones. Full-roster artwork and mobile performance benchmarks are not complete.
+[Fresh refinement recordings, matrix results and CE review](reviews/fireworm-foreground-refinement.md) supplement the original prototype evidence. The owner has accepted Fireworm’s presentation after physical-phone testing; see the [benchmark](FIREWORM_BENCHMARK.md) for the approval scope. Full-roster artwork and mobile performance benchmarks are not complete.
 
 `e2e/fireworm_impact.spec.js` checks Normal/Fast board/arena sequences for both pawn and Flamehuffer. It samples painted fire over the opaque interior chest at peak impact, then checks dissipation during the defeated-character hold. Unit coverage checks each illustration's native heading against attackers on either side and protects the visible defeat hold before fading. [Current technical results and remaining owner acceptance](reviews/fireworm-facing-impact.md) are separate from visual approval.

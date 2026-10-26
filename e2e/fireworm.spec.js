@@ -50,6 +50,7 @@ for (const finish of ['complete','Skip','abort']) {
     if (finish === 'Skip') {
       const box = await page.locator('#phaser-container canvas').boundingBox();
       await tapCanvas(page,{x:box.width/2,y:box.height*0.9}); await page.clock.runFor(32);
+      await expect(ui).toHaveAttribute('data-attack-state','idle'); await expectTurn(page,'black');
     } else await advanceUntil(page,ui,'data-attack-state','idle');
     await page.clock.runFor(5000); await expectTurn(page,'black');
     await expect(ui).toHaveAttribute('data-attack-state','idle');

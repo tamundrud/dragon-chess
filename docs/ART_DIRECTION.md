@@ -26,7 +26,7 @@ The current UI's dark background, gold text, lettered token circles and procedur
 - Make impact readable without overwhelming flashes; offer reduced-motion and Skip paths as currently implemented.
 - Keep motion, character proportions, effects, typography and backgrounds coherent with the same book-led world.
 - Evaluate at 360px phone portrait and short phone landscape sizes and on a real phone; screenshots and test assertions cannot validate motion quality.
-- Approve one signature capture as the quality benchmark **before** scaling to the cast.
+- Fireworm is the [approved signature-capture benchmark](FIREWORM_BENCHMARK.md) after owner phone testing on 2026-10-26. Follow its staging, continuity and polish while preserving character-specific choreography.
 
 See [the visual reset plan](plans/2026-10-25-book-visual-reset.md) and [character roster](CHARACTER_ROSTER.md).
 
@@ -44,7 +44,7 @@ See [the visual reset plan](plans/2026-10-25-book-visual-reset.md) and [characte
 
 - The newly generated **original fantasy/Viking roster sheet and six-stage Fireworm capture storyboard** are positively received as *visual concepts*, **not copied or production-ready character assets**.
 - **Hairy Scary Librarian correction (defer until individual character-art pass):** although he is the **Black Queen as a chess role**, depict him visually as a **hairy, frightening, distinctly male barbarian**, rugged and physically imposing, not as a feminine or queen-like royal portrait. Do not regenerate the entire concept sheet just for this correction.
-- **Fireworm capture sequence:** retain the exuberant, firework-like burst of flames, sparks, exaggerated comic impact, smoke and triumphant return seen in the concept. This is the user's favourite element and should guide the first signature-attack storyboard. Retain clearly legible defender, nonviolent comic tone, mobile accessibility, reduced-motion/Skip support and appropriate flash limits. **Actual animation duration, assets and full device acceptance remain pending.**
+- **Fireworm capture sequence:** retain the exuberant, firework-like burst of flames, sparks, exaggerated comic impact, smoke and triumphant return seen in the concept. This is the user's favourite element and should guide the first signature-attack storyboard. Retain clearly legible defender, nonviolent comic tone, mobile accessibility, reduced-motion/Skip support and appropriate flash limits. **Subsequent Fireworm choreography approval is recorded in the [benchmark](FIREWORM_BENCHMARK.md); full-device and full-roster acceptance remain open.**
 - **Originality requirement:** produce new fantasy/Viking and dragon designs with independent shapes, costumes, colour details, scenes and choreography. Book-inspired names/roles are casting references, **not instructions to trace, copy or closely imitate any particular book illustration, film character model, fan art, card layout or storyboard frame**.
 
 ## Overall style

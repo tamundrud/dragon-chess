@@ -1,10 +1,10 @@
 # Fireworm proof artwork provenance
 
-Created for this repository on 2026-10-26 using OpenAI's `image_gen.imagegen` tool. These are newly generated illustrations, not scanned, traced, downloaded or licensed character artwork. The tool did not expose a model/version identifier. Names and chess casting follow the approved roster; the independent depiction is an unaccepted prototype and is not official franchise artwork.
+Created for this repository on 2026-10-26 using OpenAI's `image_gen.imagegen` tool. These are newly generated illustrations, not scanned, traced, downloaded or licensed character artwork. The tool did not expose a model/version identifier. Names and chess casting follow the approved roster; the independent depiction is prototype artwork whose Fireworm choreography is now owner-approved (see [benchmark](../../../docs/FIREWORM_BENCHMARK.md)) and is not official franchise artwork.
 
 | Shipped image | Production method | Runtime use |
 | --- | --- | --- |
-| `rig.png` | Original generated cutout atlas, followed by one image-tool edit requesting transparent background removal and separated parts. Transparent alpha was verified in the saved PNG. | Body, closed/open head-and-neck poses, wing, comic raider placeholder, painted flame. `firewormAssets.ts` records measured frame bounds because equal-cell spacing was not honoured. No CPU image processing or borrowed sprites. |
+| `rig.png` | Original generated cutout atlas, followed by one image-tool edit requesting transparent background removal and separated parts. Transparent alpha was verified in the saved PNG. | Comic raider placeholder and painted flame. Obsolete anatomical frame registrations were removed during consolidation; the original source atlas is retained. `firewormAssets.ts` records measured frame bounds because equal-cell spacing was not honoured. No CPU image processing or borrowed sprites. |
 | `cove.png` | Original image-tool generation without reference images. | Painterly coastal Viking sunset stage, uniformly fitted to the shared 800×600 logical space. |
 
 No sound is shipped or requested by this presenter. Existing optional sound handling for other attacks remains separate.
@@ -19,7 +19,7 @@ The environment prompt requested an original 4:3 coastal cove at sunset: teal se
 
 ## Acceptance and limits
 
-These assets are prototype art, not owner-approved final designs. The wing/body/head seams, pose consistency, painterly quality, originality of the depiction and book-character interpretation need owner review on a physical phone. The raider is a common temporary defender, not a full set of approved named-piece portraits. Other board tokens/characters retain placeholders. A transparent cutout rig is not a frame-by-frame animation sheet; expressive motion comes from the independently animated parts, two head poses and staged effects.
+Fireworm’s refined choreography is owner-approved after physical-phone testing. This is not blanket approval of all portraits or final roster designs. The original separated wing/body/head experiment is superseded by the connected full poses below. The raider is a common temporary defender, not a full set of approved named-piece portraits. Other board tokens/characters retain placeholders. A transparent cutout rig is not a frame-by-frame animation sheet; the refined animation uses connected ready/breath/proud illustrations and staged effects.
 
 ## Foreground refinement assets (2026-10-26)
 
@@ -30,4 +30,4 @@ The follow-up adds four original transparent 1254×1254 PNGs generated with Open
 - `proud.png`: an image-tool edit of `ready.png`, preserving proportions, harness and baseline while settling the wings, lifting the chin and giving a pleased closed-mouth expression.
 - `flamehuffer.png`: a new original image-tool generation without reference art. Prompt: a squat left-facing slate-blue/teal dragon, large bellows chest, short attached neck, round nostrils, four sturdy feet, small shoulder fins, curled tail, brass collar and teal cloth. It represents the approved unnamed Meathead Flamehuffer rook casting, not a newly invented named book character. No flames, smoke or backdrop were requested.
 
-The generated images are copied unchanged from tool outputs. Their actual size is 1254×1254 rather than the requested 1280-square size; Phaser uniformly displays each complete pose in the same 410×410 artwork box and uses a shared foot baseline. Transparent alpha and solid-silhouette connectivity are technically checked. Anatomy/design quality and pose consistency still need owner viewing, and this is not final character-art approval. Fire effects remain separately animated; no smoke conceals anatomical seams. No new sound is shipped.
+The generated images are copied unchanged from tool outputs. Their actual size is 1254×1254 rather than the requested 1280-square size; Phaser uniformly displays each complete pose in the same 410×410 artwork box and uses a shared foot baseline. Transparent alpha and solid-silhouette connectivity are technically checked. Fireworm’s presentation has since been accepted; this does not establish final character-art approval across the roster. Fire effects remain separately animated; no smoke conceals anatomical seams. No new sound is shipped.

@@ -1,5 +1,7 @@
 # Fireworm foreground refinement — verification and acceptance
 
+> Historical implementation record. Fireworm visual objections are resolved by [owner approval on PR #16](../FIREWORM_BENCHMARK.md). See [current integration verification](fireworm-integration.md) for technical results.
+
 2026-10-26. Follow-up to the owner's [PR #13 feedback](https://github.com/tamundrud/dragon-chess/pull/13#issuecomment-6409635177), on `feat/fireworm-foreground-refinement`, based on fetched parent `feat/fireworm-animation-proof` at `a969d1730956a47b301ceaa5d998d8ee418ccf36`. This is a stacked draft; the parent prototype and its earlier evidence remain unchanged. No merge or deployment.
 
 ## What changed

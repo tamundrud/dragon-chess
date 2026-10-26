@@ -1,0 +1,170 @@
+{
+  "status": "complete",
+  "verdict": "Ready with fixes",
+  "verdict_reason": "Apply finding #1 to prevent natural completion from masking a failed touch Skip, then finish the parent-owned production browser and integration gates before merging. No gameplay defect was established.",
+  "scope": {
+    "base": "3b02ce782775e1d7832b887a9e4399493c23c9ec",
+    "branch": "integration/fireworm-consolidation",
+    "head_sha": "4d933195f3a2f4c8d4ee393d2f946dfccfcad161",
+    "pr_url": null,
+    "files_changed": 182
+  },
+  "intent": "Integrate stacked PRs #12\u201316 without duplicate changes. Preserve standard chess, named-piece identity, exactly-once capture commits and abort/cleanup. Reconcile Fireworm approval as a flexible battle-scene benchmark and remove safe obsolete scaffolding; no deployment or additional characters.",
+  "intent_confidence": "explicit",
+  "reviewers": [
+    "correctness",
+    "project-standards",
+    "testing",
+    "maintainability",
+    "adversarial",
+    "julik-frontend-races"
+  ],
+  "findings": [
+    {
+      "#": 1,
+      "autofix_class": "gated_auto",
+      "confidence": 100,
+      "evidence": [
+        "e2e/fireworm.spec.js:54 -- await page.clock.runFor(5000); await expectTurn(page,'black');",
+        "e2e/fireworm.spec.js:52 -- await tapCanvas(page,{x:box.width/2,y:box.height*0.9}); await page.clock.runFor(32);",
+        "e2e/fireworm_refinement.spec.js:82 -- await tapCanvas(page,{x:box.width/2,y:box.height*.9});await page.clock.runFor(4000);await expectTurn(page,'black');",
+        "src/game/animation/FirewormPresenter.ts:121 -- at(3350, () => this.finish());",
+        "e2e/game.spec.js:57-59 and e2e/attack_resize.spec.js:98-100 already assert idle after one input frame, before a long stale-timeline advance."
+      ],
+      "file": "e2e/fireworm.spec.js",
+      "first_evidence": "e2e/fireworm.spec.js:54 -- await page.clock.runFor(5000); await expectTurn(page,'black');",
+      "independent_reviewers": [
+        "testing"
+      ],
+      "line": 54,
+      "owner": "downstream-resolver",
+      "pre_existing": false,
+      "requires_verification": true,
+      "reviewers": [
+        "testing"
+      ],
+      "severity": "P2",
+      "suggested_fix": "In the finish === 'Skip' branch, assert data-attack-state=idle and black turn immediately after the 32 ms runFor, before the common 5000 ms advance. In fireworm_refinement.spec.js:82, advance only 32 ms after tap, assert idle and black turn, then retain the 4000 ms stale-timeline advance and assertions. Rerun these Skip cases on desktop and phone portrait/landscape.",
+      "title": "Assert Fireworm Skip before natural completion can mask failure",
+      "why_it_matters": "The Fireworm touch-Skip cases can pass even when the tap does not skip the capture. The clock is paused, but the test advances 5000 ms after the tap before checking idle and the committed turn, which exceeds the entire 3350 ms Fireworm animation. A broken or unreachable Skip therefore falls through to natural completion and satisfies every subsequent check. The moved-Flamehuffer refinement test has the same issue with its 4000 ms advance at line 82. As the generic production browser Skip tests already do, assert idle and the committed turn after one input frame, then advance beyond the abandoned timeline to check that no stale completion occurs.",
+      "validation_status": "confirmed",
+      "validation_reason": "If the Fireworm canvas Skip tap is missed or broken, the paused-clock tests still advance 5000 ms (e2e/fireworm.spec.js:54) or 4000 ms (e2e/fireworm_refinement.spec.js:82), exceeding the 3350 ms natural finish at FirewormPresenter.ts:121 before checking the committed turn; both tests are newly introduced by this diff, and helpers add no immediate Skip assertion, so the gap is established from code while actual missed-Skip incidence was not measured."
+    }
+  ],
+  "actionable_findings": [
+    {
+      "#": 1,
+      "autofix_class": "gated_auto",
+      "confidence": 100,
+      "evidence": [
+        "e2e/fireworm.spec.js:54 -- await page.clock.runFor(5000); await expectTurn(page,'black');",
+        "e2e/fireworm.spec.js:52 -- await tapCanvas(page,{x:box.width/2,y:box.height*0.9}); await page.clock.runFor(32);",
+        "e2e/fireworm_refinement.spec.js:82 -- await tapCanvas(page,{x:box.width/2,y:box.height*.9});await page.clock.runFor(4000);await expectTurn(page,'black');",
+        "src/game/animation/FirewormPresenter.ts:121 -- at(3350, () => this.finish());",
+        "e2e/game.spec.js:57-59 and e2e/attack_resize.spec.js:98-100 already assert idle after one input frame, before a long stale-timeline advance."
+      ],
+      "file": "e2e/fireworm.spec.js",
+      "first_evidence": "e2e/fireworm.spec.js:54 -- await page.clock.runFor(5000); await expectTurn(page,'black');",
+      "independent_reviewers": [
+        "testing"
+      ],
+      "line": 54,
+      "owner": "downstream-resolver",
+      "pre_existing": false,
+      "requires_verification": true,
+      "reviewers": [
+        "testing"
+      ],
+      "severity": "P2",
+      "suggested_fix": "In the finish === 'Skip' branch, assert data-attack-state=idle and black turn immediately after the 32 ms runFor, before the common 5000 ms advance. In fireworm_refinement.spec.js:82, advance only 32 ms after tap, assert idle and black turn, then retain the 4000 ms stale-timeline advance and assertions. Rerun these Skip cases on desktop and phone portrait/landscape.",
+      "title": "Assert Fireworm Skip before natural completion can mask failure",
+      "why_it_matters": "The Fireworm touch-Skip cases can pass even when the tap does not skip the capture. The clock is paused, but the test advances 5000 ms after the tap before checking idle and the committed turn, which exceeds the entire 3350 ms Fireworm animation. A broken or unreachable Skip therefore falls through to natural completion and satisfies every subsequent check. The moved-Flamehuffer refinement test has the same issue with its 4000 ms advance at line 82. As the generic production browser Skip tests already do, assert idle and the committed turn after one input frame, then advance beyond the abandoned timeline to check that no stale completion occurs.",
+      "validation_status": "confirmed",
+      "validation_reason": "If the Fireworm canvas Skip tap is missed or broken, the paused-clock tests still advance 5000 ms (e2e/fireworm.spec.js:54) or 4000 ms (e2e/fireworm_refinement.spec.js:82), exceeding the 3350 ms natural finish at FirewormPresenter.ts:121 before checking the committed turn; both tests are newly introduced by this diff, and helpers add no immediate Skip assertion, so the gap is established from code while actual missed-Skip incidence was not measured."
+    }
+  ],
+  "triage_groups": [],
+  "pre_existing_findings": [],
+  "requirements_completeness": {
+    "plan_path": "docs/plans/2026-10-25-fireworm-animation-proof-plan.md",
+    "plan_source": "explicit",
+    "requirements": [
+      {
+        "requirement": "Preserve legal real moved-rook captures and named-piece identity through moves, Undo, castling and promotion.",
+        "status": "met",
+        "evidence": "ChessGameController consumes successful chess.js moves into PieceIdentity; piece_identity.test.ts covers quiet moves, capture, Undo/reset, castling, en passant and same-class promotion."
+      },
+      {
+        "requirement": "Preserve completion/Skip/Instant/Fast/Normal/reduced-motion, navigation abort, cleanup, repeated captures and rotation.",
+        "status": "met",
+        "evidence": "Presenter-owned timers/tweens, exactly-once completion and zero-commit abort are implemented with unit and production browser scenarios; finding #1 requires immediate touch-Skip assertions."
+      },
+      {
+        "requirement": "Verify production browser and full unit/typecheck/lint/build gates; retain honest device and artwork limitations.",
+        "status": "partially addressed",
+        "evidence": "105 unit tests, typecheck, lint and build passed per caller evidence. Full production browser matrix and final integration delivery are parent-owned and still in progress; they are not claimed complete by this review."
+      }
+    ],
+    "implementation_units": [],
+    "unrequested_behavior_rules": [],
+    "note": "The original prototype plan is supplemented by foreground/continuity follow-ups and the current integration request; its prior pending-approval and no-merge statements are historical, with current authority owned by the caller."
+  },
+  "learnings": [],
+  "agent_native_gaps": [],
+  "deployment_notes": [],
+  "residual_risks": [],
+  "testing_gaps": [],
+  "coverage": {
+    "depth": "full",
+    "scope_mode": "standalone",
+    "reviewer_reasons": {
+      "correctness": "always-on",
+      "project-standards": "AGENTS.md criteria",
+      "testing": "changed behavior tests and harness",
+      "maintainability": "structural presenter/identity additions",
+      "adversarial": "cross-component lifecycle failures",
+      "julik-frontend-races": "frontend animation/loading/cleanup races"
+    },
+    "notes": [
+      "AGENTS.md supplies the designated instruction-file fallback for every changed path.",
+      "Scope: standalone current integrated working tree vs fetched main 3b02ce7.",
+      "105 unit tests, typecheck, lint and production build pass. Full Playwright matrix is in progress, parent-owned. Runtime runs do not replace owner acceptance.",
+      "Final integration verification document and delivery steps remain parent-owned in progress, not missing production features.",
+      "Cross-model pass: not run (no different-provider CLI installed; only Codex available). The local adversarial reviewer covered the lens; no cross-model independence is claimed.",
+      "All six reviewer returns and full artifacts collected. No quote-gate demotions, malformed returns or confidence suppressions.",
+      "One P2 actionable finding requires independent validation; none qualify for cross-model shortcut."
+    ],
+    "suppressed_by_confidence": {},
+    "mode_aware_demotion_count": 0,
+    "first_evidence_backfilled": 0,
+    "quote_gate_demoted": 0,
+    "malformed_findings": 0,
+    "malformed_returns": 0,
+    "failed_reviewers": [],
+    "timed_out_reviewers": [],
+    "validation": {
+      "outcome": "verdicts",
+      "batches": 1,
+      "confirmed": 1,
+      "rejected": 0,
+      "unresolved": 0,
+      "malformed": 0,
+      "failed": 0,
+      "shortcut_skipped": 0,
+      "bound_exceeded": false,
+      "protected_subject_reclassifications": 0,
+      "reason": "One independently inspected P2 test-fidelity finding confirmed from code; actual missed-Skip incidence was not measured."
+    },
+    "not_assessed": [
+      "security, public API contracts, migrations, agent-native surfaces and institutional learnings: no applicable changed surface selected",
+      "physical-device performance and full-roster visual acceptance: outside automated code review"
+    ],
+    "untracked_excluded": []
+  },
+  "peer": {
+    "outcome": "in-process-fallback",
+    "coverage": "Cross-model pass: not run (no different-provider CLI installed; only Codex available). The local adversarial reviewer covered the lens; no cross-model independence is claimed."
+  },
+  "artifact_path": "/tmp/compound-engineering-0/ce-code-review/fireworm-integration",
+  "run_id": "fireworm-integration"
+}

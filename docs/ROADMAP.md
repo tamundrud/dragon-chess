@@ -11,7 +11,7 @@ The original development phases describe implementation milestones. They do not 
 - Attack framework: lifecycle, input lock, Skip, speed/reduced-motion preferences, cleanup, and duplicate-move coverage.
 - Fire Dragon: dedicated procedural presenter and effects. Other characters retain generic temporary presentation. HTML Audio playback handles optional cues, but no sound pack is shipped.
 
-The original claims of completed phone validation, visual-quality verification, and mobile performance tuning are not acceptance evidence. Frame-rate/memory measurements and human visual assessment remain outstanding.
+The original claims of completed phone validation, visual-quality verification, and mobile performance tuning are not acceptance evidence. Frame-rate/memory measurements and broader human visual assessment remain outstanding; Fireworm’s later prototype acceptance is recorded below.
 
 ## Recovery milestones
 
@@ -27,15 +27,15 @@ Physical iOS Safari/Android Chrome, safe areas/browser bars, high-density readab
 
 Illustrated sprites and sound packs, dedicated Viking/other character presenters, and a single-player opponent require separate scope and acceptance. No roster expansion, gameplay changes, or bundle optimization is part of Recovery Phase 3.
 
-## Book-first visual development (proposed after recovery)
+## Book-first visual development
 
-Owner phone testing confirmed the game is broadly functional as chess but the animation quality and *How to Train Your Dragon* **book** setting are far below the target. Treat functional stability as a foundation, **not product/visual acceptance**. This is a change of priority, not a claim that the original visual vertical slice passed.
+Before the Fireworm work, owner phone testing confirmed the game was broadly functional as chess but its animation quality and *How to Train Your Dragon* **book** setting were far below the target. Treat functional stability as a foundation, **not product/visual acceptance**. This is a change of priority, not a claim that the original visual vertical slice passed.
 
-1. **Phase 5 — Rich-colour book visual concept and approval (next):** the broad creative direction and **complete starting-piece roster plus standard promotion with reused same-class artwork are selected**. Next: book-canon appearance references, 2–3 rich-colour visual variants, phone-scale board/menu and character-token designs, and one fire-rook capture storyboard. The **artwork and choreography**, not the identities, still require owner approval. [Plan](plans/2026-10-25-book-visual-reset.md).
-2. **Phase 6 — One outstanding showcase capture:** produce approved character assets, real sound and expressive pose-driven choreography for one attack. Preserve the existing chess engine and capture lifecycle; accept the result by watching it on a real phone, not merely automated tests.
+1. **Phase 5 — Rich-colour book visual concept and approval:** the broad creative direction and **complete starting-piece roster plus standard promotion with reused same-class artwork are selected**. Fireworm’s later showcase choreography is accepted; full-roster appearances and phone-scale board/menu and token designs remain open. [Plan](plans/2026-10-25-book-visual-reset.md).
+2. **Phase 6 — One outstanding showcase capture:** Fireworm’s illustrated, expressive choreography is accepted after physical-phone viewing. Chess/lifecycle regression gates remain mandatory. Real sound is still absent.
 3. **Phase 7 — Complete the themed experience:** board tokens, other character attacks, menu/setting treatment, book-setting environment, and cohesive audio, using the Phase 6 quality benchmark.
 4. **Phase 8 — Family and device refinement:** assess clarity, repetition fatigue, comfort, child usability and performance across physical phones and play sessions.
 
-**Piece casting is now approved, but final visual character designs and animation direction are not.** Do not commission broad animation/roster implementation until those Phase 5 visual approvals. Automated regression testing continues for every application change. Dedicated performance measurements and physical-device acceptance are still required.
+**Current status (2026-10-26):** Fireworm’s showcase choreography is [owner-approved as the battle-scene benchmark](FIREWORM_BENCHMARK.md), resolving its earlier visual objections. One signature capture is now accepted. This does not approve all character designs, audio or release readiness. Additional character development requires separate scope and character-specific acceptance; it is not part of integration. Automated regression testing continues for every application change. Dedicated performance measurements and physical-device acceptance are still required.
 
 This sequence supersedes the earlier implied visual-completion claims. Previous recovery documents remain an accurate historical technical record.
