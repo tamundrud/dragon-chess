@@ -3,46 +3,34 @@ export type OwnedTween = (config: Phaser.Types.Tweens.TweenBuilderConfig) => voi
 export const FIREWORK_COLORS = [0xffce50, 0xff7849, 0x67e6db, 0xf491df, 0xbca0ff];
 
 export function createFirewormBreath(scene: Phaser.Scene, layer: Phaser.GameObjects.Container,
-  tween: OwnedTween, mouth: () => { x: number; y: number }, contact: () => { x: number; y: number }) {
+  tween: OwnedTween, mouth: () => { x: number; y: number }, contact: () => { x: number; y: number }, size: number) {
   const ribbons: Phaser.GameObjects.Image[] = [];
+  const motion = { travel: 0, engulf: 0 };
   for (let i = 0; i < 5; i++) {
-    const point = mouth();
-    const flame = scene.add.image(point.x, point.y, 'fireworm-sheet', 'flame')
-      .setOrigin(0.025, 0.5).setDisplaySize(370 - i * 10, 270 - i * 38).setAlpha(0);
+    const flame = scene.add.image(0, 0, 'fireworm-sheet', 'flame')
+      .setOrigin(0.025, 0.5).setAlpha(0.96 - i * 0.08);
     layer.add(flame); ribbons.push(flame);
-    const full = flame.scaleX;
-    flame.scaleX = full * 0.02;
-    tween({ targets: flame, scaleX: full, alpha: 0.96 - i * 0.08,
-      duration: 330 + i * 45, ease: 'Cubic.easeOut', onUpdate: () => {
-        const point = mouth(), end = contact();
-        flame.setPosition(point.x, point.y + (i - 2) * 5).setRotation(Math.atan2(end.y - point.y, end.x - point.x));
-      } });
   }
-  return () => ribbons.forEach((ribbon, i) => tween({ targets: ribbon, alpha: 0, duration: 260 + i * 25 }));
+  const draw = () => {
+    const start = mouth(), end = contact();
+    const angle = Math.atan2(end.y - start.y, end.x - start.x);
+    const distance = Math.hypot(end.x - start.x, end.y - start.y) + size * 0.25 * motion.engulf;
+    ribbons.forEach((flame, i) => {
+      const width = ((210 - i * 30) + size * 0.55 * motion.engulf) * (0.2 + 0.8 * motion.travel);
+      flame.setPosition(start.x, start.y + (i - 2) * 3).setRotation(angle)
+        .setDisplaySize(Math.max(1, distance * motion.travel), width);
+    });
+  };
+  draw();
+  tween({targets:motion, travel:1, duration:480, ease:'Linear', onUpdate:draw});
+  // The same ribbons broaden from contact; no additional foreground flame is introduced.
+  tween({targets:motion, engulf:1, delay:480, duration:270, ease:'Sine.easeOut', onUpdate:draw});
+  return () => ribbons.forEach((ribbon, i) => tween({targets:ribbon, alpha:0, duration:260 + i * 25}));
 }
 
 export function createFirewormImpact(scene: Phaser.Scene, rear: Phaser.GameObjects.Container,
   front: Phaser.GameObjects.Container, tween: OwnedTween, size: number, attackSide: number) {
   const x = attackSide * size * 0.18, y = -size * 0.56;
-  const plume = scene.add.image(x, y, 'fireworm-sheet', 'flame')
-    .setDisplaySize(size * 0.85, size).setAngle(-65 * -attackSide).setAlpha(0.8);
-  rear.add(plume);
-  tween({ targets: plume, y:y - size * 0.15, alpha:0, duration:650, ease:'Sine.easeOut' });
-  const engulfment = scene.add.container(0, 0).setAlpha(0);
-  front.add(engulfment);
-  for (const [angle, opacity] of [[-65, 0.9], [-110, 0.65]]) {
-    const wrap = scene.add.image(x, y, 'fireworm-sheet', 'flame')
-      .setDisplaySize(size * 0.68, size * 0.82).setAngle(angle * -attackSide).setAlpha(opacity);
-    engulfment.add(wrap);
-  }
-  const strike = scene.add.image(attackSide * size * 0.5, y, 'fireworm-sheet', 'flame')
-    .setOrigin(attackSide < 0 ? 0 : 1, 0.5).setFlipX(attackSide > 0)
-    .setDisplaySize(size * 0.8, size * 0.6);
-  engulfment.add(strike);
-  tween({ targets:engulfment, alpha:0.92, duration:160, ease:'Cubic.easeOut' });
-  const core = scene.add.ellipse(attackSide * size * 0.36, y, size * 0.28, size * 0.36, 0xffd770, 0.55);
-  front.add(core);
-  tween({ targets:core, alpha:0, duration:180 });
   for (let i = 0; i < 40; i++) {
     const angle = (i / 40) * Math.PI * 2;
     const radius = size * (0.3 + (i % 5) * 0.025);
@@ -69,5 +57,4 @@ export function createFirewormImpact(scene: Phaser.Scene, rear: Phaser.GameObjec
     front.add(smoke);
     tween({ targets:smoke, y:y - size * (0.2 + i * 0.04), alpha:0, duration:600 + i * 40 });
   }
-  return () => tween({ targets:engulfment, alpha:0, duration:260 });
 }
