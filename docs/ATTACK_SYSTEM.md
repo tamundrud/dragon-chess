@@ -56,8 +56,10 @@ See [the verification and owner-acceptance record](reviews/fireworm-animation-pr
 
 ## Foreground refinement (owner feedback on PR #13)
 
-Fireworm defaults to enlarged foreground combatants over the actual board, dimmed at 28% opacity. Settings retain the painted arena for comparison; each capture snapshots that choice. Complete connected ready/breath/proud illustrations replace independently transformed anatomical cutouts. The full character moves together; larger painted ribbons, a rising plume and colourful spark trails sit behind the characters. Reduced motion retains subdued fades/static sparks without emergence travel.
+Fireworm defaults to enlarged foreground combatants over the actual board, dimmed at 28% opacity. Settings retain the painted arena for comparison; each capture snapshots that choice. Complete connected ready/breath/proud illustrations replace independently transformed anatomical cutouts. The full character moves together. The approach breath sits behind the actors. Rear and foreground impact layers move with the defender, engulf it, then recede to reveal soot, a slump and static dazed stars before the final fade. Reduced motion retains subdued fades/static sparks without emergence travel.
 
 The director carries the captured piece's actual class/colour alongside persistent identity. The a8 black rook is Flamehuffer; h8 is the distinct Common or Garden Dragon. Only Flamehuffer receives new defender art in this slice. Other unsupported targets use an explicit class/faction placeholder rather than pawn artwork. From a new game, `a2-a4 a7-a5 a1-a3 a8-a6 a3-b3 a6-b6 b3xb6` demonstrates a legal moved-rook capture and preserves identities through Undo.
 
 See [the refinement evidence and outstanding owner acceptance](reviews/fireworm-foreground-refinement.md). The earlier prototype record above remains historical.
+
+The [PR #14 impact follow-up](reviews/fireworm-facing-impact.md) derives illustration flips from native heading and staged attack direction, preserving readable symmetrical class placeholders. Pawn extraction excludes a neighbouring flame tip in the atlas; PNG sources remain unchanged. Complete Normal/Fast sequences for both defenders and board/arena remain subject to owner phone acceptance.

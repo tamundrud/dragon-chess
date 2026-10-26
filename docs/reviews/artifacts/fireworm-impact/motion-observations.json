@@ -1,0 +1,194 @@
+[
+  {
+    "filename": "portrait-pawn.mp4",
+    "viewport": {
+      "width": 360,
+      "height": 800
+    },
+    "defender": "pawn",
+    "segments": [
+      {
+        "presentation": "board",
+        "speed": "normal",
+        "from": 3.084,
+        "to": 9.527,
+        "wholeNaturalPlayback": true,
+        "inspection_sheet_local_path": "/workspace/scratch/fireworm-impact-sheets/portrait-pawn-board-normal-sheet.png"
+      },
+      {
+        "presentation": "board",
+        "speed": "fast",
+        "from": 10.028,
+        "to": 12.224,
+        "wholeNaturalPlayback": true,
+        "inspection_sheet_local_path": "/workspace/scratch/fireworm-impact-sheets/portrait-pawn-board-fast-sheet.png"
+      },
+      {
+        "presentation": "arena",
+        "speed": "normal",
+        "from": 12.702,
+        "to": 17.093,
+        "wholeNaturalPlayback": true,
+        "inspection_sheet_local_path": "/workspace/scratch/fireworm-impact-sheets/portrait-pawn-arena-normal-sheet.png"
+      },
+      {
+        "presentation": "arena",
+        "speed": "fast",
+        "from": 17.601,
+        "to": 19.779,
+        "wholeNaturalPlayback": true,
+        "inspection_sheet_local_path": "/workspace/scratch/fireworm-impact-sheets/portrait-pawn-arena-fast-sheet.png"
+      }
+    ],
+    "errors": [],
+    "retention": "Full original browser recording, including setup, all four Replay sequences and returns. No cuts, time edits or source artwork changes.",
+    "raw_recording": "/workspace/dragon-chess-artifacts/impact-motion/portrait-pawn.webm",
+    "export": "H.264 MP4 transcode for phone playback; original timing preserved, no cuts or speed edits.",
+    "timing_note": "Segment offsets are wall time since page initialization, not exact encoded-video seek times; use visible presentation/speed controls. Full recordings include every return.",
+    "ending_inspection_sheet": "portrait-pawn-tail-sheet.png"
+  },
+  {
+    "filename": "portrait-rook.mp4",
+    "viewport": {
+      "width": 360,
+      "height": 800
+    },
+    "defender": "rook",
+    "segments": [
+      {
+        "presentation": "board",
+        "speed": "normal",
+        "from": 2.91,
+        "to": 9.421,
+        "wholeNaturalPlayback": true,
+        "inspection_sheet_local_path": "/workspace/scratch/fireworm-impact-sheets/portrait-rook-board-normal-sheet.png"
+      },
+      {
+        "presentation": "board",
+        "speed": "fast",
+        "from": 9.97,
+        "to": 12.124,
+        "wholeNaturalPlayback": true,
+        "inspection_sheet_local_path": "/workspace/scratch/fireworm-impact-sheets/portrait-rook-board-fast-sheet.png"
+      },
+      {
+        "presentation": "arena",
+        "speed": "normal",
+        "from": 12.595,
+        "to": 16.972,
+        "wholeNaturalPlayback": true,
+        "inspection_sheet_local_path": "/workspace/scratch/fireworm-impact-sheets/portrait-rook-arena-normal-sheet.png"
+      },
+      {
+        "presentation": "arena",
+        "speed": "fast",
+        "from": 17.519,
+        "to": 19.733,
+        "wholeNaturalPlayback": true,
+        "inspection_sheet_local_path": "/workspace/scratch/fireworm-impact-sheets/portrait-rook-arena-fast-sheet.png"
+      }
+    ],
+    "errors": [],
+    "retention": "Full original browser recording, including setup, all four Replay sequences and returns. No cuts, time edits or source artwork changes.",
+    "raw_recording": "/workspace/dragon-chess-artifacts/impact-motion/portrait-rook.webm",
+    "export": "H.264 MP4 transcode for phone playback; original timing preserved, no cuts or speed edits.",
+    "timing_note": "Segment offsets are wall time since page initialization, not exact encoded-video seek times; use visible presentation/speed controls. Full recordings include every return.",
+    "ending_inspection_sheet": "portrait-rook-tail-sheet.png"
+  },
+  {
+    "filename": "landscape-pawn.mp4",
+    "viewport": {
+      "width": 800,
+      "height": 360
+    },
+    "defender": "pawn",
+    "segments": [
+      {
+        "presentation": "board",
+        "speed": "normal",
+        "from": 2.826,
+        "to": 9.31,
+        "wholeNaturalPlayback": true,
+        "inspection_sheet_local_path": "/workspace/scratch/fireworm-impact-sheets/landscape-pawn-board-normal-sheet.png"
+      },
+      {
+        "presentation": "board",
+        "speed": "fast",
+        "from": 9.785,
+        "to": 11.928,
+        "wholeNaturalPlayback": true,
+        "inspection_sheet_local_path": "/workspace/scratch/fireworm-impact-sheets/landscape-pawn-board-fast-sheet.png"
+      },
+      {
+        "presentation": "arena",
+        "speed": "normal",
+        "from": 12.416,
+        "to": 16.786,
+        "wholeNaturalPlayback": true,
+        "inspection_sheet_local_path": "/workspace/scratch/fireworm-impact-sheets/landscape-pawn-arena-normal-sheet.png"
+      },
+      {
+        "presentation": "arena",
+        "speed": "fast",
+        "from": 17.229,
+        "to": 19.426,
+        "wholeNaturalPlayback": true,
+        "inspection_sheet_local_path": "/workspace/scratch/fireworm-impact-sheets/landscape-pawn-arena-fast-sheet.png"
+      }
+    ],
+    "errors": [],
+    "retention": "Full original browser recording, including setup, all four Replay sequences and returns. No cuts, time edits or source artwork changes.",
+    "raw_recording": "/workspace/dragon-chess-artifacts/impact-motion/landscape-pawn.webm",
+    "export": "H.264 MP4 transcode for phone playback; original timing preserved, no cuts or speed edits.",
+    "timing_note": "Segment offsets are wall time since page initialization, not exact encoded-video seek times; use visible presentation/speed controls. Full recordings include every return.",
+    "ending_inspection_sheet": "landscape-pawn-tail-sheet.png"
+  },
+  {
+    "filename": "landscape-rook.mp4",
+    "viewport": {
+      "width": 800,
+      "height": 360
+    },
+    "defender": "rook",
+    "segments": [
+      {
+        "presentation": "board",
+        "speed": "normal",
+        "from": 2.835,
+        "to": 9.283,
+        "wholeNaturalPlayback": true,
+        "inspection_sheet_local_path": "/workspace/scratch/fireworm-impact-sheets/landscape-rook-board-normal-sheet.png"
+      },
+      {
+        "presentation": "board",
+        "speed": "fast",
+        "from": 9.785,
+        "to": 11.922,
+        "wholeNaturalPlayback": true,
+        "inspection_sheet_local_path": "/workspace/scratch/fireworm-impact-sheets/landscape-rook-board-fast-sheet.png"
+      },
+      {
+        "presentation": "arena",
+        "speed": "normal",
+        "from": 12.384,
+        "to": 16.727,
+        "wholeNaturalPlayback": true,
+        "inspection_sheet_local_path": "/workspace/scratch/fireworm-impact-sheets/landscape-rook-arena-normal-sheet.png"
+      },
+      {
+        "presentation": "arena",
+        "speed": "fast",
+        "from": 17.2,
+        "to": 19.393,
+        "wholeNaturalPlayback": true,
+        "inspection_sheet_local_path": "/workspace/scratch/fireworm-impact-sheets/landscape-rook-arena-fast-sheet.png"
+      }
+    ],
+    "errors": [],
+    "retention": "Full original browser recording, including setup, all four Replay sequences and returns. No cuts, time edits or source artwork changes.",
+    "raw_recording": "/workspace/dragon-chess-artifacts/impact-motion/landscape-rook.webm",
+    "export": "H.264 MP4 transcode for phone playback; original timing preserved, no cuts or speed edits.",
+    "timing_note": "Segment offsets are wall time since page initialization, not exact encoded-video seek times; use visible presentation/speed controls. Full recordings include every return.",
+    "ending_inspection_sheet": "landscape-rook-tail-sheet.png"
+  }
+]

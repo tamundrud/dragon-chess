@@ -18,4 +18,16 @@ export function frameFireworm(scene: Phaser.Scene): void {
   for (const [name, x, y, width, height] of frames) {
     if (!texture.has(name)) texture.add(name, 0, x, y, width, height);
   }
+  if (!scene.textures.exists('fireworm-raider')) {
+    const raider = scene.textures.createCanvas('fireworm-raider', 545, 515)!;
+    const ctx = raider.getContext();
+    const source = texture.getSourceImage() as HTMLImageElement;
+    // The atlas's neighbouring flame tip overlaps an empty corner of the pawn
+    // frame. Extract around it without cropping the hand or the lower boot.
+    for (const [x, y, width, height] of [[0, 0, 545, 220], [0, 220, 450, 90], [0, 310, 545, 205]]) {
+      ctx.drawImage(source, 535 + x, 495 + y, width, height, x, y, width, height);
+    }
+    raider.add('defender', 0, 0, 0, 545, 515);
+    raider.refresh();
+  }
 }

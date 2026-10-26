@@ -59,3 +59,5 @@ public/assets/
 - `public/art/fireworm/flamehuffer.png`: original transparent non-pawn defender (1254×1254), selected only for the black Flamehuffer rook identity.
 - The cove remains the comparison arena. The default board presentation draws no painted background. Other defenders remain temporary; full-roster artwork is out of scope.
 - The prototype PNG pack is now approximately 13MB uncompressed-on-disk; loading readiness is tested, physical-phone memory/frame-rate acceptance remains open. See [refinement verification](reviews/fireworm-foreground-refinement.md) and the provenance document above.
+
+The [facing/impact follow-up](reviews/fireworm-facing-impact.md) changes no source PNGs. `frameFireworm` extracts a clean pawn texture around a neighbouring flame-tip fragment in the atlas; the presenter flips that right-facing pawn toward its attacker while retaining Flamehuffer's native left-facing artwork.

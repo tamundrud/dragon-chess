@@ -1,0 +1,31 @@
+{
+  "source_commit": "578f110970cf505d1a35af77c6cc2bccc39249c4",
+  "unit": {
+    "files": 11,
+    "passed": 105
+  },
+  "typecheck": "passed",
+  "lint": "passed",
+  "build": "passed; existing bundle warning",
+  "browser": {
+    "passed": 30,
+    "failed": 0,
+    "skipped": 0,
+    "flaky": 0,
+    "projects": [
+      "chromium",
+      "phone-360-portrait",
+      "phone-landscape"
+    ]
+  },
+  "mobile_motion_combinations": 16,
+  "full_recordings": 4,
+  "source_pngs": "all 6 identical to PR14",
+  "code_review": {
+    "status": "complete",
+    "run_id": "fireworm-impact-20261026-1757",
+    "actionable_findings": 0
+  },
+  "owner_visual_acceptance": "NOT RUN / NOT ACCEPTED",
+  "merge_or_deploy": false
+}

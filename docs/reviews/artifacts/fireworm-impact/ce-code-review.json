@@ -1,0 +1,122 @@
+{
+  "status": "complete",
+  "verdict": "Ready to merge",
+  "verdict_reason": "No actionable code defect was found in the reviewed snapshot. This code-review verdict does not authorize merging, deployment or owner visual acceptance; final rendered evidence and draft handoff remain caller-owned.",
+  "scope": {
+    "base": "6981b8720274827b89863cf36c825da6ea561d80",
+    "branch": "fix/fireworm-defender-impact",
+    "head_sha": "6981b8720274827b89863cf36c825da6ea561d80",
+    "pr_url": null,
+    "files_changed": 7,
+    "mode": "standalone",
+    "diff_a": "origin/feat/fireworm-foreground-refinement",
+    "diff_b": null,
+    "diff_sha256": "6d9b3ae8454457fa2392ca3d1cc0986bb8db8b672de952a6d05a84f08d85efc7"
+  },
+  "intent": "Fix the pawn facing away and rear-only fire after owner PR14 review. Defender orientation follows actual staged attacker direction; intentional rear/front target-local fire briefly engulfs both pawn and Flamehuffer, clears, and reveals a soot-covered defeated hold. Preserve source PNGs, board/arena composition, chess authority, accessibility and capture cleanup/timing/modes.",
+  "intent_confidence": "explicit",
+  "reviewers": [
+    "correctness",
+    "adversarial"
+  ],
+  "findings": [],
+  "actionable_findings": [],
+  "triage_groups": [],
+  "pre_existing_findings": [],
+  "requirements_completeness": {
+    "plan_path": "docs/plans/2026-10-26-fireworm-foreground-refinement-plan.md",
+    "plan_source": "explicit",
+    "requirements": [
+      {
+        "id": "R1",
+        "status": "preserved",
+        "note": "Whole Fireworm pose assets and root animation remain unchanged; brief impact coverage is intentional."
+      },
+      {
+        "id": "R2",
+        "status": "met in source",
+        "note": "Target-local rear/foreground layers visibly cover the silhouette, retain one bounded coloured burst, then fade before the defeated hold. Final rendered qualification is caller-owned."
+      },
+      {
+        "id": "R3",
+        "status": "preserved",
+        "note": "Board dimmer, snapshot preference, arena comparison and board emergence/return are unchanged."
+      },
+      {
+        "id": "R4",
+        "status": "preserved",
+        "note": "Persistent target metadata and portrait selection remain narrow and accurate; orientation metadata is added only for illustrated pawn/rook. Symmetric class placeholders and letters are not flipped."
+      },
+      {
+        "id": "R5",
+        "status": "preserved",
+        "note": "Owned root/timers/tweens and existing commit/Skip/abort callbacks remain intact. Fast scales added timings; reduced motion bypasses engulfment and travel."
+      },
+      {
+        "id": "R6",
+        "status": "met",
+        "note": "Four presentation source files and three test files only; no source PNG, chess-rule, settings or roster change."
+      },
+      {
+        "id": "R7",
+        "status": "caller-owned qualification",
+        "note": "The new browser matrix exercises both defenders and both presentations/modes; final full recordings and physical-phone owner acceptance are outside this code-review receipt."
+      }
+    ],
+    "implementation_units": [
+      {
+        "id": "U1",
+        "status": "follow-up met in source",
+        "note": "Latest owner PR14 instruction intentionally replaces the earlier rear-only impact staging with readable arrival, engulfment and reveal."
+      },
+      {
+        "id": "U2",
+        "status": "preserved",
+        "note": "Board/arena and shared proof remain unchanged."
+      },
+      {
+        "id": "U3",
+        "status": "preserved",
+        "note": "Actual class/faction/identity remain unchanged, with illustration-native facing used for presentation."
+      },
+      {
+        "id": "U4",
+        "status": "caller-owned qualification",
+        "note": "Current automated/browser execution, recordings, evidence report and stacked draft PR are being completed separately."
+      }
+    ],
+    "unrequested_behavior_rules": [],
+    "reverse_check": "Orientation, atlas extraction and temporary impact/reveal choreography fit the two owner-requested presentation fixes. No additional gameplay or product rule was introduced."
+  },
+  "learnings": [],
+  "agent_native_gaps": [],
+  "deployment_notes": [],
+  "residual_risks": [],
+  "testing_gaps": [],
+  "coverage": {
+    "depth": "focused",
+    "criteria_files": [
+      "AGENTS.md"
+    ],
+    "criteria_source": "instruction-file fallback; no designated CODING_STANDARDS.md found",
+    "notes": [
+      "115 executable non-test changed lines; no hard-block class or full-depth floor. Focused depth selected because target-local ordering and cleanup could fail silently across presentation boundaries.",
+      "Correctness reviewed source texture extraction, native image directions, target-local depth/scale/recoil, timed fade/reveal, owned cancellation and integration call sites.",
+      "The separate local adversarial read completed with zero findings. No other review agents or validator batch ran.",
+      "Cross-model pass: not run. Only same-family codex CLI is installed; no different-provider route is available. Local adversarial fallback covered the independent context read, without cross-model corroboration.",
+      "All seven tracked/staged paths reviewed, including staged e2e/fireworm_impact.spec.js. No untracked code was silently included.",
+      "Source PNGs remain unchanged. A read-only atlas-corner colour inspection confirmed zero cool-coloured pixels in the excluded neighbour-flame region.",
+      "Parent-reported 105 unit tests/typecheck/lint/build passes are context, not checks performed by this review. Final production-browser matrix and recordings are caller-owned; no browser/build/server was run here.",
+      "Rendered orientation is supported by helper tests and retained screenshots; artistic quality, comic timing and physical-device comfort still require owner viewing.",
+      "Declared Compound Packs were not applied; learnings, agent-native gaps and deployment notes were not assessed on this focused path."
+    ],
+    "failed_reviewers": [],
+    "untracked_excluded": []
+  },
+  "peer": {
+    "outcome": "in-process-fallback",
+    "coverage": "Independent cross-model adversarial review did not run: only the same-family Codex CLI is installed. A separately dispatched local adversarial reviewer covered the lens; no different-provider corroboration is claimed."
+  },
+  "artifact_path": "/tmp/compound-engineering-1000/ce-code-review/fireworm-impact-20261026-1757",
+  "run_id": "fireworm-impact-20261026-1757"
+}
