@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 import type { AttackContext, AttackDefinition, AttackLifecycleState, AttackPlaybackSettings, AttackPresenter } from './attackTypes';
-import { resolveFirewormDefender } from './firewormDefender';
+import { resolveFirewormDefender, defenderFlipX } from './firewormDefender';
 import { createFirewormBreath, createFirewormImpact, FIREWORK_COLORS } from './firewormEffects';
 
 export class FirewormPresenter implements AttackPresenter {
@@ -27,15 +27,27 @@ export class FirewormPresenter implements AttackPresenter {
     dragon.add(poses);
     const appearance = resolveFirewormDefender(context);
     const target = scene.add.container(650, 490);
+    const targetSize = appearance.type === 'r' ? 275 : 215;
+    const attackSide = Math.sign(dragon.x - target.x) || -1;
+    const rearImpact = scene.add.container(0, 0);
+    target.add(rearImpact);
     let targetArt: Phaser.GameObjects.Image | null = null;
     if (appearance.texture) {
       targetArt = scene.add.image(0, 0, appearance.texture, appearance.frame)
-        .setDisplaySize(appearance.type === 'r' ? 275 : 215, appearance.type === 'r' ? 275 : 215).setOrigin(0.5, 0.94);
+        .setDisplaySize(targetSize, targetSize).setOrigin(0.5, 0.94)
+        .setFlipX(defenderFlipX(appearance.facing!, dragon.x, target.x));
       target.add(targetArt);
     } else {
       target.add(scene.add.ellipse(0, -90, 140, 165, appearance.color === 'b' ? 0x345c75 : 0xc39647, 0.95));
       target.add(scene.add.text(0, -95, appearance.type.toUpperCase(), {fontSize:'72px', color:'#fff4da', fontFamily:'Georgia'}).setOrigin(0.5));
     }
+    const soot = scene.add.container(0, 0).setVisible(false);
+    for (const [x, y] of [[-0.12, -0.42], [0.14, -0.64], [0.05, -0.3]]) {
+      soot.add(scene.add.ellipse(x * targetSize, y * targetSize, targetSize * 0.23, targetSize * 0.09, 0x242935, 0.55));
+    }
+    const dazed = scene.add.text(0, -targetSize, '✦  ·  ✦', {fontSize:'24px', color:'#ffe08b', stroke:'#283b48', strokeThickness:3}).setOrigin(0.5).setVisible(false);
+    const foregroundImpact = scene.add.container(0, 0);
+    target.add([soot, dazed, foregroundImpact]);
     root.add([effects, dragon, target]);
     this.attacker.setText('FIREWORM · ROOK'); this.defender.setText(appearance.label);
     const reduced = settings.reducedMotion;
@@ -58,10 +70,9 @@ export class FirewormPresenter implements AttackPresenter {
         say('impact', 'A very surprised opponent!');
         const sparks = scene.add.graphics();
         FIREWORK_COLORS.forEach((color, i) => { sparks.fillStyle(color, 0.55); sparks.fillCircle(565 + i * 18, 290 - (i % 2) * 20, 5); });
-        effects.add(sparks); targetArt?.setTint(0x81909c);
-        tween({targets:target, alpha:0.25, duration:200});
+        effects.add(sparks); targetArt?.setTint(0x81909c); soot.setVisible(true);
       });
-      at(700, () => { say('recovering', 'A most satisfying spark.'); pose(2); });
+      at(700, () => { say('recovering', 'A well-toasted opponent!'); pose(2); tween({targets:target, alpha:0.25, duration:200}); });
       at(1000, () => this.finish()); return;
     }
     const origins = settings.origins?.();
@@ -73,22 +84,27 @@ export class FirewormPresenter implements AttackPresenter {
     }
     at(520, () => tween({targets:dragon, scaleY:0.96, angle:-2, duration:280, ease:'Sine.easeInOut'}));
     let stopBreath: (() => void) | undefined;
+    let clearEngulfment: (() => void) | undefined;
     at(850, () => {
       say('attacking', 'Here comes the fire!'); pose(1);
       tween({targets:dragon, x:262, scaleY:1, angle:0, duration:210, ease:'Cubic.easeOut'});
-      stopBreath = createFirewormBreath(scene, effects, tween, mouth);
+      stopBreath = createFirewormBreath(scene, effects, tween, mouth, () => ({x:target.x + attackSide * targetSize * 0.3, y:target.y - targetSize * 0.6}));
     });
     at(1330, () => {
-      say('impact', 'What a spectacular surprise!'); createFirewormImpact(scene, effects, tween);
-      targetArt?.setTint(0x84909b);
+      say('impact', 'What a spectacular surprise!');
+      clearEngulfment = createFirewormImpact(scene, rearImpact, foregroundImpact, tween, targetSize, attackSide);
+      targetArt?.setTint(0x7b8491); soot.setVisible(true);
       tween({targets:target, x:670, angle:12, duration:210, ease:'Back.easeOut'});
     });
     at(1600, () => stopBreath?.());
+    at(1680, () => clearEngulfment?.());
     at(1980, () => {
-      say('recovering', 'A most satisfying spark.'); pose(2);
+      say('recovering', 'A well-toasted opponent!'); pose(2);
+      dazed.setVisible(true);
+      tween({targets:target, scaleY:0.9, duration:180});
       tween({targets:dragon, angle:-3, y:483, duration:260, yoyo:true, ease:'Sine.easeInOut'});
-      tween({targets:target, alpha:0, y:520, duration:520});
     });
+    at(2640, () => tween({targets:target, alpha:0, y:520, duration:300}));
     at(2980, () => {
       this.status.setText('Back to the board');
       if (settings.presentation !== 'arena' && settings.origins) {
