@@ -1,0 +1,21 @@
+{
+  "source_commit": "578f110970cf505d1a35af77c6cc2bccc39249c4",
+  "files": {
+    "dist/assets/FirewormPreview-CltP_6nN.js": {
+      "bytes": 5939,
+      "sha256": "a4d617a46d031055fef0772e215f2ccf8e27159b68bcee205d9cecb178f4e14e"
+    },
+    "dist/assets/index-Dd8_Lhwg.js": {
+      "bytes": 1803760,
+      "sha256": "15abdb111559d611f5818b7c0468187f19e0b2b32d2d65733ab0626d335fd3d0"
+    },
+    "dist/assets/index-BI9afnLn.css": {
+      "bytes": 22229,
+      "sha256": "ba9d8480167e2a10731b769bb00cae92c7dc873682703ce0aa6cd9256d0e36b9"
+    },
+    "dist/assets/FirewormPreview-DWXeCfaY.css": {
+      "bytes": 1503,
+      "sha256": "c513df1eddfcd7e5d69b0dc33db4ae5a8a5b2f972b6d5f4c12f769b36a513c98"
+    }
+  }
+}

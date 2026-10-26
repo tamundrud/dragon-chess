@@ -1,0 +1,32 @@
+{
+  "public/art/fireworm/cove.png": {
+    "bytes": 2706061,
+    "sha256": "156aa6c14883df4e720cb53941735519d5099ad6bb08e08581f8ebf8f6689859",
+    "identical_to_PR14": true
+  },
+  "public/art/fireworm/rig.png": {
+    "bytes": 2600996,
+    "sha256": "46d5c87ede2fe744a12aeecc9a3e7d382c712d2feb1e14e6381183d7788a72b7",
+    "identical_to_PR14": true
+  },
+  "public/art/fireworm/proud.png": {
+    "bytes": 1777528,
+    "sha256": "5302161e46b38315a1056adbe34d527deaf3044d962016b67e9a362f677cd4f8",
+    "identical_to_PR14": true
+  },
+  "public/art/fireworm/flamehuffer.png": {
+    "bytes": 2220515,
+    "sha256": "7ed6f3823a25d49fc2f8c02518911ac7e066236c80689e19dcd75f0ad9751eca",
+    "identical_to_PR14": true
+  },
+  "public/art/fireworm/breath.png": {
+    "bytes": 1907407,
+    "sha256": "cac68c43b10858ea527b5445bd3d930b212998a17e182376f1aa85891dae41c7",
+    "identical_to_PR14": true
+  },
+  "public/art/fireworm/ready.png": {
+    "bytes": 1934325,
+    "sha256": "2b7168803dd7748b300e04ffbfee66c6465d8a00e833bae88ca23dcadbafe764",
+    "identical_to_PR14": true
+  }
+}
