@@ -3,6 +3,8 @@ import { AttackContext, AttackDefinition, AttackLifecycleState, AttackPresenter 
 import { AttackDirector } from '../animation/AttackDirector';
 import { CharacterRegistry } from '../characters/CharacterRegistry';
 import { AudioController } from '../audio/AudioController';
+import { FirewormPresenter } from '../animation/FirewormPresenter';
+import { preloadFireworm, frameFireworm } from '../animation/firewormAssets';
 import { FireDragonPresenter } from '../animation/FireDragonPresenter';
 import { ATTACK_ART_WIDTH, ATTACK_ART_HEIGHT, fitAttackArtwork } from '../animation/attackLayout';
 
@@ -18,6 +20,7 @@ export class AttackScene extends Phaser.Scene implements AttackPresenter {
   private attackerContainer!: Phaser.GameObjects.Container;
   private defenderContainer!: Phaser.GameObjects.Container;
   private impactEffectContainer!: Phaser.GameObjects.Container;
+  private firewormPresenter!: FirewormPresenter;
   private fireDragonPresenter!: FireDragonPresenter;
   private cleanedUp = true;
   private onCompleteCallback: (() => void) | null = null;
@@ -26,7 +29,12 @@ export class AttackScene extends Phaser.Scene implements AttackPresenter {
     super({ key: 'AttackScene' });
   }
 
+  public isPresentationReady(): boolean { return !this.cleanedUp; }
+
+  preload(): void { preloadFireworm(this); }
+
   create(): void {
+    frameFireworm(this);
     this.cleanedUp = false;
     this.overlayGraphics = this.add.graphics();
     this.stageContainer = this.add.container(0, 0);
@@ -115,6 +123,7 @@ export class AttackScene extends Phaser.Scene implements AttackPresenter {
 
     this.layoutStage(width, height);
 
+    this.firewormPresenter = new FirewormPresenter(this, this.artworkContainer, this.statusText, this.attackerText, this.defenderText);
     this.fireDragonPresenter = new FireDragonPresenter(
       this,
       this.artworkContainer,
@@ -135,6 +144,19 @@ export class AttackScene extends Phaser.Scene implements AttackPresenter {
     this.onCompleteCallback = onComplete;
     this.stageContainer.setVisible(true);
     this.drawOverlay();
+
+    if (definition.id === 'fireworm_fireworks') {
+      this.attackerContainer.setVisible(false);
+      this.defenderContainer.setVisible(false);
+      this.impactEffectContainer.setVisible(false);
+      this.firewormPresenter.playAttack(context, definition, settings, onPhaseChange, () => {
+        const callback = this.onCompleteCallback;
+        this.onCompleteCallback = null;
+        this.cleanUpAttackPresentation();
+        callback?.();
+      });
+      return;
+    }
 
     if (definition.id === 'fire_stream_attack' || context.attackerCharacterId === 'fire_dragon') {
       this.attackerContainer.setVisible(false);
@@ -318,6 +340,7 @@ export class AttackScene extends Phaser.Scene implements AttackPresenter {
   }
 
   public skip(): void {
+    this.firewormPresenter?.cleanup();
     if (this.fireDragonPresenter) {
       this.fireDragonPresenter.cleanup();
     }
@@ -343,6 +366,7 @@ export class AttackScene extends Phaser.Scene implements AttackPresenter {
   }
 
   private cleanUpAttackPresentation(): void {
+    this.firewormPresenter?.cleanup();
     if (this.fireDragonPresenter) {
       this.fireDragonPresenter.cleanup();
     }

@@ -1,0 +1,84 @@
+[
+  {
+    "run": "initial-phone",
+    "raw_report": "/workspace/dragon-chess-artifacts/playwright/results.json",
+    "stats": {
+      "startTime": "2026-10-26T00:25:13.335Z",
+      "duration": 145180.519,
+      "expected": 8,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "is_final_matrix": false,
+    "note": "Preliminary 8-case phone run before final review fixes; not final qualification."
+  },
+  {
+    "run": "cold-red",
+    "raw_report": "/workspace/dragon-chess-artifacts/fireworm-cold-red/results.json",
+    "stats": {
+      "startTime": "2026-10-26T00:36:00.292Z",
+      "duration": 8693.321,
+      "expected": 0,
+      "skipped": 0,
+      "unexpected": 1,
+      "flaky": 0
+    },
+    "is_final_matrix": false,
+    "note": "Intentional red regression holding rig.png; confirmed premature game-ready=true before fix."
+  },
+  {
+    "run": "broad-interrupted",
+    "raw_report": "/workspace/dragon-chess-artifacts/fireworm-final/results.json",
+    "stats": {
+      "startTime": "2026-10-26T00:29:15.849Z",
+      "duration": 289761.518,
+      "expected": 6,
+      "skipped": 93,
+      "unexpected": 1,
+      "flaky": 0
+    },
+    "is_final_matrix": false,
+    "note": "Stopped after review found readiness race. Console: 6 passed, 1 timeout, 1 intentional skip, 3 interrupted, 89 not run; JSON aggregates interrupted/unrun as skipped."
+  },
+  {
+    "run": "cold-final",
+    "raw_report": "/workspace/dragon-chess-artifacts/fireworm-cold-final/results.json",
+    "stats": {
+      "startTime": "2026-10-26T00:42:43.671Z",
+      "duration": 17539.683,
+      "expected": 2,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "is_final_matrix": false,
+    "note": "Final source: held-art readiness and leaving-during-load passed in phone-360 project."
+  },
+  {
+    "run": "final-three-viewport-matrix",
+    "is_final_matrix": true,
+    "stats": {
+      "startTime": "2026-10-26T00:45:26.253Z",
+      "duration": 1324085.159,
+      "expected": 64,
+      "skipped": 2,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "summary": "browser-summary.json"
+  },
+  {
+    "run": "post-neck-pivot-three-viewport-recheck",
+    "is_final_matrix": true,
+    "stats": {
+      "startTime": "2026-10-26T05:52:01.657Z",
+      "duration": 133556.028,
+      "expected": 6,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "summary": "browser-post-visual-summary.json"
+  }
+]

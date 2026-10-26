@@ -42,7 +42,7 @@ describe('Dragon Chess Phase 1 Scaffold Smoke Tests', () => {
     expect(screen.getByText('Restart')).toBeInTheDocument();
   });
 
-  it('initializes CharacterRegistry with temporary and final vertical slice targets', () => {
+  it('keeps unaccepted character artwork marked temporary', () => {
     const charReg = CharacterRegistry.getInstance();
     const stoick = charReg.getById('stoick');
     const fireDragon = charReg.getById('fire_dragon');
@@ -50,7 +50,7 @@ describe('Dragon Chess Phase 1 Scaffold Smoke Tests', () => {
     expect(stoick).toBeDefined();
     expect(stoick?.artStatus).toBe('temporary');
     expect(fireDragon).toBeDefined();
-    expect(fireDragon?.artStatus).toBe('final');
+    expect(fireDragon?.artStatus).toBe('temporary');
   });
 
   it('initializes AttackRegistry with fire dragon attack definition', () => {

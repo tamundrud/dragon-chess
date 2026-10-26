@@ -2,7 +2,7 @@
 
 ## Planned asset directory structure
 
-This is the intended production layout, not a directory tree shipped by the current build. Current art is procedural; audio files are not shipped.
+This is the intended production layout, not a directory tree shipped by the current build. The Fireworm prototype ships original generated PNG artwork under `public/art/fireworm/`; other art remains procedural/temporary. Audio files are not shipped.
 ```text
 public/assets/
   board/
@@ -45,3 +45,10 @@ public/assets/
   - `fire_stream`: Directed flame travel roar.
   - `fire_impact`: Collision blast sound.
   - `dragon_rumble`: Low-frequency rumble during flame travel.
+
+## Fireworm capture prototype (2026-10-26)
+
+- `public/art/fireworm/rig.png`: original generated transparent cutout atlas; independently animated body, wing, two neck/head poses, painted flame and temporary raider defender.
+- `public/art/fireworm/cove.png`: original generated painted coastal stage.
+- [Production method, creative prompts and limitations](../public/art/fireworm/PROVENANCE.md). These are prototype assets with owner visual acceptance pending.
+- `firewormAssets.ts` preloads images and defines measured texture-frame bounds. `FirewormPresenter` owns its timers/tweens/objects; effects use modest coloured spark trajectories with trails and translucent smoke. No Fireworm sound cue or audio file ships.

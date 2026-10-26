@@ -1,0 +1,81 @@
+{
+  "source_commit": "42b3a5b7b7a0da3c224fde1121c349ac52594140",
+  "command": "DRAGON_CHESS_ARTIFACTS=/workspace/dragon-chess-artifacts/fireworm-joint-verified npx playwright test e2e/fireworm.spec.js -g 'Fireworm moved rook capture, rotate across phases, complete|isolated proof' --config=/workspace/dragon-chess-playwright.config.mjs --project=chromium --project=phone-360-portrait --project=phone-landscape --workers=1",
+  "stats": {
+    "startTime": "2026-10-26T05:52:01.657Z",
+    "duration": 133556.028,
+    "expected": 6,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "errors": [],
+  "tests": [
+    {
+      "title": "Fireworm moved rook capture, rotate across phases, complete",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 49306
+        }
+      ]
+    },
+    {
+      "title": "isolated proof supports stable replay, Skip, Fast, Instant and reduced motion",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 22408
+        }
+      ]
+    },
+    {
+      "title": "Fireworm moved rook capture, rotate across phases, complete",
+      "project": "phone-360-portrait",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 21419
+        }
+      ]
+    },
+    {
+      "title": "isolated proof supports stable replay, Skip, Fast, Instant and reduced motion",
+      "project": "phone-360-portrait",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 4932
+        }
+      ]
+    },
+    {
+      "title": "Fireworm moved rook capture, rotate across phases, complete",
+      "project": "phone-landscape",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 22627
+        }
+      ]
+    },
+    {
+      "title": "isolated proof supports stable replay, Skip, Fast, Instant and reduced motion",
+      "project": "phone-landscape",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 4827
+        }
+      ]
+    }
+  ]
+}

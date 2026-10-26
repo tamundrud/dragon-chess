@@ -16,6 +16,13 @@ export class AttackRegistry {
   }
 
   private registerDefaults(): void {
+    this.register({
+      id: 'fireworm_fireworks', displayName: 'Fireworm’s spark of mischief',
+      description: 'Illustrated neck and wing anticipation, painted flame ribbons, colourful fireworks and comic recoil.',
+      totalDuration: 3350, anticipationDuration: 850, strikeDuration: 480,
+      impactTime: 1330, recoveryDuration: 2020, screenShake: false, hitPause: false,
+      soundCueIds: [], effectIds: ['painted_flame', 'colour_sparks', 'soft_smoke'],
+    });
     // Fire Dragon Vertical Slice Attack
     this.register({
       id: 'fire_stream_attack',

@@ -64,6 +64,13 @@ export class PhaserGameManager {
       this.game.scene.run('AttackScene');
     }
 
+    if (!this.attackScene.isPresentationReady()) {
+      this.boardScene.getInputController().setLocked(true);
+      this.attackScene.events.once(Phaser.Scenes.Events.CREATE, this.handleReady);
+      return;
+    }
+    this.boardScene.getInputController().setLocked(false);
+
     // Connect ChessGameController to BoardScene
     this.unsubscribeChess = this.controller.subscribe((status: GameStatus, board, lastMove) => {
       if (this.boardScene) {
@@ -197,6 +204,10 @@ export class PhaserGameManager {
         this.pendingAttack = null;
         this.controller.setInputLocked(false);
         this.boardScene?.getInputController().setLocked(false);
+      }, {
+        attacker: this.controller.getCharacterId(prepared.from),
+        defender: this.controller.getCharacterId(prepared.flags.includes('e')
+          ? `${prepared.to[0]}${prepared.from[1]}` : prepared.to),
       });
 
       if (!started) {
@@ -250,6 +261,7 @@ export class PhaserGameManager {
     this.onPromotionCallback = null;
     this.controller.setInputLocked(false);
     this.boardScene?.getInputController().setLocked(false);
+    this.attackScene?.events.off(Phaser.Scenes.Events.CREATE, this.handleReady);
     if (this.unsubscribeChess) this.unsubscribeChess();
     if (this.unsubscribeInputMove) this.unsubscribeInputMove();
     if (this.unsubscribeInputSelect) this.unsubscribeInputSelect();
@@ -259,6 +271,8 @@ export class PhaserGameManager {
       this.game.events.off(Phaser.Core.Events.READY, this.handleReady);
       // Phaser destruction is deferred to a frame. Stop scenes synchronously so
       // an old overlay cannot remain registered during a Strict Mode remount.
+      // A loading scene is not in getScenes(true); stop its loader synchronously too.
+      this.game.scene.stop('AttackScene');
       this.game.scene.getScenes(true).forEach((scene) => this.game?.scene.stop(scene));
       this.game.destroy(true);
       this.game = null;

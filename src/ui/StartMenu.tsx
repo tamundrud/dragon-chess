@@ -45,6 +45,9 @@ export const StartMenu: React.FC<StartMenuProps> = ({ onStartGame, onOpenSetting
           </div>
         </div>
 
+        <a href="/?preview=fireworm" className="mt-5 inline-flex min-h-11 items-center text-sm text-amber-200 underline">
+          Watch Fireworm capture prototype
+        </a>
         {/* Main Actions */}
         <div className="mt-8 flex flex-col gap-3">
           <button

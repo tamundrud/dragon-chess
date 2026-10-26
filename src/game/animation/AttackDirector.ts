@@ -57,7 +57,7 @@ export class AttackDirector {
    * Starts an attack sequence for a capture or special move.
    * Prevents overlapping concurrent attacks.
    */
-  public startAttack(move: ChessMoveResult, onComplete: AttackCompletionCallback, onAbort?: () => void): boolean {
+  public startAttack(move: ChessMoveResult, onComplete: AttackCompletionCallback, onAbort?: () => void, identities?: { attacker?: string; defender?: string }): boolean {
     if (this.state !== 'idle') {
       console.warn('Concurrent attack requested while director is not idle. Rejecting.');
       return false;
@@ -75,9 +75,9 @@ export class AttackDirector {
     const characterReg = CharacterRegistry.getInstance();
     const attackReg = AttackRegistry.getInstance();
 
-    const attackerChar = characterReg.getByPiece(move.color, move.piece, move.from);
+    const attackerChar = (identities?.attacker && characterReg.getById(identities.attacker)) || characterReg.getByPiece(move.color, move.piece, move.from);
     const defenderColor = move.color === 'w' ? 'b' : 'w';
-    const defenderChar = move.captured ? characterReg.getByPiece(defenderColor, move.captured, move.to) : characterReg.getByPiece(defenderColor, 'p', move.to);
+    const defenderChar = (identities?.defender && characterReg.getById(identities.defender)) || characterReg.getByPiece(defenderColor, move.captured ?? 'p', move.to);
     
     const attackDef = attackReg.getById(attackerChar.defaultAttackId) || attackReg.getById('generic_strike')!;
 

@@ -1,0 +1,253 @@
+{
+  "status": "complete",
+  "verdict": "Ready with fixes",
+  "verdict_reason": "Resolve #1 so cold artwork loading cannot bypass the capture overlay, then #2 so the release restores the original body proportions. The draft prototype may proceed after technical fixes and verification; owner visual acceptance remains pending.",
+  "scope": {
+    "base": "d4937d234e569d977faaa2ff063fe6329bae40c9",
+    "branch": "feat/fireworm-animation-proof",
+    "head_sha": "d4937d234e569d977faaa2ff063fe6329bae40c9",
+    "pr_url": null,
+    "files_changed": 23
+  },
+  "intent": "Implement one original illustrated Fireworm rook capture prototype with expressive layered animation and a colourful fireworks impact. Preserve chess.js authority and the one-commit lifecycle, support Skip/abort/speed/reduced motion/rotation, and retain named-rook identity through moves, capture, Undo, reset, castling and promotion. Keep other cast art explicitly temporary; real-device owner visual acceptance remains pending and is not a prerequisite for draft prototype handoff.",
+  "intent_confidence": "explicit",
+  "reviewers": [
+    "correctness",
+    "project-standards",
+    "testing",
+    "maintainability",
+    "adversarial",
+    "julik-frontend-races"
+  ],
+  "findings": [
+    {
+      "#": 1,
+      "autofix_class": "manual",
+      "confidence": 75,
+      "evidence": [
+        "src/game/scenes/AttackScene.ts:32 -- preload(): void { preloadFireworm(this); }",
+        "src/game/scenes/AttackScene.ts:50 -- AttackDirector.getInstance().registerPresenter(this);",
+        "src/game/PhaserGameManager.ts:64 -- this.game.scene.run('AttackScene');",
+        "src/game/PhaserGameManager.ts:110 -- this.isReady = true;",
+        "node_modules/phaser/src/scene/SceneManager.js:498-510 -- scene.preload is called, loader starts, and create(scene) is deferred until loadComplete.",
+        "src/game/animation/AttackDirector.ts:110-124 -- if (this.presenter) delegates; otherwise runs the no-presenter fallback schedule."
+      ],
+      "file": "src/game/scenes/AttackScene.ts",
+      "first_evidence": "src/game/scenes/AttackScene.ts:32 -- preload(): void { preloadFireworm(this); }",
+      "independent_reviewers": [
+        "correctness",
+        "adversarial"
+      ],
+      "line": 32,
+      "owner": "downstream-resolver",
+      "pre_existing": false,
+      "requires_verification": true,
+      "reviewers": [
+        "correctness",
+        "adversarial"
+      ],
+      "severity": "P1",
+      "suggested_fix": "Wait for AttackScene CREATE before completing manager setup/readiness and accepting move requests, with cancellation when the manager is destroyed. Add a browser regression that holds the Fireworm image requests, verifies moves cannot enter the headless fallback, then releases assets and performs a capture.",
+      "title": "Wait for the attack scene before enabling moves",
+      "why_it_matters": "On a cold or slow phone connection, the board accepts moves while the newly introduced image preload is still in progress. A capture during that window finds no registered presenter and silently runs the headless fallback, so the user gets no attack scene at all; registration after loading does not attach the already-running capture. Wait for AttackScene creation before declaring the game ready and enabling moves, or load the artwork before board interaction starts.",
+      "validation_status": "confirmed",
+      "validation_reason": "If a legal capture occurs while the new Fireworm image preload remains pending, Phaser SceneManager.js:498-529 defers AttackScene.create and its presenter registration, but PhaserGameManager.ts:64-110 immediately wires unlocked board input and advertises readiness, so AttackDirector.ts:109-124 selects the invisible fallback; the board input caller establishes reachability, while incidence was not measured.",
+      "protected_subject": "concurrency"
+    },
+    {
+      "#": 2,
+      "autofix_class": "gated_auto",
+      "confidence": 100,
+      "evidence": [
+        "src/game/animation/FirewormPresenter.ts:81 -- tween({ targets: body, scaleY: body.scaleX, y: -12, duration: 230 });",
+        "src/game/animation/FirewormPresenter.ts:28 -- const body = scene.add.image(-37, -12, 'fireworm-sheet', 'body').setDisplaySize(290, 290);",
+        "src/game/animation/firewormAssets.ts:12 -- ['body', 0, 20, 615, 465], ['head', 630, 12, 415, 480],"
+      ],
+      "file": "src/game/animation/FirewormPresenter.ts",
+      "first_evidence": "src/game/animation/FirewormPresenter.ts:81 -- tween({ targets: body, scaleY: body.scaleX, y: -12, duration: 230 });",
+      "independent_reviewers": [
+        "correctness"
+      ],
+      "line": 81,
+      "owner": "downstream-resolver",
+      "pre_existing": false,
+      "requires_verification": true,
+      "reviewers": [
+        "correctness"
+      ],
+      "severity": "P2",
+      "suggested_fix": "Capture body.scaleY immediately after setDisplaySize and use that value for the release tween rather than body.scaleX. Inspect anticipation/release/recovery frames after the change.",
+      "title": "Restore the body with its original Y scale",
+      "why_it_matters": "The dragon gets shorter when it releases instead of returning from its crouch. The body frame is 615\u00d7465 but is displayed as 290\u00d7290, so its original scaleY is about 0.624 while scaleX is about 0.472; assigning scaleX to scaleY shrinks its rendered height to about 219px and leaves it there through triumph. Retaining the original Y scale restores the intended proportions and avoids shifting the neck/body seam during release.",
+      "validation_status": "confirmed",
+      "validation_reason": "For a non-reduced Fireworm attack reaching release, FirewormPresenter.ts:28,69,81 changes scaleY from the 290/465 display-size scale to scaleX=290/615, rendering the body about 219 pixels tall through recovery instead of restoring 290 pixels, as established by firewormAssets.ts:12 and Phaser Size.js:64-98; incidence was not measured."
+    }
+  ],
+  "actionable_findings": [
+    {
+      "#": 1,
+      "autofix_class": "manual",
+      "confidence": 75,
+      "evidence": [
+        "src/game/scenes/AttackScene.ts:32 -- preload(): void { preloadFireworm(this); }",
+        "src/game/scenes/AttackScene.ts:50 -- AttackDirector.getInstance().registerPresenter(this);",
+        "src/game/PhaserGameManager.ts:64 -- this.game.scene.run('AttackScene');",
+        "src/game/PhaserGameManager.ts:110 -- this.isReady = true;",
+        "node_modules/phaser/src/scene/SceneManager.js:498-510 -- scene.preload is called, loader starts, and create(scene) is deferred until loadComplete.",
+        "src/game/animation/AttackDirector.ts:110-124 -- if (this.presenter) delegates; otherwise runs the no-presenter fallback schedule."
+      ],
+      "file": "src/game/scenes/AttackScene.ts",
+      "first_evidence": "src/game/scenes/AttackScene.ts:32 -- preload(): void { preloadFireworm(this); }",
+      "independent_reviewers": [
+        "correctness",
+        "adversarial"
+      ],
+      "line": 32,
+      "owner": "downstream-resolver",
+      "pre_existing": false,
+      "requires_verification": true,
+      "reviewers": [
+        "correctness",
+        "adversarial"
+      ],
+      "severity": "P1",
+      "suggested_fix": "Wait for AttackScene CREATE before completing manager setup/readiness and accepting move requests, with cancellation when the manager is destroyed. Add a browser regression that holds the Fireworm image requests, verifies moves cannot enter the headless fallback, then releases assets and performs a capture.",
+      "title": "Wait for the attack scene before enabling moves",
+      "why_it_matters": "On a cold or slow phone connection, the board accepts moves while the newly introduced image preload is still in progress. A capture during that window finds no registered presenter and silently runs the headless fallback, so the user gets no attack scene at all; registration after loading does not attach the already-running capture. Wait for AttackScene creation before declaring the game ready and enabling moves, or load the artwork before board interaction starts.",
+      "validation_status": "confirmed",
+      "validation_reason": "If a legal capture occurs while the new Fireworm image preload remains pending, Phaser SceneManager.js:498-529 defers AttackScene.create and its presenter registration, but PhaserGameManager.ts:64-110 immediately wires unlocked board input and advertises readiness, so AttackDirector.ts:109-124 selects the invisible fallback; the board input caller establishes reachability, while incidence was not measured.",
+      "protected_subject": "concurrency"
+    },
+    {
+      "#": 2,
+      "autofix_class": "gated_auto",
+      "confidence": 100,
+      "evidence": [
+        "src/game/animation/FirewormPresenter.ts:81 -- tween({ targets: body, scaleY: body.scaleX, y: -12, duration: 230 });",
+        "src/game/animation/FirewormPresenter.ts:28 -- const body = scene.add.image(-37, -12, 'fireworm-sheet', 'body').setDisplaySize(290, 290);",
+        "src/game/animation/firewormAssets.ts:12 -- ['body', 0, 20, 615, 465], ['head', 630, 12, 415, 480],"
+      ],
+      "file": "src/game/animation/FirewormPresenter.ts",
+      "first_evidence": "src/game/animation/FirewormPresenter.ts:81 -- tween({ targets: body, scaleY: body.scaleX, y: -12, duration: 230 });",
+      "independent_reviewers": [
+        "correctness"
+      ],
+      "line": 81,
+      "owner": "downstream-resolver",
+      "pre_existing": false,
+      "requires_verification": true,
+      "reviewers": [
+        "correctness"
+      ],
+      "severity": "P2",
+      "suggested_fix": "Capture body.scaleY immediately after setDisplaySize and use that value for the release tween rather than body.scaleX. Inspect anticipation/release/recovery frames after the change.",
+      "title": "Restore the body with its original Y scale",
+      "why_it_matters": "The dragon gets shorter when it releases instead of returning from its crouch. The body frame is 615\u00d7465 but is displayed as 290\u00d7290, so its original scaleY is about 0.624 while scaleX is about 0.472; assigning scaleX to scaleY shrinks its rendered height to about 219px and leaves it there through triumph. Retaining the original Y scale restores the intended proportions and avoids shifting the neck/body seam during release.",
+      "validation_status": "confirmed",
+      "validation_reason": "For a non-reduced Fireworm attack reaching release, FirewormPresenter.ts:28,69,81 changes scaleY from the 290/465 display-size scale to scaleX=290/615, rendering the body about 219 pixels tall through recovery instead of restoring 290 pixels, as established by firewormAssets.ts:12 and Phaser Size.js:64-98; incidence was not measured."
+    }
+  ],
+  "triage_groups": [],
+  "pre_existing_findings": [],
+  "requirements_completeness": {
+    "plan": "docs/plans/2026-10-25-fireworm-animation-proof-plan.md",
+    "source": "explicit",
+    "requirements": [
+      {
+        "requirement": "Original layered transparent character art and environment with provenance for every shipped image/sound; no copied depiction or finished-art claim.",
+        "status": "met",
+        "note": "Corresponding prototype implementation appears in the reviewed diff."
+      },
+      {
+        "requirement": "Phaser standalone proof with replay, staging, anticipation, directional release, colourful fireworks, comic reaction, triumph and clean reset in portrait and landscape.",
+        "status": "met",
+        "note": "Corresponding prototype implementation appears in the reviewed diff."
+      },
+      {
+        "requirement": "Fireworm registered as rook with unique attack and dedicated AttackPresenter; preserve old FireDragonPresenter for comparison.",
+        "status": "met",
+        "note": "Corresponding prototype implementation appears in the reviewed diff."
+      },
+      {
+        "requirement": "Per-game presentation identity follows committed moves, captures, Undo, castling, restart and standard promotion; a1 Fireworm and h1 Hookfang remain distinct.",
+        "status": "met",
+        "note": "Corresponding prototype implementation appears in the reviewed diff."
+      },
+      {
+        "requirement": "Actual legal rook capture fixture after quiet moves, no gameplay backdoors; exactly one commit after completion/Skip and zero on abort.",
+        "status": "partially addressed",
+        "note": "Capture lifecycle is implemented, but the cold-load presentation gap is finding #1."
+      },
+      {
+        "requirement": "Normal around3\u20134 seconds, Fast shorter, Instant immediate; reduced low-motion poses/static subdued spark burst without shake/flash/zoom.",
+        "status": "partially addressed",
+        "note": "Modes and durations are implemented; release-body proportions need finding #2."
+      },
+      {
+        "requirement": "Automated/unit/type/lint/build and production browser capture/cleanup/resize matrix; retained static and motion/runnable evidence; technical proof distinct from physical-phone owner acceptance.",
+        "status": "met",
+        "note": "Runnable proof and test coverage exist. Parent owns final command results and retained evidence; physical-device owner acceptance remains pending."
+      },
+      {
+        "requirement": "Separate feature branch and draft PR targeting docs/book-visual-reset-2026-10-25; no merge/deploy; no full-roster rollout.",
+        "status": "met",
+        "note": "Correct feature/base arrangement is recorded. Draft PR is a later parent-owned delivery step; no merge/deploy performed by review."
+      }
+    ],
+    "implementation_units": [],
+    "unrequested_behavior_rules": []
+  },
+  "learnings": [],
+  "agent_native_gaps": [],
+  "deployment_notes": [],
+  "residual_risks": [
+    "e2e/fireworm.spec.js records screenshots but does not assert illustrated artwork visibility after rotation; unlike e2e/attack_resize.spec.js, its automated pass cannot distinguish a correctly sized blank or background-only stage. Physical-device visual acceptance remains explicitly pending."
+  ],
+  "testing_gaps": [
+    "The en-passant rules test exercises a commit but asserts only chess flags/captured type. Extend that existing case to assert getCharacterId clears the off-destination victim square and that Undo restores both pawn identities, covering the new metadata deletion at src/game/characters/PieceIdentity.ts:27."
+  ],
+  "coverage": {
+    "depth": "full",
+    "notes": [
+      "Scope: standalone current working tree (including staged changes) against origin/docs/book-visual-reset-2026-10-25.",
+      "Project standards used AGENTS.md as instruction-file fallback; no CODING_STANDARDS.md exists.",
+      "Untracked preliminary screenshot artifacts were excluded from code-review scope. Parent is retaining final visual evidence separately.",
+      "No reviewer reran application checks because the parent owns concurrent authoritative verification. Review uses source and existing reported local results; physical-device owner acceptance remains pending.",
+      "Cross-model pass: not run; host Codex identity attested, but only the same-family codex CLI is installed. The adversarial lens ran as an in-process local fallback; no independent cross-model review is claimed.",
+      "Four persona candidates reconciled to three primary findings; the cold-load race was independently reported by correctness and local adversarial reviewers. Same serving family agreement did not promote confidence.",
+      "First evidence backfilled: 0; quote-gate demotions: 0; malformed findings/returns: 0; confidence suppressions: 0; mode-aware demotions: 0.",
+      "Validation shortcuts: 0; all three actionable findings require the one validator batch because no verified different-family corroboration exists.",
+      "Validator batch completed: 2 confirmed, 1 rejected, 0 unresolved, 0 malformed, 0 failed, 0 shortcut-skipped. Finding #3 was dropped because the parent added the exact moved-Hookfang defender/Undo regression during review.",
+      "Parent follow-up fixes for #1/#2 appeared after validation. This receipt preserves the validated review snapshot and does not claim those subsequent fixes were re-reviewed or executed."
+    ],
+    "validator": {
+      "confirmed": 2,
+      "rejected": 1,
+      "unresolved": 0,
+      "malformed": 0,
+      "failed": 0,
+      "shortcut_skipped": 0,
+      "rejections": [
+        {
+          "#": 3,
+          "status": "rejected",
+          "protected_subject": null,
+          "reason": "The current working tree now contains a regression test added during review at game_manager_lifecycle.test.ts:119-131 that moves Hookfang from h1 to h3, captures it with the h6 black rook, asserts defenderCharacterId is hookfang before Skip, and checks Undo restores both identities, directly refuting the alleged missing coverage for a moved named defender."
+        }
+      ]
+    },
+    "suppressed_by_confidence": {},
+    "mode_aware_demotions": 0,
+    "first_evidence_backfilled": 0,
+    "quote_gate_demotions": 0,
+    "protected_subject_reclassifications": 0,
+    "failed_reviewers": [],
+    "tests_run_by_review": []
+  },
+  "peer": {
+    "outcome": "in-process-fallback",
+    "coverage": "Cross-model pass: not run; host Codex identity attested, but only the same-family codex CLI is installed. The adversarial lens ran as an in-process local fallback; no independent cross-model review is claimed."
+  },
+  "artifact_path": "/tmp/compound-engineering-1000/ce-code-review/fireworm-20261026",
+  "run_id": "fireworm-20261026"
+}

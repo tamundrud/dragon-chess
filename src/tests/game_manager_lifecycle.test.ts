@@ -12,12 +12,14 @@ vi.mock('../game/scenes/BoardScene', () => ({ BoardScene: class {} }));
 vi.mock('../game/scenes/AttackScene', () => ({ AttackScene: class {} }));
 vi.mock('phaser', () => ({ default: {
   AUTO: 0, Scale: { RESIZE: 0, CENTER_BOTH: 0 }, Core: { Events: { READY: 'ready' } },
+  Scenes: { Events: { CREATE: 'create' } },
   Game: class {
     events = host.events;
     canvas = host.canvas;
     scale = { updateBounds: host.updateBounds, setParentSize: host.setParentSize };
     scene = {
-      getScene: () => host.board,
+      getScene: (key: string) => key === 'AttackScene'
+        ? { isPresentationReady: () => host.presentationReady, events: host.attackEvents } : host.board,
       isSleeping: () => false, isActive: () => true,
       getScenes: () => [], stop: vi.fn(),
     };
@@ -26,6 +28,8 @@ vi.mock('phaser', () => ({ default: {
 } }));
 const host = vi.hoisted(() => ({
   events: null as unknown as EventEmitter,
+  attackEvents: null as unknown as EventEmitter,
+  presentationReady: true,
   board: null as unknown as {
     getInputController: () => InputController;
     updateBoardState: ReturnType<typeof vi.fn>;
@@ -70,6 +74,8 @@ describe('PhaserGameManager lifecycle', () => {
 
   beforeEach(() => {
     vi.useFakeTimers();
+    host.presentationReady = true;
+    host.attackEvents = new EventEmitter();
     SettingsStore.getInstance().reset();
     presenter = {
       playAttack: (_ctx, _def, _settings, _phase, callback) => { complete = callback; },
@@ -85,6 +91,66 @@ describe('PhaserGameManager lifecycle', () => {
     director.abort();
     director.unregisterPresenter(presenter);
     vi.useRealTimers();
+  });
+
+  it('waits for the illustrated presentation before advertising readiness or accepting moves', () => {
+    host.presentationReady = false;
+    const game = mount();
+    const ready = vi.fn(); game.manager.onReady(ready);
+    game.move('e2', 'e4');
+    expect(game.controller.getTurn()).toBe('w');
+    expect(ready).not.toHaveBeenCalled();
+    host.presentationReady = true; host.attackEvents.emit('create');
+    expect(ready).toHaveBeenCalledTimes(1);
+    game.move('e2', 'e4');
+    expect(game.controller.getTurn()).toBe('b');
+  });
+
+  it('destroy while art is loading removes the deferred readiness callback', () => {
+    host.presentationReady = false;
+    const game = mount(); const ready = vi.fn(); game.manager.onReady(ready);
+    game.manager.destroy();
+    host.presentationReady = true; host.attackEvents.emit('create');
+    expect(ready).not.toHaveBeenCalled();
+    expect(host.attackEvents.listenerCount('create')).toBe(0);
+    expect(game.controller.getTurn()).toBe('w');
+  });
+
+  it('preserves a moved Hookfang defender and restores both identities after Undo', () => {
+    const game = mount(new ChessGameController('4k3/8/7r/8/8/8/8/R3K2R w KQ - 0 1'));
+    game.move('h1', 'h3');
+    game.move('h6', 'h3');
+    expect(director.getCurrentContext()?.defenderCharacterId).toBe('hookfang');
+    const before = game.controller.getFen();
+    const attacker = game.controller.getCharacterId('h6');
+    director.skip();
+    expect(game.controller.getCharacterId('h3')).toBe(attacker);
+    game.controller.undo();
+    expect(game.controller.getFen()).toBe(before);
+    expect(game.controller.getCharacterId('h3')).toBe('hookfang');
+    expect(game.controller.getCharacterId('h6')).toBe(attacker);
+  });
+
+  it.each([
+    ['fireworm', 'a1', 'a3', 'h7', 'h6', 'a6'],
+    ['hookfang', 'h1', 'h3', 'a6', 'a5', 'h7'],
+  ])('routes the moved %s rook by its identity and commits only once', (id, from, via, replyFrom, replyTo, to) => {
+    const game = mount(new ChessGameController('4k3/7p/p7/8/8/8/8/R3K2R w KQ - 0 1'));
+    game.move(from, via);
+    game.move(replyFrom, replyTo);
+    const before = game.controller.getFen();
+    game.move(via, to);
+    expect(director.getCurrentContext()?.attackerCharacterId).toBe(id);
+    expect(game.controller.getFen()).toBe(before);
+    const stale = complete;
+    director.skip();
+    stale();
+    expect(game.controller.getPieceAt(to)).toEqual({ type: 'r', color: 'w' });
+    expect(game.controller.getCharacterId(to)).toBe(id);
+    expect(game.controller.getTurn()).toBe('b');
+    game.controller.undo();
+    expect(game.controller.getFen()).toBe(before);
+    expect(game.controller.getCharacterId(via)).toBe(id);
   });
 
   it('leaving cancels the pending move, releases locks and allows a new game', () => {

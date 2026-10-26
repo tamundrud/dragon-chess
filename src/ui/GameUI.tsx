@@ -65,13 +65,13 @@ export const GameUI: React.FC<GameUIProps> = ({ controller, onBackToMenu, onOpen
   }, [controller]);
 
   const handleUndo = () => {
-    if (isAttackActive || controller.isInputLocked()) return;
+    if (!isGameReady || isAttackActive || controller.isInputLocked()) return;
     setPromotionReq(null);
     controller.undo();
   };
 
   const handleRestart = () => {
-    if (isAttackActive || controller.isInputLocked()) return;
+    if (!isGameReady || isAttackActive || controller.isInputLocked()) return;
     setPromotionReq(null);
     controller.reset();
   };
@@ -146,6 +146,9 @@ export const GameUI: React.FC<GameUIProps> = ({ controller, onBackToMenu, onOpen
             ref={containerRef}
             className="surface w-full h-[clamp(300px,calc(100svh-200px),640px)] max-w-4xl rounded-sm overflow-hidden border border-[#222] shadow-2xl bg-[#050505]"
           />
+          {!isGameReady && <div role="status" className="pointer-events-none absolute inset-0 flex items-center justify-center bg-black/80 text-sm text-amber-100">
+            Getting the board ready…
+          </div>}
           <div className="w-full max-w-4xl px-2 py-1 text-center text-[10px] sm:text-[11px] uppercase tracking-wider text-[#718096] bg-[#121212]/80 border-t border-[#222] mt-1 rounded-b-sm">
             Temporary Vertical Slice Tokens — Final character art will replace these silhouettes in future phases.
           </div>
@@ -227,7 +230,7 @@ export const GameUI: React.FC<GameUIProps> = ({ controller, onBackToMenu, onOpen
         <button
           id="undo-btn"
           onClick={handleUndo}
-          disabled={isAttackActive || status.isGameOver || controller.isInputLocked()}
+          disabled={!isGameReady || isAttackActive || status.isGameOver || controller.isInputLocked()}
           className="flex items-center gap-2 rounded-sm min-h-11 px-4 sm:px-6 py-2.5 font-bold text-xs uppercase tracking-[0.2em] btn-ghost shadow disabled:opacity-40 disabled:pointer-events-none transition-all active:scale-95"
         >
           <Undo2 className="h-4 w-4" />
@@ -237,7 +240,7 @@ export const GameUI: React.FC<GameUIProps> = ({ controller, onBackToMenu, onOpen
         <button
           id="restart-btn"
           onClick={handleRestart}
-          disabled={isAttackActive}
+          disabled={!isGameReady || isAttackActive}
           className="flex items-center gap-2 rounded-sm min-h-11 px-4 sm:px-6 py-2.5 font-bold text-xs uppercase tracking-[0.2em] btn-ghost shadow disabled:opacity-40 disabled:pointer-events-none transition-all active:scale-95"
         >
           <RotateCcw className="h-4 w-4" />

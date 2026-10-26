@@ -5,6 +5,8 @@ export class CharacterRegistry {
   private static instance: CharacterRegistry;
   private characters: Map<string, CharacterDefinition> = new Map();
   private squareAssignments: Map<string, string> = new Map([
+    ['a1', 'fireworm'],
+    ['h1', 'hookfang'],
     ['g1', 'fire_dragon'], // Assigned to one light-side knight
   ]);
   private pieceTypeAssignments: Map<string, string> = new Map([
@@ -12,7 +14,7 @@ export class CharacterRegistry {
     ['w_k', 'stoick'],
     ['w_q', 'valhallarama'],
     ['w_p', 'viking_warrior'],
-    ['w_r', 'light_generic'],
+    ['w_r', 'fireworm'],
     ['w_b', 'light_generic'],
     ['b_p', 'rival_generic'],
   ]);
@@ -29,6 +31,17 @@ export class CharacterRegistry {
   }
 
   private registerDefaults(): void {
+    this.register({
+      id: 'fireworm', displayName: 'Fireworm', faction: 'light', pieceType: 'r',
+      boardTokenAsset: 'token_fireworm_temp', attackStageAsset: 'fireworm-rig',
+      defaultAttackId: 'fireworm_fireworks', artStatus: 'temporary',
+      personalityTags: ['mischievous', 'exuberant', 'confident'],
+    });
+    this.register({
+      id: 'hookfang', displayName: 'Hookfang', faction: 'light', pieceType: 'r',
+      boardTokenAsset: 'token_hookfang_temp', attackStageAsset: 'stage_hookfang_temp',
+      defaultAttackId: 'generic_strike', artStatus: 'temporary', personalityTags: ['proud'],
+    });
     // Light Faction (Berk)
     this.register({
       id: 'stoick',
@@ -62,7 +75,7 @@ export class CharacterRegistry {
       boardTokenAsset: 'token_fire_dragon',
       attackStageAsset: 'stage_fire_dragon',
       defaultAttackId: 'fire_stream_attack',
-      artStatus: 'final', // Vertical slice target
+      artStatus: 'temporary',
       personalityTags: ['powerful', 'expressive', 'mischievous', 'proud_of_fire'],
     });
 
@@ -124,7 +137,7 @@ export class CharacterRegistry {
     if (square && this.squareAssignments.has(square)) {
       const charId = this.squareAssignments.get(square)!;
       const char = this.characters.get(charId);
-      if (char) return char;
+      if (char && char.pieceType === type && char.faction === (color === 'w' ? 'light' : 'dark')) return char;
     }
     const key = `${color}_${type}`;
     if (this.pieceTypeAssignments.has(key)) {

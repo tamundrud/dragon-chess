@@ -1,17 +1,21 @@
 import { Chess, Move, Square } from 'chess.js';
+import { PieceIdentity } from '../game/characters/PieceIdentity';
 import { ChessMoveRequest, ChessMoveResult, ChessPiece, ChessStateListener, GameStatus, PieceColor, PieceType } from './chessTypes';
 
 export class ChessGameController {
   private chess: Chess;
+  private identities = new PieceIdentity();
   private listeners: Set<ChessStateListener> = new Set();
   private inputLocked: boolean = false;
 
   constructor(fen?: string) {
     this.chess = new Chess(fen);
+    this.identities.reset(this.getBoard());
   }
 
   public reset(fen?: string): void {
     this.chess = new Chess(fen);
+    this.identities.reset(this.getBoard());
     this.inputLocked = false;
     this.notifyListeners();
   }
@@ -22,6 +26,10 @@ export class ChessGameController {
 
   public setInputLocked(locked: boolean): void {
     this.inputLocked = locked;
+  }
+
+  public getCharacterId(square: string): string | undefined {
+    return this.identities.get(square);
   }
 
   public getTurn(): PieceColor {
@@ -81,6 +89,7 @@ export class ChessGameController {
       });
       if (move) {
         const result = this.formatMove(move);
+        this.identities.commit(result);
         this.notifyListeners();
         return result;
       }
@@ -96,6 +105,7 @@ export class ChessGameController {
     }
     const undone = this.chess.undo();
     if (undone) {
+      this.identities.undo();
       this.notifyListeners();
       return true;
     }
