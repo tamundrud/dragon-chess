@@ -41,3 +41,15 @@ Implements the 11-beat storybook capture animation for `fire_stream_attack`:
 9. **Soot & Sparks Reaction** (`impact` phase): Comic soot cloud and golden spark burst envelope the wobbling/shrinking defender.
 10. **Satisfied Recovery** (`recovering` phase): Glow fades, posture returns to upright, followed by a proud nod and playful nostril smoke ring.
 11. **Clean Return** (`completing` phase): All temporary graphics, tweens, timers, and camera shakes clean up, restoring board input.
+
+## Fireworm illustrated prototype
+
+`fireworm_fireworks` routes through `AttackScene` to a separate `FirewormPresenter`; the procedural `FireDragonPresenter` remains for comparison. Fireworm is the starting a1 Hooligan rook. Hookfang is the h1 rook and retains generic temporary presentation. Other roster artwork is not rolled out.
+
+`ChessGameController` owns a per-game `PieceIdentity` metadata map, seeded on reset and updated only from successful chess.js commits, including captures, en passant, castling and promotion. Undo restores the corresponding metadata snapshot. The manager passes attacker/defender IDs to the director before the capture commits; an aborted presentation never updates identities. This metadata does not determine chess legality. Arbitrary FEN positions have no historical named-piece identity; they are deterministically seeded by compatible home-square/class defaults.
+
+The shared 800×600 stage supports Normal (3350ms candidate), Fast (0.35×), Instant/disabled (no presentation), and reduced motion (two poses, low-motion fade, static subdued sparks, 1000ms before speed scaling). There is one impact, no camera movement or strobe, and no required audio. All timings remain subject to repeated owner phone viewing.
+
+The isolated `/?preview=fireworm` proof uses the same Phaser presenter and assets, with Replay/Skip and speed/reduced-motion controls. It does not commit chess moves. The normal game still requires legal captures; the browser fixture moves Fireworm from a1 through a3 and b3 before capturing on b4.
+
+See [the verification and owner-acceptance record](reviews/fireworm-animation-proof.md).

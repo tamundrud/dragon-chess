@@ -1,0 +1,16 @@
+.fireworm-proof { min-height:100dvh; padding:24px 12px; background:#132e3b; color:#fff1d1; font-family:Georgia,serif; }
+.fireworm-proof header,.fireworm-controls,.fireworm-note,.fireworm-proof footer { max-width:900px; margin:0 auto; }
+.fireworm-proof header a { color:#aee5df; }
+.fireworm-proof header p:first-of-type { margin-top:26px; font:12px sans-serif; letter-spacing:.18em; color:#ffc677; }
+.fireworm-proof h1 { font-size:clamp(32px,6vw,56px); margin:8px 0; }
+.fireworm-proof header p { margin:8px 0 20px; }
+.fireworm-canvas { width:100%; max-width:900px; height:auto; aspect-ratio:4/3; margin:0 auto 18px; overflow:hidden; border:1px solid #a8b9aa55; border-radius:12px; }
+.fireworm-canvas canvas { display:block; }
+.fireworm-controls { display:flex; flex-wrap:wrap; gap:12px; align-items:center; font:15px sans-serif; }
+.fireworm-controls button,.fireworm-controls select { min-height:44px; border-radius:8px; border:1px solid #99b9bb; padding:8px 14px; color:#132e3b; background:#ffce84; }
+.fireworm-controls button:disabled { opacity:.45; }
+.fireworm-controls label { display:flex; align-items:center; gap:8px; min-height:44px; }
+.fireworm-controls input { width:20px; height:20px; }
+.fireworm-proof .fireworm-note { margin:14px auto; font:14px sans-serif; color:#b9dcd8; }
+.fireworm-proof footer { font:12px/1.6 sans-serif; color:#b4c6c8; }
+@media (max-height:500px) and (min-width:600px) { .fireworm-proof { padding:10px; } .fireworm-proof header { max-width:600px; } .fireworm-proof header p { display:none; } .fireworm-proof h1 { font-size:25px; } .fireworm-canvas { max-width:min(600px, calc((100dvh - 110px) * 1.3333)); } }

@@ -97,9 +97,18 @@ describe('Authoritative Chess Engine Tests (chess.js compliance)', () => {
   it('executes en passant capture', () => {
     controller.reset('rnbqkbnr/ppp1pppp/8/3pP3/8/8/PPPP1PPP/RNBQKBNR w KQkq d6 0 3');
     // White pawn on e5 can capture black pawn on d5 en passant to d6
+    const attacker = controller.getCharacterId('e5');
+    const victim = controller.getCharacterId('d5');
     const epMove = controller.commitMove({ from: 'e5', to: 'd6' });
     expect(epMove?.flags).toContain('e'); // en passant flag
     expect(epMove?.captured).toBe('p');
+    expect(controller.getCharacterId('d5')).toBeUndefined();
+    expect(controller.getCharacterId('e5')).toBeUndefined();
+    expect(controller.getCharacterId('d6')).toBe(attacker);
+    controller.undo();
+    expect(controller.getCharacterId('e5')).toBe(attacker);
+    expect(controller.getCharacterId('d5')).toBe(victim);
+    expect(controller.getCharacterId('d6')).toBeUndefined();
   });
 
   it('executes quiet pawn promotion to Queen, Rook, Bishop, or Knight', () => {
