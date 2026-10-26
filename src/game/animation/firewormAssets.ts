@@ -11,9 +11,7 @@ export function preloadFireworm(scene: Phaser.Scene): void {
 export function frameFireworm(scene: Phaser.Scene): void {
   const texture = scene.textures.get('fireworm-sheet');
   const frames: [string, number, number, number, number][] = [
-    ['body', 0, 20, 615, 465], ['head', 630, 12, 415, 480],
-    ['release', 1080, 10, 456, 480], ['wing', 15, 490, 520, 515],
-    ['defender', 535, 495, 545, 515], ['flame', 1080, 570, 456, 350],
+    ['flame', 1080, 570, 456, 350],
   ];
   for (const [name, x, y, width, height] of frames) {
     if (!texture.has(name)) texture.add(name, 0, x, y, width, height);

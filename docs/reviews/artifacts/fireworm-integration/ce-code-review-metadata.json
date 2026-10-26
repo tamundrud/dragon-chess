@@ -1,0 +1,65 @@
+{
+  "branch": "integration/fireworm-consolidation",
+  "completed_at": "2026-10-26T22:29:22.588689+00:00",
+  "cost": {
+    "host": "codex",
+    "scope": {
+      "depth": "full"
+    },
+    "stages": [
+      {
+        "elapsed_seconds": 11.523,
+        "ended_at": "2026-10-26T22:23:30.845317+00:00",
+        "facts": {
+          "depth": "full"
+        },
+        "stage": "scope",
+        "started_at": "2026-10-26T22:23:19.321937+00:00"
+      },
+      {
+        "elapsed_seconds": 0.035,
+        "ended_at": "2026-10-26T22:23:30.880386+00:00",
+        "reviewers": 6,
+        "stage": "select",
+        "started_at": "2026-10-26T22:23:30.845317+00:00"
+      },
+      {
+        "candidates": 1,
+        "elapsed_seconds": 143.142,
+        "ended_at": "2026-10-26T22:25:54.022518+00:00",
+        "stage": "dispatch",
+        "started_at": "2026-10-26T22:23:30.880386+00:00"
+      },
+      {
+        "candidates": 1,
+        "elapsed_seconds": 27.207,
+        "ended_at": "2026-10-26T22:26:56.557109+00:00",
+        "stage": "merge",
+        "started_at": "2026-10-26T22:26:29.349901+00:00"
+      },
+      {
+        "elapsed_seconds": 14.828,
+        "ended_at": "2026-10-26T22:27:52.487292+00:00",
+        "stage": "validate",
+        "started_at": "2026-10-26T22:27:37.658869+00:00"
+      },
+      {
+        "elapsed_seconds": 37.189,
+        "ended_at": "2026-10-26T22:29:22.681988+00:00",
+        "stage": "report",
+        "started_at": "2026-10-26T22:28:45.493157+00:00"
+      }
+    ],
+    "status": "complete",
+    "totals": {
+      "artifact_bytes": 494169,
+      "candidates": 1,
+      "elapsed_seconds": 233.924,
+      "reviewers": 6
+    },
+    "truncated_events": 0
+  },
+  "head_sha": "4d933195f3a2f4c8d4ee393d2f946dfccfcad161",
+  "run_id": "fireworm-integration",
+  "verdict": "Ready with fixes"
+}

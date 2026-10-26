@@ -49,8 +49,8 @@ Other characters may use deliberate temporary silhouettes.
 - The characters, setting, humour and visual references come from **Cressida Cowell's *How to Train Your Dragon* books**, **not** DreamWorks films or television.
 - This is a private family game with no planned public release or commercial use. Revisit asset rights before any distribution.
 - The chess game should remain legally correct and clear; the book-themed presentation should make the experience memorable rather than change chess mechanics.
-- Technical milestones are largely implemented, but **the product's central visual promise is not yet accepted**: current pieces and generic battle art are placeholders, the Fire Dragon is procedural, and no sound pack ships.
-- The next priority is a coherent book-first visual treatment and one genuinely engaging capture animation, assessed by the owner on a real phone rather than by CI alone.
+- Fireworm’s illustrated rook capture is accepted after owner physical-phone testing as the [battle-scene quality benchmark](FIREWORM_BENCHMARK.md). Board tokens and most character art remain placeholders; the Fire Dragon is procedural and no sound pack ships.
+- Extend the coherent book-first visual treatment only through separately scoped character work, preserving character-specific attacks and the approved quality standard.
 - See [the visual reset plan](plans/2026-10-25-book-visual-reset.md) for approval gates before another animation implementation phase.
 
 ## Approved family-game factions and roles (2026-10-25)

@@ -16,7 +16,7 @@ The primary user is an 8-year-old child who likes chess and dragons.
 ## Task Workflow
 
 - Check `git status --short --branch` and the remote before editing. Verify the user’s intended base branch and its current commit; do not assume `main` or rely on a stale local ref. Explicitly fetch it when starting work, e.g. `git fetch origin refs/heads/<base>:refs/remotes/origin/<base>`, then `git rev-parse origin/<base>`.
-- Create a separate task branch from that fetched base (`git switch --no-track -c <task-branch> origin/<base>`). Preserve existing task branches, commits, and uncommitted work; use a separate checkout if switching would disturb them. Recovery work currently targets `recovery/2026-10-22`; confirm the requested base each task, without pinning it to an initial recovery SHA.
+- Create a separate task branch from that fetched base (`git switch --no-track -c <task-branch> origin/<base>`). Preserve existing task branches, commits, and uncommitted work; use a separate checkout if switching would disturb them. The recovery stack has been integrated; normal follow-up work targets `main` unless the task explicitly selects another base. Confirm and fetch the requested base each task.
 - Before related changes, read [product scope](docs/PRODUCT_BRIEF.md), [game rules](docs/GAME_RULES.md), [architecture](docs/ARCHITECTURE.md), [attack system](docs/ATTACK_SYSTEM.md), [roadmap](docs/ROADMAP.md), and [test plan](docs/TEST_PLAN.md). Read the roster, art, and asset documents in `docs/` when those areas are affected.
 - Keep each task and commit scoped. Avoid unrelated recovery fixes, dependency upgrades, or configuration changes.
 
@@ -65,8 +65,8 @@ For application changes, run from the repository root and report current results
 ## Continued Work (Codex & Claude Code Guidelines)
 
 1. **Adding New Attack Presenters**:
-   - Implement the `AttackPresenter` interface (see `FireDragonPresenter.ts` for reference).
-   - `AttackScene` is the presenter registered with `AttackDirector`. Route dedicated presenters from `AttackScene.playAttack()` as it does for `FireDragonPresenter`; registry data alone uses the generic presentation.
+   - Implement the `AttackPresenter` interface. [Fireworm is the owner-approved visual/animation benchmark](docs/FIREWORM_BENCHMARK.md); preserve its staging, continuity, polish and lifecycle standard while allowing character-specific attacks. See `FirewormPresenter.ts` for illustrated presentation and `FireDragonPresenter.ts` for the older procedural example.
+   - `AttackScene` is the presenter registered with `AttackDirector`. Route dedicated presenters from `AttackScene.playAttack()` as it does for `FirewormPresenter` and `FireDragonPresenter`; registry data alone uses the generic presentation.
    - Ensure `skip()` and `cleanup()` remove all temporary Phaser containers, graphics, tweens, and timers.
    - Never mutate `chess.js` state inside a presenter.
 2. **Replacing Temporary Art**:

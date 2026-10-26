@@ -1,5 +1,7 @@
 # Fireworm continuous blast — review evidence
 
+> Historical implementation record. Fireworm visual objections are resolved by [owner approval on PR #16](../FIREWORM_BENCHMARK.md). See [current integration verification](fireworm-integration.md) for technical results.
+
 This follows the owner’s PR #15 feedback. The primary flame ribbons are in a layer above the defender and stretch from the moving mouth to the target; their width grows at contact and their alpha fades for the soot/dazed reveal. The former independent impact flames are removed. Fireworks and smoke remain separate ambient effects. Board and arena use the same breath.
 
 ## Full-sequence recordings

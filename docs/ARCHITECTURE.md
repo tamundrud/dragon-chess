@@ -91,9 +91,9 @@ Must not own chess rules.
 - **Single Entry Point**: Captures in `ChessGameController` are routed through `PhaserGameManager.handleMoveRequest()`, which initiates `AttackDirector.startAttack()`. The move commit to `chess.js` occurs via the callback when the attack reaches the `completing` phase.
 - **Cancellation**: Leaving a game aborts the presentation, removes callbacks/timers, and does not commit the pending capture. Destroy also disconnects the board parent ResizeObserver.
 - **State Protection**: When an attack starts, `ChessGameController.setInputLocked(true)` prevents duplicate moves or UI actions (undo/restart) until the lifecycle completes.
-- **Presenter Routing**: `AttackScene` registers with `AttackDirector` and delegates Fire Dragon captures to `FireDragonPresenter`. Other attack definitions use generic temporary art and motion; registry entries do not imply dedicated choreography.
+- **Presenter Routing**: `AttackScene` registers with `AttackDirector` and delegates Fireworm rook captures to `FirewormPresenter` and procedural Fire Dragon captures to `FireDragonPresenter`. Other attack definitions use generic temporary art and motion; registry entries do not imply dedicated choreography.
 - **Audio Status**: `AudioController.playSound()` checks preferences/unlock state and plays optional MP3 cues through HTML Audio with missing-file/rejection tolerance. No sound pack is shipped.
 - **Data-Driven Registries**: Both `CharacterRegistry` and `AttackRegistry` provide clean decoupling between piece types, character identities, and presentation choreography.
 
 ## Export & Continued Work
-- The architecture supports extension by adding and routing new `AttackPresenter` implementations for remaining pieces (e.g., Viking Warriors, Obsidian Clan) without touching core chess engine rules or React overlays.
+- The architecture supports extension by adding and routing new `AttackPresenter` implementations for remaining pieces (using the approved Hairy Hooligans and Meatheads roster) without touching core chess engine rules or React overlays.

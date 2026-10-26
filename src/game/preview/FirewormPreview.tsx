@@ -119,6 +119,6 @@ export default function FirewormPreview() {
       <label><input type="checkbox" checked={reduced} onChange={e=>{setReduced(e.target.checked);options.current.reduced=e.target.checked;}}/> Reduced motion</label>
     </div>
     <p className="fireworm-note" aria-live="polite">{caption}<br/>{phase==='idle'?'Ready to replay':phase} · Changes apply on Replay.</p>
-    <footer>Visual prototype · original artwork · owner approval pending.<br/>Other character portraits remain temporary.</footer>
+    <footer>Fireworm choreography approved · original artwork.<br/>Other character portraits remain temporary.</footer>
   </main>;
 }

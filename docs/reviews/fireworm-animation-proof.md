@@ -1,5 +1,7 @@
 # Fireworm capture prototype — technical evidence and visual acceptance
 
+> Historical implementation record. Fireworm visual objections are resolved by [owner approval on PR #16](../FIREWORM_BENCHMARK.md). See [current integration verification](fireworm-integration.md) for technical results.
+
 2026-10-26. Prototype implementation on `feat/fireworm-animation-proof`, based on fetched `docs/book-visual-reset-2026-10-25` at `d4937d234e569d977faaa2ff063fe6329bae40c9`. Parent documentation PR #12 remains an open draft. No merge or deployment is part of this work.
 
 ## What can be reviewed

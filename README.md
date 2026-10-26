@@ -1,6 +1,6 @@
 # Dragon Chess
 
-Dragon Chess is a child-friendly, local pass-and-play chess game with animated capture scenes. `chess.js` owns the rules, Phaser renders the board and battles, and React supplies menus and settings. The current vertical slice uses procedural graphics and one dedicated Fire Dragon presenter; visual quality and physical-device acceptance remain open.
+Dragon Chess is a child-friendly, local pass-and-play chess game with animated capture scenes. `chess.js` owns the rules, Phaser renders the board and battles, and React supplies menus and settings. The integrated Fireworm rook capture uses illustrated poses and the owner-approved battle choreography benchmark. Other cast artwork and broader device acceptance remain open.
 
 ## Setup and verification
 
@@ -53,7 +53,8 @@ Run from the repository root. If those files are absent, use the ordinary setup 
 - Standard chess through `ChessGameController` and `chess.js`: legal moves, captures, castling, en passant, promotion, check, checkmate, supported draw conditions, Undo, and Restart.
 - Local two-player play with touch/mouse input, move highlighting, promotion selection, menus, and persistent preferences.
 - Capture lifecycle: `idle -> preparing -> attacking -> impact -> recovering -> completing -> idle`, input locking, Skip, animation enable/disable, Normal/Fast/Instant speed, and reduced motion.
-- Fire Dragon capture presentation for light knights, with procedural wings, glow, flame, embers, and defender reaction. Other pieces use the generic temporary presentation even when their registry entries name bespoke attacks.
+- Illustrated Fireworm capture for the starting a1 rook, with persistent piece identity through moves, captures, castling, promotion and Undo. Foreground over the live board is the default; an arena comparison and `/?preview=fireworm` replay remain available.
+- Fire Dragon capture presentation for light knights, with procedural wings, glow, flame, embers, and defender reaction. Remaining pieces use the generic temporary presentation even when their registry entries name bespoke attacks.
 - Capture cancellation when leaving a game and cleanup of presentation resources. Restart/Undo stay disabled during an active capture.
 
 ## Architecture and extension boundaries
@@ -66,10 +67,10 @@ See [AGENTS.md](AGENTS.md), [architecture](docs/ARCHITECTURE.md), and [attack sy
 
 ## Evidence and remaining acceptance
 
-The integrated recovery candidate contains seven Vitest suites (69 tests) and 60 Playwright cases across desktop, two phone portrait sizes, phone landscape, and tablet. Two desktop cases intentionally skip touch-only scenarios. Chromium iPhone/iPad emulation does not verify Safari. Current qualification results, CE review coverage and risks are recorded in [the post-PR #11 reassessment](docs/reviews/recovery-post-pr11-reassessment.md), with [practical manual acceptance gates](docs/reviews/recovery-manual-acceptance.md). [The original qualification](docs/reviews/final-recovery-qualification.md), [Phase 3](docs/reviews/recovery-phase3.md) and [Phase 2](docs/reviews/recovery-phase2.md) preserve historical evidence.
+The historical recovery candidate contained seven Vitest suites (69 tests) and 60 Playwright cases across desktop, two phone portrait sizes, phone landscape, and tablet. Two desktop cases intentionally skip touch-only scenarios. Chromium iPhone/iPad emulation does not verify Safari. Current Fireworm results and review coverage are recorded in [integration verification](docs/reviews/fireworm-integration.md); the [approved benchmark](docs/FIREWORM_BENCHMARK.md) records owner acceptance and its limits. Recovery results are recorded in [the post-PR #11 reassessment](docs/reviews/recovery-post-pr11-reassessment.md), with [practical manual acceptance gates](docs/reviews/recovery-manual-acceptance.md). [The original qualification](docs/reviews/final-recovery-qualification.md), [Phase 3](docs/reviews/recovery-phase3.md) and [Phase 2](docs/reviews/recovery-phase2.md) preserve historical evidence.
 
-[The test plan](docs/TEST_PLAN.md) separates existing coverage from required acceptance. Remaining gates include physical iOS Safari and Android Chrome, browser bars/safe areas, tap and scroll comfort, promotion/status readability, animation quality, audible behavior with real assets, and intended-child usability. Capture artwork now fits a shared logical space during rotation; composition and readability still need physical-device acceptance.
+[The test plan](docs/TEST_PLAN.md) separates existing coverage from required acceptance. Remaining gates include physical iOS Safari and Android Chrome, browser bars/safe areas, tap and scroll comfort, promotion/status readability, remaining-character animation quality, audible behavior with real assets, and intended-child usability. Capture artwork now fits a shared logical space during rotation; composition and readability still need physical-device acceptance.
 
 PRs #8 and #9 addressed the earlier capture-resize text-wrapping error and artwork clipping; #11 corrected the render-test clock handoff and made CI reject flaky classifications. See [the resize fix evidence](docs/reviews/active-capture-resize.md), [artwork rotation evidence](docs/reviews/board-rotation-artwork.md) and [render-clock investigation](docs/reviews/recovery-render-clock.md) for their regressions and limits. A separate blank screenshot-attachment limitation remains open.
 
-The production JavaScript bundle still exceeds Vite's 500 kB warning threshold. Bundle optimization, illustrated assets, dedicated remaining-character presenters, sound assets, and a single-player opponent are outside this tooling recovery phase. See [the roadmap](docs/ROADMAP.md).
+The production JavaScript bundle still exceeds Vite's 500 kB warning threshold. Bundle optimization, full-roster illustrated assets, dedicated remaining-character presenters, sound assets, and a single-player opponent remain separate work. See [the roadmap](docs/ROADMAP.md).
