@@ -118,3 +118,9 @@ The [render-clock investigation](reviews/recovery-render-clock.md) diagnoses the
 ## Fireworm prototype coverage
 
 See [the Fireworm verification record](reviews/fireworm-animation-proof.md) for current command results, CE findings/fixes, source artwork, recordings and screenshots. New coverage exercises named-rook identity and defender restoration, presentation-owned cleanup, cold-art readiness/cancellation, legal moved-rook captures and portrait/landscape rotation across phases. Those technical checks do not establish owner visual acceptance, physical-device smoothness or completed roster artwork.
+
+### Fireworm foreground refinement
+
+`e2e/fireworm_refinement.spec.js` checks decoded source silhouette connectivity, rendered live-board dimming versus the arena, actual moved Flamehuffer identity/class, touch Skip/Undo/recapture/abort, and presentation-setting persistence/reset. Existing Fireworm cases retain rotation, completion, keyboard Skip, speed/reduced-motion, disabled animation and cold-load cancellation coverage. Source alpha connectivity and sampled board pixels are quantitative technical checks; they cannot establish expressive motion or owner visual acceptance.
+
+[Fresh refinement recordings, matrix results and CE review](reviews/fireworm-foreground-refinement.md) supplement the original prototype evidence. The owner must still inspect whole Normal/Fast sequences, transitions, fire scale and repeated-play comfort on physical portrait/landscape phones. Full-roster artwork and mobile performance benchmarks are not complete.

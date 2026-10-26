@@ -1,0 +1,87 @@
+{
+  "bundle": "index-D86TeS-T.js",
+  "description": "Browser-only diagnostic of the unchanged production FirewormPresenter. Same complete poses/tweens; effects container visibility disabled through Phaser object API. No product code or source image altered. Frames surround pose transitions.",
+  "errors": [],
+  "frames": [
+    {
+      "mode": "normal",
+      "logical_ms": 650,
+      "filename": "effects-hidden-normal-650.png"
+    },
+    {
+      "mode": "normal",
+      "logical_ms": 890,
+      "filename": "effects-hidden-normal-890.png"
+    },
+    {
+      "mode": "normal",
+      "logical_ms": 940,
+      "filename": "effects-hidden-normal-940.png"
+    },
+    {
+      "mode": "normal",
+      "logical_ms": 1020,
+      "filename": "effects-hidden-normal-1020.png"
+    },
+    {
+      "mode": "normal",
+      "logical_ms": 1950,
+      "filename": "effects-hidden-normal-1950.png"
+    },
+    {
+      "mode": "normal",
+      "logical_ms": 2010,
+      "filename": "effects-hidden-normal-2010.png"
+    },
+    {
+      "mode": "normal",
+      "logical_ms": 2080,
+      "filename": "effects-hidden-normal-2080.png"
+    },
+    {
+      "mode": "normal",
+      "logical_ms": 2450,
+      "filename": "effects-hidden-normal-2450.png"
+    },
+    {
+      "mode": "fast",
+      "logical_ms": 650,
+      "filename": "effects-hidden-fast-650.png"
+    },
+    {
+      "mode": "fast",
+      "logical_ms": 890,
+      "filename": "effects-hidden-fast-890.png"
+    },
+    {
+      "mode": "fast",
+      "logical_ms": 940,
+      "filename": "effects-hidden-fast-940.png"
+    },
+    {
+      "mode": "fast",
+      "logical_ms": 1020,
+      "filename": "effects-hidden-fast-1020.png"
+    },
+    {
+      "mode": "fast",
+      "logical_ms": 1950,
+      "filename": "effects-hidden-fast-1950.png"
+    },
+    {
+      "mode": "fast",
+      "logical_ms": 2010,
+      "filename": "effects-hidden-fast-2010.png"
+    },
+    {
+      "mode": "fast",
+      "logical_ms": 2080,
+      "filename": "effects-hidden-fast-2080.png"
+    },
+    {
+      "mode": "fast",
+      "logical_ms": 2450,
+      "filename": "effects-hidden-fast-2450.png"
+    }
+  ]
+}

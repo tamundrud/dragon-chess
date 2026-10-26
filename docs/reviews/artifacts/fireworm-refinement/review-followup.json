@@ -1,0 +1,15 @@
+{
+  "review_run": "fireworm-refinement-review-1343",
+  "status": "resolved",
+  "findings": [
+    {
+      "id": 1,
+      "severity": "P2",
+      "disposition": "applied inline",
+      "file": "src/tests/fireworm_presenter.test.ts",
+      "change": "Added observable source/victim coordinates, tween advancement, dynamic resized destination, fixed arena staging and Skip/cleanup during return checks.",
+      "verification": "13 presenter tests passed; typecheck and lint passed. Production source unchanged."
+    }
+  ],
+  "unresolved": []
+}
