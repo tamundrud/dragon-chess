@@ -2,7 +2,7 @@
 
 ## Planned asset directory structure
 
-This is the intended production layout, not a directory tree shipped by the current build. The Fireworm prototype ships original generated PNG artwork under `public/art/fireworm/`; other art remains procedural/temporary. Audio files are not shipped.
+This is the intended production layout, not a directory tree shipped by the current build. The Fireworm prototype ships original generated PNG artwork under `public/art/fireworm/`; the four provisional knight pose sheets and Hooligan defender ship under `public/art/knights/`; other art remains procedural/temporary. Audio files are not shipped.
 ```text
 public/assets/
   board/

@@ -1,6 +1,7 @@
 import type { AttackContext } from './attackTypes';
 import type { PieceColor, PieceType } from '../../chess/chessTypes';
 import { CharacterRegistry } from '../characters/CharacterRegistry';
+import { KNIGHTS } from './knightAssets';
 
 const CLASS_NAMES: Record<PieceType, string> = { p:'PAWN', r:'ROOK', n:'KNIGHT', b:'BISHOP', q:'QUEEN', k:'KING' };
 
@@ -11,6 +12,10 @@ export function resolveFirewormDefender(context: AttackContext): {
   const type = context.defenderPieceType ?? character?.pieceType ?? 'p';
   const color = context.defenderColor ?? (character?.faction === 'light' ? 'w' : 'b');
   const matches = character?.pieceType === type && character.faction === (color === 'w' ? 'light' : 'dark');
+  if (matches && type === 'n' && KNIGHTS.some(id => id === context.defenderCharacterId)) {
+    return { type, color, label:`${character!.displayName.toUpperCase()} · KNIGHT`,
+      texture:`knight-${context.defenderCharacterId}`, frame:'0', facing:1 };
+  }
   if (context.defenderCharacterId === 'flamehuffer' && type === 'r' && color === 'b') {
     return { type, color, label:'FLAMEHUFFER · ROOK', texture:'flamehuffer', facing:-1 };
   }

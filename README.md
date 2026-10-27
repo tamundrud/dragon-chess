@@ -54,7 +54,7 @@ Run from the repository root. If those files are absent, use the ordinary setup 
 - Local two-player play with touch/mouse input, move highlighting, promotion selection, menus, and persistent preferences.
 - Capture lifecycle: `idle -> preparing -> attacking -> impact -> recovering -> completing -> idle`, input locking, Skip, animation enable/disable, Normal/Fast/Instant speed, and reduced motion.
 - Illustrated Fireworm capture for the starting a1 rook, with persistent piece identity through moves, captures, castling, promotion and Undo. Foreground over the live board is the default; an arena comparison and `/?preview=fireworm` replay remain available.
-- Fire Dragon capture presentation for light knights, with procedural wings, glow, flame, embers, and defender reaction. Remaining pieces use the generic temporary presentation even when their registry entries name bespoke attacks.
+- Four provisional illustrated knight capture scenes for Windwalker, One Eye, Driller-Dragon and Poisonous Piffleworm. Their artwork and motion await individual visual acceptance. Most remaining pieces use temporary presentation even when registry entries name bespoke attacks.
 - Capture cancellation when leaving a game and cleanup of presentation resources. Restart/Undo stay disabled during an active capture.
 
 ## Architecture and extension boundaries

@@ -1,0 +1,276 @@
+{
+  "status": "complete",
+  "verdict": "Ready with fixes",
+  "scope": {
+    "base": "457204eb6581ca7a4a15820a02e23d64ce12ded0",
+    "branch": "codex/four-character-batch",
+    "head_sha": "457204eb6581ca7a4a15820a02e23d64ce12ded0",
+    "pr_url": null,
+    "files_changed": 14
+  },
+  "intent": "Implement Windwalker, One Eye, Driller-Dragon and Poisonous Piffleworm with distinctive illustrated attacks, maintaining authoritative chess lifecycle and mobile staging.",
+  "intent_confidence": "explicit",
+  "reviewers": [
+    "correctness",
+    "project-standards",
+    "testing",
+    "maintainability",
+    "adversarial"
+  ],
+  "findings": [
+    {
+      "#": 1,
+      "autofix_class": "manual",
+      "confidence": 100,
+      "evidence": [
+        "src/game/animation/KnightPresenter.ts:31 -- const fallback = resolveFirewormDefender(context);",
+        "src/game/animation/firewormDefender.ts:19-22 -- only Flamehuffer and the black pawn return a texture; all other defenders return the ART PLACEHOLDER label without a texture.",
+        "src/game/animation/KnightPresenter.ts:38-40 -- an appearance without a texture is drawn as an ellipse and the piece-type letter.",
+        "src/game/animation/KnightPresenter.ts:38-40 -- else { target.add(scene.add.ellipse(0, -90, 140, 165, appearance.color === 'b' ? 0x345c75 : 0xc39647, 0.95)); target.add(scene.add.text(0, -95, appearance.type.toUpperCase(), { fontSize:'72px', color:'#fff4da', fontFamily:'Georgia' }).setOrigin(0.5)); }",
+        "src/game/animation/firewormDefender.ts:22 -- return { type, color, label:`${name} \u00b7 ${CLASS_NAMES[type]}\\nART PLACEHOLDER` };",
+        "src/game/animation/knightAssets.ts:8 -- for (const id of KNIGHTS) scene.load.image(`knight-${id}`, `/art/knights/${id}.png`);"
+      ],
+      "file": "src/game/animation/KnightPresenter.ts",
+      "first_evidence": "src/game/animation/KnightPresenter.ts:31 -- const fallback = resolveFirewormDefender(context);",
+      "independent_reviewers": [
+        "correctness",
+        "adversarial"
+      ],
+      "line": 31,
+      "owner": "downstream-resolver",
+      "pre_existing": false,
+      "requires_verification": true,
+      "reviewers": [
+        "correctness",
+        "adversarial"
+      ],
+      "severity": "P2",
+      "suggested_fix": "Resolve loaded knight and Fireworm ready art as defender textures with matching class, faction and facing; retain placeholders where no art exists and test a real knight-on-knight capture.",
+      "title": "Knight captures replace illustrated defenders with placeholders",
+      "why_it_matters": "When one of the newly implemented knights is captured, its distinct illustration disappears and the defender becomes a generic letter disc, even though its ready pose is loaded. For example, after 1. Nc3 Nc6 2. Nd5 Nb4 3. Nxb4, Windwalker attacks Driller-Dragon but the latter renders only an N placeholder. Resolving the newly supported knight identities to their ready poses preserves recognizable combatants in the requested different-defender cases. When one of the newly illustrated knights or Fireworm is captured by a knight, the defender is rendered as a colored letter instead of the character whose art is already loaded. For example, b1-c3, g8-f6, c3-d5, f6xd5 captures Windwalker but displays a generic Hooligan knight placeholder. Resolving the available defender textures by identity preserves recognition and facing for actual opposing characters."
+    },
+    {
+      "#": 2,
+      "autofix_class": "manual",
+      "confidence": 75,
+      "evidence": [
+        "src/game/animation/KnightPresenter.ts:88 -- bubble=scene.add.ellipse(350, 365, 38, 38, 0xb974df, 0.75).setStrokeStyle(3, 0xf5dbff, 0.9);",
+        "src/game/animation/KnightPresenter.ts:73 -- if (id !== 'poisonous_piffleworm') pose(1);",
+        "docs/reviews/artifacts/four-knights/phone-360-portrait-piffleworm.mp4 around 0.9 seconds shows a visible gap between the mouth and the bubble."
+      ],
+      "file": "src/game/animation/KnightPresenter.ts",
+      "first_evidence": "src/game/animation/KnightPresenter.ts:88 -- bubble=scene.add.ellipse(350, 365, 38, 38, 0xb974df, 0.75).setStrokeStyle(3, 0xf5dbff, 0.9);",
+      "independent_reviewers": [
+        "adversarial"
+      ],
+      "line": 88,
+      "owner": "downstream-resolver",
+      "pre_existing": false,
+      "requires_verification": true,
+      "reviewers": [
+        "adversarial"
+      ],
+      "severity": "P2",
+      "suggested_fix": "Use a bubble-free expressive release pose and compute the bubble's initial position from the dragon's current transformed mouth, then grow and move it continuously to the defender; verify the full portrait and landscape recordings.",
+      "title": "Piffleworm bubble appears detached from its mouth",
+      "why_it_matters": "Piffleworm's bubble appears in open space while the dragon retains its neutral ready pose, so its signature attack has no visible release from the character. This is visible in the portrait recording at 0.9 seconds and breaks the requested continuity between anticipation and attack. Anchoring the bubble to the actual mouth throughout release and using an expressive bubble-free attack pose would make the cause and motion readable."
+    },
+    {
+      "#": 3,
+      "autofix_class": "gated_auto",
+      "confidence": 75,
+      "evidence": [
+        "src/tests/knight_presenter.test.ts:32 --     presenter.playAttack(context,AttackRegistry.getInstance().getById(attack)!,{durationScale,reducedMotion},phase=>phases.push(phase),done);",
+        "src/game/animation/KnightPresenter.ts:55 --     if (!settings.reducedMotion && settings.presentation !== 'arena' && origins) {",
+        "src/game/animation/KnightPresenter.ts:110 --           const destination=settings.origins!().destination;",
+        "src/tests/fireworm_presenter.test.ts:125 --   it('emerges from the actual source/victim squares and follows a resized destination during return',()=>{",
+        "src/tests/knight_presenter.test.ts:33 --     vi.advanceTimersByTime(duration); presenter.skip(); vi.runAllTimers();",
+        "src/game/animation/KnightPresenter.ts:119 --   skip(): void { this.finish(); }",
+        "src/tests/fireworm_presenter.test.ts:42 --     expect(done).toHaveBeenCalledTimes(1);"
+      ],
+      "file": "src/tests/knight_presenter.test.ts",
+      "first_evidence": "src/tests/knight_presenter.test.ts:32 --     presenter.playAttack(context,AttackRegistry.getInstance().getById(attack)!,{durationScale,reducedMotion},phase=>phases.push(phase),done);",
+      "independent_reviewers": [
+        "testing"
+      ],
+      "line": 32,
+      "owner": "downstream-resolver",
+      "pre_existing": false,
+      "requires_verification": true,
+      "reviewers": [
+        "testing"
+      ],
+      "severity": "P2",
+      "suggested_fix": "Assert completion before Skip for normal, fast and reduced-motion playback, and adapt the Fireworm board-connection harness to verify origins, resized return, arena staging and cancellation.",
+      "title": "Cover natural completion and resized board travel",
+      "why_it_matters": "Fast and reduced-motion playback can fail to complete naturally while these tests still pass: Skip invokes the same completion callback immediately before the assertion. The browser scenarios cover normal playback only, so they do not close this gap. Assert completion immediately after advancing the specified duration, then invoke Skip and assert that it does not complete again. The new presenter independently implements source-square emergence and a return that must track the destination after resizing, but every unit invocation omits origins, so both movement branches are skipped. The browser test checks canvas dimensions and turn changes; it cannot detect an actor returning to a stale square. The existing Fireworm board-connection tests already demonstrate a suitable behavioral harness for this contract."
+    }
+  ],
+  "actionable_findings": [
+    {
+      "#": 1,
+      "autofix_class": "manual",
+      "confidence": 100,
+      "evidence": [
+        "src/game/animation/KnightPresenter.ts:31 -- const fallback = resolveFirewormDefender(context);",
+        "src/game/animation/firewormDefender.ts:19-22 -- only Flamehuffer and the black pawn return a texture; all other defenders return the ART PLACEHOLDER label without a texture.",
+        "src/game/animation/KnightPresenter.ts:38-40 -- an appearance without a texture is drawn as an ellipse and the piece-type letter.",
+        "src/game/animation/KnightPresenter.ts:38-40 -- else { target.add(scene.add.ellipse(0, -90, 140, 165, appearance.color === 'b' ? 0x345c75 : 0xc39647, 0.95)); target.add(scene.add.text(0, -95, appearance.type.toUpperCase(), { fontSize:'72px', color:'#fff4da', fontFamily:'Georgia' }).setOrigin(0.5)); }",
+        "src/game/animation/firewormDefender.ts:22 -- return { type, color, label:`${name} \u00b7 ${CLASS_NAMES[type]}\\nART PLACEHOLDER` };",
+        "src/game/animation/knightAssets.ts:8 -- for (const id of KNIGHTS) scene.load.image(`knight-${id}`, `/art/knights/${id}.png`);"
+      ],
+      "file": "src/game/animation/KnightPresenter.ts",
+      "first_evidence": "src/game/animation/KnightPresenter.ts:31 -- const fallback = resolveFirewormDefender(context);",
+      "independent_reviewers": [
+        "correctness",
+        "adversarial"
+      ],
+      "line": 31,
+      "owner": "downstream-resolver",
+      "pre_existing": false,
+      "requires_verification": true,
+      "reviewers": [
+        "correctness",
+        "adversarial"
+      ],
+      "severity": "P2",
+      "suggested_fix": "Resolve loaded knight and Fireworm ready art as defender textures with matching class, faction and facing; retain placeholders where no art exists and test a real knight-on-knight capture.",
+      "title": "Knight captures replace illustrated defenders with placeholders",
+      "why_it_matters": "When one of the newly implemented knights is captured, its distinct illustration disappears and the defender becomes a generic letter disc, even though its ready pose is loaded. For example, after 1. Nc3 Nc6 2. Nd5 Nb4 3. Nxb4, Windwalker attacks Driller-Dragon but the latter renders only an N placeholder. Resolving the newly supported knight identities to their ready poses preserves recognizable combatants in the requested different-defender cases. When one of the newly illustrated knights or Fireworm is captured by a knight, the defender is rendered as a colored letter instead of the character whose art is already loaded. For example, b1-c3, g8-f6, c3-d5, f6xd5 captures Windwalker but displays a generic Hooligan knight placeholder. Resolving the available defender textures by identity preserves recognition and facing for actual opposing characters."
+    },
+    {
+      "#": 2,
+      "autofix_class": "manual",
+      "confidence": 75,
+      "evidence": [
+        "src/game/animation/KnightPresenter.ts:88 -- bubble=scene.add.ellipse(350, 365, 38, 38, 0xb974df, 0.75).setStrokeStyle(3, 0xf5dbff, 0.9);",
+        "src/game/animation/KnightPresenter.ts:73 -- if (id !== 'poisonous_piffleworm') pose(1);",
+        "docs/reviews/artifacts/four-knights/phone-360-portrait-piffleworm.mp4 around 0.9 seconds shows a visible gap between the mouth and the bubble."
+      ],
+      "file": "src/game/animation/KnightPresenter.ts",
+      "first_evidence": "src/game/animation/KnightPresenter.ts:88 -- bubble=scene.add.ellipse(350, 365, 38, 38, 0xb974df, 0.75).setStrokeStyle(3, 0xf5dbff, 0.9);",
+      "independent_reviewers": [
+        "adversarial"
+      ],
+      "line": 88,
+      "owner": "downstream-resolver",
+      "pre_existing": false,
+      "requires_verification": true,
+      "reviewers": [
+        "adversarial"
+      ],
+      "severity": "P2",
+      "suggested_fix": "Use a bubble-free expressive release pose and compute the bubble's initial position from the dragon's current transformed mouth, then grow and move it continuously to the defender; verify the full portrait and landscape recordings.",
+      "title": "Piffleworm bubble appears detached from its mouth",
+      "why_it_matters": "Piffleworm's bubble appears in open space while the dragon retains its neutral ready pose, so its signature attack has no visible release from the character. This is visible in the portrait recording at 0.9 seconds and breaks the requested continuity between anticipation and attack. Anchoring the bubble to the actual mouth throughout release and using an expressive bubble-free attack pose would make the cause and motion readable."
+    },
+    {
+      "#": 3,
+      "autofix_class": "gated_auto",
+      "confidence": 75,
+      "evidence": [
+        "src/tests/knight_presenter.test.ts:32 --     presenter.playAttack(context,AttackRegistry.getInstance().getById(attack)!,{durationScale,reducedMotion},phase=>phases.push(phase),done);",
+        "src/game/animation/KnightPresenter.ts:55 --     if (!settings.reducedMotion && settings.presentation !== 'arena' && origins) {",
+        "src/game/animation/KnightPresenter.ts:110 --           const destination=settings.origins!().destination;",
+        "src/tests/fireworm_presenter.test.ts:125 --   it('emerges from the actual source/victim squares and follows a resized destination during return',()=>{",
+        "src/tests/knight_presenter.test.ts:33 --     vi.advanceTimersByTime(duration); presenter.skip(); vi.runAllTimers();",
+        "src/game/animation/KnightPresenter.ts:119 --   skip(): void { this.finish(); }",
+        "src/tests/fireworm_presenter.test.ts:42 --     expect(done).toHaveBeenCalledTimes(1);"
+      ],
+      "file": "src/tests/knight_presenter.test.ts",
+      "first_evidence": "src/tests/knight_presenter.test.ts:32 --     presenter.playAttack(context,AttackRegistry.getInstance().getById(attack)!,{durationScale,reducedMotion},phase=>phases.push(phase),done);",
+      "independent_reviewers": [
+        "testing"
+      ],
+      "line": 32,
+      "owner": "downstream-resolver",
+      "pre_existing": false,
+      "requires_verification": true,
+      "reviewers": [
+        "testing"
+      ],
+      "severity": "P2",
+      "suggested_fix": "Assert completion before Skip for normal, fast and reduced-motion playback, and adapt the Fireworm board-connection harness to verify origins, resized return, arena staging and cancellation.",
+      "title": "Cover natural completion and resized board travel",
+      "why_it_matters": "Fast and reduced-motion playback can fail to complete naturally while these tests still pass: Skip invokes the same completion callback immediately before the assertion. The browser scenarios cover normal playback only, so they do not close this gap. Assert completion immediately after advancing the specified duration, then invoke Skip and assert that it does not complete again. The new presenter independently implements source-square emergence and a return that must track the destination after resizing, but every unit invocation omits origins, so both movement branches are skipped. The browser test checks canvas dimensions and turn changes; it cannot detect an actor returning to a stale square. The existing Fireworm board-connection tests already demonstrate a suitable behavioral harness for this contract."
+    }
+  ],
+  "triage_groups": [],
+  "pre_existing_findings": [],
+  "requirements_completeness": {
+    "plan": "docs/plans/2026-10-27-four-knights-plan.md",
+    "source": "explicit",
+    "requirements": [
+      {
+        "id": "R1",
+        "status": "partially addressed",
+        "evidence": "Four identities and attacks are present; #2 identifies a continuity defect. The artwork was excluded from this code review."
+      },
+      {
+        "id": "R2",
+        "status": "partially addressed",
+        "evidence": "Staging and lifecycle are present; #1 and #3 identify defender and verification gaps."
+      },
+      {
+        "id": "R3",
+        "status": "partially addressed",
+        "evidence": "Automated cases and recording script are present; #3 identifies test gaps. Recordings were excluded from the review."
+      },
+      {
+        "id": "R4",
+        "status": "delivery pending",
+        "evidence": "Draft PR creation and final acceptance are outside this pre-delivery code review."
+      }
+    ],
+    "implementation_units": [
+      {
+        "unit": "Original artwork and identities",
+        "status": "partially addressed"
+      },
+      {
+        "unit": "Shared stage and distinctive choreography",
+        "status": "partially addressed"
+      },
+      {
+        "unit": "Browser evidence and adversarial review",
+        "status": "partially addressed"
+      }
+    ],
+    "reverse_check": "No unrequested behavior rule identified in the reviewed code."
+  },
+  "learnings": [],
+  "agent_native_gaps": [],
+  "deployment_notes": [],
+  "residual_risks": [
+    "Physical-phone decoding, memory, smoothness and visual acceptance remain unverified."
+  ],
+  "testing_gaps": [],
+  "coverage": {
+    "depth": "full",
+    "validator": {
+      "confirmed": 3,
+      "rejected": 0,
+      "unresolved": 0,
+      "malformed": 0,
+      "failed": 0,
+      "shortcut_skipped": 0,
+      "outcome": "One independent local validator batch confirmed all three findings."
+    },
+    "suppressed_by_confidence": {},
+    "first_evidence_backfilled": 0,
+    "missing_first_evidence_demoted": 0,
+    "failed_reviewers": [],
+    "notes": [
+      "Root AGENTS.md was the standards fallback.",
+      "Generated artwork and recordings excluded from code diff review and require visual inspection.",
+      "No cross-model shortcut was available.",
+      "Learnings, agent-native and deployment reviews were not selected."
+    ]
+  },
+  "peer": {
+    "outcome": "in-process-fallback",
+    "coverage": "Different-provider CLI unavailable; the adversarial lens ran in a separate local reviewer context, not a cross-model pass."
+  },
+  "artifact_path": "/tmp/compound-engineering-1000/ce-code-review/20261027-four-knights",
+  "run_id": "20261027-four-knights"
+}

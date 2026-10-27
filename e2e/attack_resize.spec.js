@@ -22,14 +22,14 @@ async function expectCombatantsVisible(page, presenter) {
       const { width, height } = canvas;
       const pixels = ctx.getImageData(0, 0, width, height).data;
       const counts = { attacker: 0, defender: 0, status: 0 };
-      for (let y = Math.floor(height * 0.1); y < height * 0.64; y++) {
+      const artScale = Math.min(width / 800, height / 600);
+      const statusY = presenter === 'generic' ? height * 0.22 : Math.max(16, (height - 600 * artScale) / 2 + 28 * artScale);
+      for (let y = 0; y < height * 0.64; y++) {
         for (let x = 0; x < width; x++) {
           const i = (y * width + x) * 4;
           const [r, g, b] = pixels.slice(i, i + 3);
-          if (y < height * 0.32) {
-            if (r > 180 && g > 180 && b > 180) counts.status++;
-            continue;
-          }
+          if (Math.abs(y - statusY) < 22 * artScale && x > width * 0.2 && x < width * 0.8 && r > 180 && g > 180 && b > 180) counts.status++;
+          if (y < height * 0.32) continue;
           if ((presenter === 'generic'
             ? r > 160 && g > 110 && g < 190 && b < 70
             : r > 160 && g > 65 && g < 185 && b < 55)) counts.attacker++;
@@ -46,7 +46,7 @@ async function expectCombatantsVisible(page, presenter) {
 
 for (const [presenter, moves, from, to] of [
   ['generic', ['e2', 'e4', 'd7', 'd5', 'e4', 'd5'], 'e4', 'd5'],
-  ['Fire Dragon', ['e2', 'e4', 'e7', 'e5', 'g1', 'f3', 'b8', 'c6', 'f3', 'e5'], 'f3', 'e5'],
+  ['One Eye', ['e2', 'e4', 'e7', 'e5', 'g1', 'f3', 'b8', 'c6', 'f3', 'e5'], 'f3', 'e5'],
 ]) {
   for (const finish of ['complete', 'Skip']) {
     test(`${presenter} capture survives a transient narrow resize and ${finish}`, async ({ page }, testInfo) => {

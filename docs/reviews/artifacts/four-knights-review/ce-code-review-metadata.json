@@ -1,0 +1,73 @@
+{
+  "branch": "codex/four-character-batch",
+  "completed_at": "2026-10-27T00:30:39.745603+00:00",
+  "cost": {
+    "host": "codex",
+    "scope": {
+      "changed_lines": 445,
+      "depth": "full",
+      "exec_nontest_lines": 268,
+      "size_band": "large",
+      "unclassified_lines": 40
+    },
+    "stages": [
+      {
+        "elapsed_seconds": 0.091,
+        "ended_at": "2026-10-27T00:22:55.574126+00:00",
+        "facts": {
+          "changed_lines": 445,
+          "depth": "full",
+          "exec_nontest_lines": 268,
+          "size_band": "large",
+          "unclassified_lines": 40
+        },
+        "stage": "scope",
+        "started_at": "2026-10-27T00:22:55.483090+00:00"
+      },
+      {
+        "elapsed_seconds": 8.141,
+        "ended_at": "2026-10-27T00:23:03.715437+00:00",
+        "reviewers": 5,
+        "stage": "select",
+        "started_at": "2026-10-27T00:22:55.574126+00:00"
+      },
+      {
+        "candidates": 5,
+        "elapsed_seconds": 239.542,
+        "ended_at": "2026-10-27T00:27:03.257915+00:00",
+        "stage": "dispatch",
+        "started_at": "2026-10-27T00:23:03.715437+00:00"
+      },
+      {
+        "candidates": 3,
+        "elapsed_seconds": 43.575,
+        "ended_at": "2026-10-27T00:28:30.053040+00:00",
+        "stage": "merge",
+        "started_at": "2026-10-27T00:27:46.478033+00:00"
+      },
+      {
+        "elapsed_seconds": 61.724,
+        "ended_at": "2026-10-27T00:29:48.140943+00:00",
+        "stage": "validate",
+        "started_at": "2026-10-27T00:28:46.417330+00:00"
+      },
+      {
+        "elapsed_seconds": 11.724,
+        "ended_at": "2026-10-27T00:30:39.779062+00:00",
+        "stage": "report",
+        "started_at": "2026-10-27T00:30:28.054886+00:00"
+      }
+    ],
+    "status": "complete",
+    "totals": {
+      "artifact_bytes": 125534,
+      "candidates": 5,
+      "elapsed_seconds": 364.797,
+      "reviewers": 5
+    },
+    "truncated_events": 0
+  },
+  "head_sha": "457204eb6581ca7a4a15820a02e23d64ce12ded0",
+  "run_id": "20261027-four-knights",
+  "verdict": "Ready with fixes"
+}

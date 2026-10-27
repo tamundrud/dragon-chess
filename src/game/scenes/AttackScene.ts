@@ -4,6 +4,8 @@ import { AttackDirector } from '../animation/AttackDirector';
 import { CharacterRegistry } from '../characters/CharacterRegistry';
 import { AudioController } from '../audio/AudioController';
 import { BoardScene } from './BoardScene';
+import { KnightPresenter } from '../animation/KnightPresenter';
+import { KNIGHTS, preloadKnights, frameKnights } from '../animation/knightAssets';
 import { FirewormPresenter } from '../animation/FirewormPresenter';
 import { preloadFireworm, frameFireworm } from '../animation/firewormAssets';
 import { FireDragonPresenter } from '../animation/FireDragonPresenter';
@@ -22,10 +24,12 @@ export class AttackScene extends Phaser.Scene implements AttackPresenter {
   private defenderContainer!: Phaser.GameObjects.Container;
   private impactEffectContainer!: Phaser.GameObjects.Container;
   private firewormPresenter!: FirewormPresenter;
+  private knightPresenter!: KnightPresenter;
   private fireDragonPresenter!: FireDragonPresenter;
   private cleanedUp = true;
   private firewormBoard = false;
   private firewormActive = false;
+  private knightActive = false;
   private onCompleteCallback: (() => void) | null = null;
 
   constructor() {
@@ -34,10 +38,10 @@ export class AttackScene extends Phaser.Scene implements AttackPresenter {
 
   public isPresentationReady(): boolean { return !this.cleanedUp; }
 
-  preload(): void { preloadFireworm(this); }
+  preload(): void { preloadFireworm(this); preloadKnights(this); }
 
   create(): void {
-    frameFireworm(this);
+    frameFireworm(this); frameKnights(this);
     this.cleanedUp = false;
     this.overlayGraphics = this.add.graphics();
     this.stageContainer = this.add.container(0, 0);
@@ -126,6 +130,7 @@ export class AttackScene extends Phaser.Scene implements AttackPresenter {
 
     this.layoutStage(width, height);
 
+    this.knightPresenter = new KnightPresenter(this, this.artworkContainer, this.statusText, this.attackerText, this.defenderText);
     this.firewormPresenter = new FirewormPresenter(this, this.artworkContainer, this.statusText, this.attackerText, this.defenderText);
     this.fireDragonPresenter = new FireDragonPresenter(
       this,
@@ -146,12 +151,13 @@ export class AttackScene extends Phaser.Scene implements AttackPresenter {
     this.cleanUpAttackPresentation();
     this.onCompleteCallback = onComplete;
     this.stageContainer.setVisible(true);
-    this.firewormActive = definition.id === 'fireworm_fireworks';
+    const knightActive = this.knightActive = KNIGHTS.some(id => id === context.attackerCharacterId);
+    this.firewormActive = definition.id === 'fireworm_fireworks' || knightActive;
     this.firewormBoard = this.firewormActive && settings.presentation !== 'arena';
     this.layoutStage(this.scale.width, this.scale.height);
     this.drawOverlay();
 
-    if (definition.id === 'fireworm_fireworks') {
+    if (definition.id === 'fireworm_fireworks' || knightActive) {
       this.attackerContainer.setVisible(false);
       this.defenderContainer.setVisible(false);
       this.impactEffectContainer.setVisible(false);
@@ -161,7 +167,8 @@ export class AttackScene extends Phaser.Scene implements AttackPresenter {
         const layout = fitAttackArtwork(this.scale.width, this.scale.height);
         return { x:(p.x - layout.x) / layout.scale, y:(p.y - layout.y) / layout.scale };
       };
-      this.firewormPresenter.playAttack(context, definition, { ...settings,
+      const presenter = knightActive ? this.knightPresenter : this.firewormPresenter;
+      presenter.playAttack(context, definition, { ...settings,
         origins: () => ({ attacker:point(context.moveFrom), defender:point(context.moveTo), destination:point(context.moveTo) }),
       }, onPhaseChange, () => {
         const callback = this.onCompleteCallback;
@@ -355,6 +362,7 @@ export class AttackScene extends Phaser.Scene implements AttackPresenter {
 
   public skip(): void {
     this.firewormPresenter?.cleanup();
+    this.knightPresenter?.cleanup();
     if (this.fireDragonPresenter) {
       this.fireDragonPresenter.cleanup();
     }
@@ -381,6 +389,7 @@ export class AttackScene extends Phaser.Scene implements AttackPresenter {
 
   private cleanUpAttackPresentation(): void {
     this.firewormPresenter?.cleanup();
+    this.knightPresenter?.cleanup();
     if (this.fireDragonPresenter) {
       this.fireDragonPresenter.cleanup();
     }
@@ -456,12 +465,12 @@ export class AttackScene extends Phaser.Scene implements AttackPresenter {
     this.statusText.setPosition(width / 2, this.firewormActive ? Math.max(statusFontSize, artwork.y + 28 * artwork.scale) : height * 0.22);
     this.statusText.setStroke('#080808', this.firewormActive ? 4 : 0);
     for (const [text, x] of [[this.attackerText, 0.25], [this.defenderText, 0.75]] as const) {
-      const fontSize = compact ? 12 : 18;
+      const fontSize = this.knightActive ? Math.max(10, Math.min(compact ? 12 : 18, 16 * artwork.scale)) : compact ? 12 : 18;
       text.setStyle({
         fontSize,
-        wordWrap: { width: Math.max(width * 0.44, fontSize * 2), useAdvancedWrap: true },
+        wordWrap: { width: Math.max(this.knightActive ? 330 * artwork.scale : width * 0.44, fontSize * 2), useAdvancedWrap: true },
       });
-      const artX = x === 0.25 ? 170 : 620;
+      const artX = this.knightActive && width > height ? (x === 0.25 ? 85 : 715) : (x === 0.25 ? 170 : 620);
       text.setPosition(this.firewormActive ? artwork.x + artX * artwork.scale : width * x,
         this.firewormActive ? Math.min(height * 0.78, artwork.y + 548 * artwork.scale) : height * 0.72);
     }

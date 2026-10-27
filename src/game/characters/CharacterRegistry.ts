@@ -9,16 +9,20 @@ export class CharacterRegistry {
     ['a8', 'flamehuffer'],
     ['h8', 'common_or_garden'],
     ['h1', 'hookfang'],
-    ['g1', 'fire_dragon'], // Assigned to one light-side knight
+    ['b1', 'windwalker'],
+    ['g1', 'one_eye'],
+    ['b8', 'driller_dragon'],
+    ['g8', 'poisonous_piffleworm'],
   ]);
   private pieceTypeAssignments: Map<string, string> = new Map([
-    ['w_n', 'fire_dragon'],
+    ['w_n', 'windwalker'],
     ['w_k', 'stoick'],
     ['w_q', 'valhallarama'],
     ['w_p', 'viking_warrior'],
     ['w_r', 'fireworm'],
     ['w_b', 'light_generic'],
     ['b_p', 'rival_generic'],
+    ['b_n', 'driller_dragon'],
   ]);
 
   private constructor() {
@@ -54,6 +58,15 @@ export class CharacterRegistry {
       boardTokenAsset: 'token_garden_temp', attackStageAsset: 'stage_garden_temp',
       defaultAttackId: 'rival_strike', artStatus: 'temporary', personalityTags: ['unassuming'],
     });
+    for (const [id, displayName, faction, attack] of [
+      ['windwalker', 'Windwalker', 'light', 'windwalker_swoop'],
+      ['one_eye', 'One Eye', 'light', 'one_eye_pounce'],
+      ['driller_dragon', 'Driller-Dragon', 'dark', 'driller_charge'],
+      ['poisonous_piffleworm', 'Poisonous Piffleworm', 'dark', 'piffle_bubble'],
+    ] as const) {
+      this.register({ id, displayName, faction, pieceType: 'n', boardTokenAsset: `token_${id}_temp`,
+        attackStageAsset: id, defaultAttackId: attack, artStatus: 'temporary', personalityTags: [] });
+    }
     // Light Faction (Berk)
     this.register({
       id: 'stoick',
