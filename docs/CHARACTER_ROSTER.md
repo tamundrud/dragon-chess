@@ -67,6 +67,6 @@
 - **No further starting-piece casting decisions are required.** Preserve the selected names/species and user-approved allowances (plausibly Meathead-owned unnamed fire-breathing species; One Eye's temporary alliance).
 - Review species-scale legibility (especially the small Piffleworm), consistent tribal silhouettes and the distinctive looks of Fireworm and Hookfang (both Monstrous Nightmares).
 - Test every approved piece at actual phone scale and approve an expressive rook fire-capture storyboard before asset production; retain `chess.js`, single-commit capture lifecycle, Skip/reduced-motion and mobile layout.
-- The **current code** implements the Fireworm a1 rook with persistent named-piece identity, distinguishes Hookfang and the two black rooks, and still has white knights mapped to a procedural generic Fire Dragon with mostly placeholder tokens/presenters. **Approved roster does not mean implemented roster.**
+- The **current code** implements the Fireworm a1 rook with persistent named-piece identity, distinguishes Hookfang and the two black rooks, and assigns all four starting knights to Windwalker, One Eye, Driller-Dragon and Poisonous Piffleworm. Their illustrated capture scenes are provisional and awaiting owner acceptance; board tokens remain placeholders. **Approved roster does not mean implemented roster.**
 
 See [the visual reset plan](plans/2026-10-25-book-visual-reset.md) and [art direction](ART_DIRECTION.md).

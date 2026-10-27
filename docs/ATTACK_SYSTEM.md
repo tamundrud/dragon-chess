@@ -23,7 +23,7 @@ Only one attack may run at a time.
 
 ## Current implementation
 
-`AttackScene` is registered with `AttackDirector`; it delegates Fireworm captures to `FirewormPresenter`, Fire Dragon captures to `FireDragonPresenter`, and presents other attack IDs with generic temporary graphics. Registry descriptions for axe smash, decisive arc, and shield bash are configuration intent, not separate implemented presenters. Audio calls use HTML Audio after user unlock, with missing-file/rejection tolerance; no sound files are shipped.
+`AttackScene` is registered with `AttackDirector`; it delegates Fireworm captures to `FirewormPresenter` and the four approved knight identities to `KnightPresenter`. The older procedural Fire Dragon remains as a technical presenter but is no longer assigned to starting knights. Other attack IDs use generic temporary graphics. Registry descriptions for axe smash, decisive arc, and shield bash are configuration intent, not separate implemented presenters. Audio calls use HTML Audio after user unlock, with missing-file/rejection tolerance; no sound files are shipped.
 
 Leaving a game cancels its pending capture and presentation; it does not complete the move. Undo/Restart are disabled during attacks. Resizing updates labels and Skip in canvas coordinates and uniformly fits a shared 800 × 600 artwork space to the canvas. All presenters keep their existing timeline coordinates inside that space, including effects created after rotation; resize does not restart or complete the capture. See [the acceptance requirements](TEST_PLAN.md).
 
@@ -63,3 +63,7 @@ The director carries the captured piece's actual class/colour alongside persiste
 See [the refinement evidence and historical owner feedback](reviews/fireworm-foreground-refinement.md). The earlier prototype record above remains historical.
 
 The [PR #14 impact follow-up](reviews/fireworm-facing-impact.md) derives illustration flips from native heading and staged attack direction, preserving readable symmetrical class placeholders. Pawn extraction excludes a neighbouring flame tip in the atlas; PNG sources remain unchanged. [PR #16 continuity refinement](reviews/fireworm-continuity.md) supersedes the separate impact flames. [Owner approval](FIREWORM_BENCHMARK.md) resolves Fireworm’s prior visual objections; it does not approve all cast artwork or devices.
+
+## Four knight scenes
+
+Windwalker swoops, One Eye pounces, Driller-Dragon charges with its horn, and Poisonous Piffleworm blows a bubble. Shared staging, timing and cleanup preserve board/arena, resize, Skip and reduced-motion behavior. Artwork and choreography are provisional pending individual visual acceptance; see the batch verification record.

@@ -33,3 +33,13 @@ describe('defender facing follows the staged attacker', () => {
     expect(resolveFirewormDefender({...base,defenderCharacterId:'hookfang'}).facing).toBeUndefined();
   });
 });
+
+describe('new knight defender artwork', () => {
+  it.each([['windwalker','w'],['one_eye','w'],['driller_dragon','b'],['poisonous_piffleworm','b']] as const)(
+    'uses %s art only for the matching class and faction', (id,color) => {
+      expect(resolveFirewormDefender({...base, defenderCharacterId:id, defenderPieceType:'n', defenderColor:color}))
+        .toMatchObject({texture:`knight-${id}`,frame:'0',facing:1});
+      expect(resolveFirewormDefender({...base, defenderCharacterId:id, defenderPieceType:'p', defenderColor:color}).texture).toBeUndefined();
+      expect(resolveFirewormDefender({...base, defenderCharacterId:id, defenderPieceType:'n', defenderColor:color==='w'?'b':'w'}).texture).toBeUndefined();
+    });
+});

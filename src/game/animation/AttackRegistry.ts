@@ -23,6 +23,14 @@ export class AttackRegistry {
       impactTime: 1330, recoveryDuration: 2020, screenShake: false, hitPause: false,
       soundCueIds: [], effectIds: ['painted_flame', 'colour_sparks', 'soft_smoke'],
     });
+    for (const [id, displayName, description] of [
+      ['windwalker_swoop', 'Windwalker swoop', 'A sweeping airborne dive'],
+      ['one_eye_pounce', 'One Eye pounce', 'A playful sabre-toothed pounce'],
+      ['driller_charge', 'Driller charge', 'A spiralling horn charge'],
+      ['piffle_bubble', 'Piffle bubble', 'A drifting purple bubble'],
+    ]) this.register({ id, displayName, description, totalDuration: 3350, anticipationDuration: 850,
+      strikeDuration: 480, impactTime: 1330, recoveryDuration: 2020,
+      screenShake: false, hitPause: false, soundCueIds: [], effectIds: [] });
     // Fire Dragon Vertical Slice Attack
     this.register({
       id: 'fire_stream_attack',

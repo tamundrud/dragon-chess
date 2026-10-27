@@ -70,7 +70,7 @@ test('deliberate Skip completes a capture and Undo restores exactly one move', a
   await expect(page.locator('#game-ui')).toHaveAttribute('data-attack-state', 'idle');
 });
 
-test('leaving a Fire Dragon capture cancels its nested presentation timeline', async ({ page }) => {
+test('leaving a One Eye capture cancels its nested presentation timeline', async ({ page }) => {
   test.setTimeout(120_000);
   const errors = [];
   page.on('pageerror', error => errors.push(error.message));

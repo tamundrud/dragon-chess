@@ -378,7 +378,7 @@ describe('Attack System & Chess Engine Integration', () => {
   });
 });
 
-describe('Fire Dragon Vertical Slice Attack', () => {
+describe('Knight attack routing and lifecycle', () => {
   let controller: ChessGameController;
   let director: AttackDirector;
   let charReg: CharacterRegistry;
@@ -397,13 +397,13 @@ describe('Fire Dragon Vertical Slice Attack', () => {
     vi.useRealTimers();
   });
 
-  it('selects fire_dragon from CharacterRegistry when moving light knight from g1', () => {
+  it('selects One Eye from CharacterRegistry when moving light knight from g1', () => {
     const char = charReg.getByPiece('w', 'n', 'g1');
-    expect(char.id).toBe('fire_dragon');
-    expect(char.defaultAttackId).toBe('fire_stream_attack');
+    expect(char.id).toBe('one_eye');
+    expect(char.defaultAttackId).toBe('one_eye_pounce');
   });
 
-  it('completes normal fire_dragon attack sequence through all phases', () => {
+  it('completes normal knight attack sequence through all phases', () => {
     SettingsStore.getInstance().update({ animationEnabled: true, animationMode: 'normal', reducedMotion: false });
     let completed = false;
     const move = {
@@ -421,8 +421,8 @@ describe('Fire Dragon Vertical Slice Attack', () => {
     const mockPresenter: AttackPresenter = {
       playAttack: (ctx, def, settings, onPhase, onComplete) => {
         playAttackCalled = true;
-        expect(ctx.attackerCharacterId).toBe('fire_dragon');
-        expect(def.id).toBe('fire_stream_attack');
+        expect(ctx.attackerCharacterId).toBe('one_eye');
+        expect(def.id).toBe('one_eye_pounce');
         presenterComplete = onComplete;
         onPhase('preparing');
       },
@@ -444,7 +444,7 @@ describe('Fire Dragon Vertical Slice Attack', () => {
     director.unregisterPresenter(mockPresenter);
   });
 
-  it('allows skipping during inhale (preparing phase)', () => {
+  it('allows skipping during anticipation (preparing phase)', () => {
     SettingsStore.getInstance().update({ animationEnabled: true, animationMode: 'normal' });
     let completeCount = 0;
     const move = {
@@ -467,7 +467,7 @@ describe('Fire Dragon Vertical Slice Attack', () => {
     expect(completeCount).toBe(1);
   });
 
-  it('allows skipping during flame travel (attacking phase)', () => {
+  it('allows skipping during attack (attacking phase)', () => {
     SettingsStore.getInstance().update({ animationEnabled: true, animationMode: 'normal' });
     let completeCount = 0;
     const move = {
@@ -484,7 +484,7 @@ describe('Fire Dragon Vertical Slice Attack', () => {
       completeCount++;
     });
 
-    vi.advanceTimersByTime(900); // Inhale (800ms) finished, now in travel
+    vi.advanceTimersByTime(900); // Anticipation finished, now attacking
     expect(director.getState()).toBe('attacking');
     director.skip();
     expect(director.getState()).toBe('idle');
@@ -515,7 +515,7 @@ describe('Fire Dragon Vertical Slice Attack', () => {
     expect(completeCount).toBe(1);
   });
 
-  it('respects reduced motion settings for fire dragon attack', () => {
+  it('respects reduced motion settings for knight attack', () => {
     SettingsStore.getInstance().update({ animationEnabled: true, animationMode: 'normal', reducedMotion: true });
     let playAttackCalled = false;
     let passedSettings: { durationScale: number; reducedMotion: boolean } | null = null;
@@ -599,7 +599,7 @@ describe('Fire Dragon Vertical Slice Attack', () => {
     director.unregisterPresenter(mockPresenter);
   });
 
-  it('applies move exactly once and restores input upon fire_dragon capture completion', () => {
+  it('applies move exactly once and restores input upon knight capture completion', () => {
     controller.reset();
     controller.commitMove({ from: 'e2', to: 'e4' });
     controller.commitMove({ from: 'e7', to: 'e5' });
@@ -619,7 +619,7 @@ describe('Fire Dragon Vertical Slice Attack', () => {
       commitCount++;
     });
 
-    vi.advanceTimersByTime(3000);
+    vi.advanceTimersByTime(4000);
 
     expect(commitCount).toBe(1);
     expect(controller.isInputLocked()).toBe(false);

@@ -60,3 +60,25 @@ describe('named rook presentation identity', () => {
     expect(game.getCharacterId('a7')).toBe(pawn);
   });
 });
+
+describe('approved knight identities', () => {
+  it('seeds both factions and follows knights through moves and Undo', () => {
+    const game = new ChessGameController();
+    expect(['b1', 'g1', 'b8', 'g8'].map(square => game.getCharacterId(square)))
+      .toEqual(['windwalker', 'one_eye', 'driller_dragon', 'poisonous_piffleworm']);
+    expect(game.commitMove({from:'b1', to:'c3'})).not.toBeNull();
+    expect(game.commitMove({from:'b8', to:'c6'})).not.toBeNull();
+    expect(game.getCharacterId('c3')).toBe('windwalker');
+    expect(game.getCharacterId('c6')).toBe('driller_dragon');
+    game.undo();
+    expect(game.getCharacterId('b8')).toBe('driller_dragon');
+  });
+  it.each([['w', '4k3/P7/8/8/8/8/8/4K3 w - - 0 1', 'a7', 'a8', 'windwalker'],
+    ['b', '4k3/8/8/8/8/8/p7/4K3 b - - 0 1', 'a2', 'a1', 'driller_dragon']])('promotes %s to its faction default knight', (_color, fen, from, to, id) => {
+    const game = new ChessGameController(fen);
+    expect(game.commitMove({from, to, promotion:'n'})).not.toBeNull();
+    expect(game.getCharacterId(to)).toBe(id);
+    game.undo();
+    expect(game.getCharacterId(from)).not.toBe(id);
+  });
+});
