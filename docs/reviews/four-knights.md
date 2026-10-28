@@ -1,6 +1,6 @@
-# Four knight scenes — draft verification
+# Four knight scenes — verification and owner acceptance
 
-The batch selects the four approved knight identities: Windwalker (swoop), One Eye (pounce), Driller-Dragon (horn charge) and Poisonous Piffleworm (bubble). Starting-square identity follows the piece through legal moves, capture and Undo; knight promotion uses the first approved design for each faction. Board tokens and unsupported defender classes remain placeholders. The new art and choreography require individual owner acceptance; see [art provenance](../../public/art/knights/PROVENANCE.md) and [the Fireworm benchmark](../FIREWORM_BENCHMARK.md).
+The batch selects the four approved knight identities: Windwalker (swoop), One Eye (pounce), Driller-Dragon (horn charge) and Poisonous Piffleworm (bubble). Starting-square identity follows the piece through legal moves, capture and Undo; knight promotion uses the first approved design for each faction. Board tokens and unsupported defender classes remain placeholders. The owner has visually approved all four knight animations (confirmed 2026-10-27); see [art provenance](../../public/art/knights/PROVENANCE.md) and [the Fireworm benchmark](../FIREWORM_BENCHMARK.md).
 
 ## Review
 
@@ -26,4 +26,4 @@ The clips are generated from the production presenter and actual legal game capt
 
 ## Acceptance boundary
 
-Owner visual acceptance of all four designs, transitions, timing, impact and phone composition remains open. The landscape labels are small and should be judged on a physical phone. Physical iOS Safari/Android, safe areas, performance and memory, and child usability are not established by Chromium emulation. No sound pack ships. The six new PNG files total approximately 10 MB compressed and are loaded during scene startup; physical-phone download, decode and memory costs need measurement.
+The owner has visually approved all four knight animations. The landscape labels are small and should be judged on a physical phone. Physical iOS Safari/Android, safe areas, performance and memory, and child usability are not established by Chromium emulation. No sound pack ships. The six new PNG files total approximately 10 MB compressed and are loaded during scene startup; physical-phone download, decode and memory costs need measurement.

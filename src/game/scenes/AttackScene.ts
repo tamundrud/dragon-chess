@@ -5,6 +5,8 @@ import { CharacterRegistry } from '../characters/CharacterRegistry';
 import { AudioController } from '../audio/AudioController';
 import { BoardScene } from './BoardScene';
 import { KnightPresenter } from '../animation/KnightPresenter';
+import { BishopPresenter } from '../animation/BishopPresenter';
+import { BISHOPS, loadBishop, type BishopId } from '../animation/bishopAssets';
 import { KNIGHTS, preloadKnights, frameKnights } from '../animation/knightAssets';
 import { FirewormPresenter } from '../animation/FirewormPresenter';
 import { preloadFireworm, frameFireworm } from '../animation/firewormAssets';
@@ -25,6 +27,8 @@ export class AttackScene extends Phaser.Scene implements AttackPresenter {
   private impactEffectContainer!: Phaser.GameObjects.Container;
   private firewormPresenter!: FirewormPresenter;
   private knightPresenter!: KnightPresenter;
+  private bishopPresenter!: BishopPresenter;
+  private cancelBishopLoad: (() => void) | null = null;
   private fireDragonPresenter!: FireDragonPresenter;
   private cleanedUp = true;
   private firewormBoard = false;
@@ -130,6 +134,7 @@ export class AttackScene extends Phaser.Scene implements AttackPresenter {
 
     this.layoutStage(width, height);
 
+    this.bishopPresenter = new BishopPresenter(this, this.artworkContainer, this.statusText, this.attackerText, this.defenderText);
     this.knightPresenter = new KnightPresenter(this, this.artworkContainer, this.statusText, this.attackerText, this.defenderText);
     this.firewormPresenter = new FirewormPresenter(this, this.artworkContainer, this.statusText, this.attackerText, this.defenderText);
     this.fireDragonPresenter = new FireDragonPresenter(
@@ -151,7 +156,8 @@ export class AttackScene extends Phaser.Scene implements AttackPresenter {
     this.cleanUpAttackPresentation();
     this.onCompleteCallback = onComplete;
     this.stageContainer.setVisible(true);
-    const knightActive = this.knightActive = KNIGHTS.some(id => id === context.attackerCharacterId);
+    const bishopActive = BISHOPS.some(id => id === context.attackerCharacterId);
+    const knightActive = this.knightActive = KNIGHTS.some(id => id === context.attackerCharacterId) || bishopActive;
     this.firewormActive = definition.id === 'fireworm_fireworks' || knightActive;
     this.firewormBoard = this.firewormActive && settings.presentation !== 'arena';
     this.layoutStage(this.scale.width, this.scale.height);
@@ -167,8 +173,8 @@ export class AttackScene extends Phaser.Scene implements AttackPresenter {
         const layout = fitAttackArtwork(this.scale.width, this.scale.height);
         return { x:(p.x - layout.x) / layout.scale, y:(p.y - layout.y) / layout.scale };
       };
-      const presenter = knightActive ? this.knightPresenter : this.firewormPresenter;
-      presenter.playAttack(context, definition, { ...settings,
+      const presenter = bishopActive ? this.bishopPresenter : knightActive ? this.knightPresenter : this.firewormPresenter;
+      const start = () => presenter.playAttack(context, definition, { ...settings,
         origins: () => ({ attacker:point(context.moveFrom), defender:point(context.moveTo), destination:point(context.moveTo) }),
       }, onPhaseChange, () => {
         const callback = this.onCompleteCallback;
@@ -176,6 +182,18 @@ export class AttackScene extends Phaser.Scene implements AttackPresenter {
         this.cleanUpAttackPresentation();
         callback?.();
       });
+      const bishopDefender = context.defenderPieceType === 'b' && BISHOPS.some(id => id === context.defenderCharacterId)
+        ? context.defenderCharacterId as BishopId : undefined;
+      if (bishopActive || bishopDefender) {
+        this.statusText.setText('Getting ready…');
+        this.attackerText.setText(CharacterRegistry.getInstance().getById(context.attackerCharacterId)?.displayName.toUpperCase() ?? 'BISHOP');
+        this.defenderText.setText('');
+        this.cancelBishopLoad = loadBishop(this, bishopActive ? context.attackerCharacterId as BishopId : null, available => {
+          this.cancelBishopLoad = null;
+          if (available) start();
+          else this.skip();
+        }, bishopDefender);
+      } else start();
       return;
     }
 
@@ -363,6 +381,7 @@ export class AttackScene extends Phaser.Scene implements AttackPresenter {
   public skip(): void {
     this.firewormPresenter?.cleanup();
     this.knightPresenter?.cleanup();
+    this.bishopPresenter?.cleanup();
     if (this.fireDragonPresenter) {
       this.fireDragonPresenter.cleanup();
     }
@@ -388,8 +407,11 @@ export class AttackScene extends Phaser.Scene implements AttackPresenter {
   }
 
   private cleanUpAttackPresentation(): void {
+    this.cancelBishopLoad?.();
+    this.cancelBishopLoad = null;
     this.firewormPresenter?.cleanup();
     this.knightPresenter?.cleanup();
+    this.bishopPresenter?.cleanup();
     if (this.fireDragonPresenter) {
       this.fireDragonPresenter.cleanup();
     }

@@ -1,0 +1,359 @@
+{
+  "status": "complete",
+  "verdict": "Ready with fixes",
+  "scope": {
+    "base": "origin/main",
+    "branch": "bishops-battle-scenes",
+    "head_sha": "48cb69c00802cfa0a3a9c05b0d24aa0c56cf0b22",
+    "pr_url": null,
+    "files_changed": 19
+  },
+  "intent": "Implement four Bishop battle scenes with original artwork, lazy loading, distinct attacks and preserved chess lifecycle; supply recordings for owner acceptance.",
+  "intent_confidence": "explicit",
+  "reviewers": [
+    "correctness",
+    "project-standards",
+    "testing",
+    "maintainability",
+    "reliability",
+    "adversarial",
+    "julik-frontend-races"
+  ],
+  "findings": [
+    {
+      "#": 1,
+      "autofix_class": "gated_auto",
+      "confidence": 100,
+      "evidence": [
+        "e2e/bishops.spec.js:20 --   await page.clock.runFor(1500); await expectCanvasSized(page); await captureScreenshot(page,info,`${name}-impact-rotated`);",
+        "src/game/scenes/AttackScene.ts:192 --           else this.skip();",
+        "scripts/bishop_record.js:19 --   await expect.poll(() => loaded.length, {timeout:30000}).toBe(name === 'hiccup' ? 5 : 3);"
+      ],
+      "file": "e2e/bishops.spec.js",
+      "first_evidence": "e2e/bishops.spec.js:20 --   await page.clock.runFor(1500); await expectCanvasSized(page); await captureScreenshot(page,info,`${name}-impact-rotated`);",
+      "independent_reviewers": [
+        "testing"
+      ],
+      "line": 20,
+      "owner": "downstream-resolver",
+      "pre_existing": false,
+      "requires_verification": true,
+      "reviewers": [
+        "testing"
+      ],
+      "severity": "P2",
+      "suggested_fix": "Assert successful artwork responses and observe attacking and impact for each Bishop before asserting idle; have the recorder likewise verify the phases it captures.",
+      "title": "Assert the real capture reaches its battle phases",
+      "why_it_matters": "A failed artwork decode or missing texture can cause AttackScene to skip directly to a committed move while all four capture tests still pass: requestfinished fires for HTTP errors as well, and the tests never require an attacking or impact state. The recorder similarly accepts an empty-board clip if it ends idle. Assert the real presenter phases and successful asset responses so the browser coverage catches a broken battle scene."
+    },
+    {
+      "#": 2,
+      "autofix_class": "manual",
+      "confidence": 100,
+      "evidence": [
+        "src/game/animation/BishopPresenter.ts:32 -- const fallback = resolveFirewormDefender(context);",
+        "src/game/animation/BishopPresenter.ts:45-47 -- else { target.add(scene.add.ellipse(...)); target.add(scene.add.text(...)); }",
+        "src/game/animation/firewormDefender.ts:25-27 -- return { type, color, label:`${name} \u00b7 ${CLASS_NAMES[type]}\\nART PLACEHOLDER` };",
+        "src/game/animation/firewormDefender.ts:15-18 -- only matching knight identities have a dedicated texture before the generic fallback.",
+        "src/game/animation/firewormDefender.ts:27 -- return { type, color, label:`${name} \u00b7 ${CLASS_NAMES[type]}\\nART PLACEHOLDER` };",
+        "src/game/animation/BishopPresenter.ts:45-47 -- no-texture fallback renders an ellipse and piece letter.",
+        "Chess.js accepts e4 e6 d4 d5 Bf4 Bd6 Bxd6; Hiccup captures Killer in that sequence."
+      ],
+      "file": "src/game/animation/BishopPresenter.ts",
+      "first_evidence": "src/game/animation/BishopPresenter.ts:32 -- const fallback = resolveFirewormDefender(context);",
+      "independent_reviewers": [
+        "correctness",
+        "adversarial"
+      ],
+      "line": 32,
+      "owner": "downstream-resolver",
+      "pre_existing": false,
+      "requires_verification": true,
+      "reviewers": [
+        "correctness",
+        "adversarial"
+      ],
+      "severity": "P2",
+      "suggested_fix": "Load the matching Bishop defender's ready pose on demand and use it in the shared illustrated-defender resolver; test a Bishop-versus-Bishop capture and facing.",
+      "title": "Render Bishop defenders with their artwork",
+      "why_it_matters": "In a normal legal Bishop-vs-Bishop capture, the new Bishop identity reaches the existing resolver, but the resolver does not return Bishop art. The presenter therefore replaces the actual opponent with a lettered B placeholder, despite this batch providing an illustrated ready pose. For example e4 e6 d4 d5 Bf4 Bd6 Bxd6 has Hiccup capture Killer; the impact and reaction display a generic badge rather than Killer. This fails the established knight-defender pattern and makes the newly introduced character identity disappear at the moment of the reaction."
+    },
+    {
+      "#": 3,
+      "autofix_class": "gated_auto",
+      "confidence": 75,
+      "evidence": [
+        "src/game/animation/bishopAssets.ts:16 -- scene.load.once(Phaser.Loader.Events.COMPLETE, complete);",
+        "src/game/scenes/AttackScene.ts:189-192 invokes the presenter only after the load callback, otherwise skips on unavailable.",
+        "node_modules/phaser/src/core/Config.js:531 defaults loader.timeout to 0, and XHRLoader.js:58 assigns that value to xhr.timeout."
+      ],
+      "file": "src/game/animation/bishopAssets.ts",
+      "first_evidence": "src/game/animation/bishopAssets.ts:16 -- scene.load.once(Phaser.Loader.Events.COMPLETE, complete);",
+      "independent_reviewers": [
+        "reliability"
+      ],
+      "line": 16,
+      "owner": "downstream-resolver",
+      "pre_existing": false,
+      "requires_verification": true,
+      "reviewers": [
+        "reliability"
+      ],
+      "severity": "P2",
+      "suggested_fix": "Apply a bounded timeout to the Bishop file requests or the load operation, cancel the completion listener on timeout, and call the existing unavailable fallback exactly once; test stalled responses and late completion after timeout.",
+      "title": "Bound stalled Bishop artwork requests",
+      "why_it_matters": "A first Bishop capture can remain on \u2018Getting ready\u2019 with board input locked indefinitely when an artwork request stalls rather than returning an error. Skip is available, but the move does not complete naturally, and Phaser's default XHR timeout is zero. A bounded load timeout that detaches the listener and invokes the existing failure fallback would restore progress without requiring the player to diagnose a stalled download.",
+      "validation_status": "confirmed",
+      "validation_reason": "When an artwork request stalls, the snapshot waits exclusively for loader COMPLETE at bishopAssets.ts:16 while AttackScene.ts:189-192 starts or skips only in that callback; Phaser's Config.js:531 defaults timeout to zero and XHRLoader.js:58 uses it, with no project override found, so natural completion remains blocked unless the user skips; incidence was not measured."
+    },
+    {
+      "#": 4,
+      "autofix_class": "gated_auto",
+      "confidence": 75,
+      "evidence": [
+        "src/game/animation/bishopAssets.ts:16-18 -- scene.load.once(Phaser.Loader.Events.COMPLETE, complete); / if (!scene.load.isLoading()) scene.load.start(); / return () => scene.load.off(Phaser.Loader.Events.COMPLETE, complete);",
+        "node_modules/phaser/src/loader/LoaderPlugin.js:1120 -- loadComplete() occurs only when list, inflight and queue are empty.",
+        "src/game/scenes/AttackScene.ts:189-193 -- every Bishop starts only after loadBishop callback fires."
+      ],
+      "file": "src/game/animation/bishopAssets.ts",
+      "first_evidence": "src/game/animation/bishopAssets.ts:16-18 -- scene.load.once(Phaser.Loader.Events.COMPLETE, complete); / if (!scene.load.isLoading()) scene.load.start(); / return () => scene.load.off(Phaser.Loader.Events.COMPLETE, complete);",
+      "independent_reviewers": [
+        "julik-frontend-races"
+      ],
+      "line": 16,
+      "owner": "downstream-resolver",
+      "pre_existing": false,
+      "requires_verification": true,
+      "reviewers": [
+        "julik-frontend-races"
+      ],
+      "severity": "P2",
+      "suggested_fix": "Track completion and failure for the requested keys rather than waiting for the global loader COMPLETE event, or cancel and remove the abandoned requests; exercise Skip followed by a different Bishop capture while the first response remains held.",
+      "title": "Skipped downloads block subsequent Bishop captures",
+      "why_it_matters": "If a player skips a capture while one artwork request is stalled and then triggers another Bishop capture, the second capture remains locked in the preparing state until the abandoned request finishes. Cancelling detaches only the old callback, and the new callback waits for the shared loader\u2019s global completion, which requires every pending and in-flight file, including the skipped capture\u2019s files. The player can skip again, but cannot see the new capture while the unrelated request hangs.",
+      "validation_status": "confirmed",
+      "validation_reason": "When a cold request remains in flight after Skip, the snapshot's bishopAssets.ts:16-18 only removes its callback; Phaser LoaderPlugin.js:1119-1121 emits global completion only after all pending, in-flight and processing files finish, so a later capture's callback also waits on the abandoned request; the precise incidence was not measured.",
+      "protected_subject": "concurrency"
+    }
+  ],
+  "actionable_findings": [
+    {
+      "#": 1,
+      "autofix_class": "gated_auto",
+      "confidence": 100,
+      "evidence": [
+        "e2e/bishops.spec.js:20 --   await page.clock.runFor(1500); await expectCanvasSized(page); await captureScreenshot(page,info,`${name}-impact-rotated`);",
+        "src/game/scenes/AttackScene.ts:192 --           else this.skip();",
+        "scripts/bishop_record.js:19 --   await expect.poll(() => loaded.length, {timeout:30000}).toBe(name === 'hiccup' ? 5 : 3);"
+      ],
+      "file": "e2e/bishops.spec.js",
+      "first_evidence": "e2e/bishops.spec.js:20 --   await page.clock.runFor(1500); await expectCanvasSized(page); await captureScreenshot(page,info,`${name}-impact-rotated`);",
+      "independent_reviewers": [
+        "testing"
+      ],
+      "line": 20,
+      "owner": "downstream-resolver",
+      "pre_existing": false,
+      "requires_verification": true,
+      "reviewers": [
+        "testing"
+      ],
+      "severity": "P2",
+      "suggested_fix": "Assert successful artwork responses and observe attacking and impact for each Bishop before asserting idle; have the recorder likewise verify the phases it captures.",
+      "title": "Assert the real capture reaches its battle phases",
+      "why_it_matters": "A failed artwork decode or missing texture can cause AttackScene to skip directly to a committed move while all four capture tests still pass: requestfinished fires for HTTP errors as well, and the tests never require an attacking or impact state. The recorder similarly accepts an empty-board clip if it ends idle. Assert the real presenter phases and successful asset responses so the browser coverage catches a broken battle scene."
+    },
+    {
+      "#": 2,
+      "autofix_class": "manual",
+      "confidence": 100,
+      "evidence": [
+        "src/game/animation/BishopPresenter.ts:32 -- const fallback = resolveFirewormDefender(context);",
+        "src/game/animation/BishopPresenter.ts:45-47 -- else { target.add(scene.add.ellipse(...)); target.add(scene.add.text(...)); }",
+        "src/game/animation/firewormDefender.ts:25-27 -- return { type, color, label:`${name} \u00b7 ${CLASS_NAMES[type]}\\nART PLACEHOLDER` };",
+        "src/game/animation/firewormDefender.ts:15-18 -- only matching knight identities have a dedicated texture before the generic fallback.",
+        "src/game/animation/firewormDefender.ts:27 -- return { type, color, label:`${name} \u00b7 ${CLASS_NAMES[type]}\\nART PLACEHOLDER` };",
+        "src/game/animation/BishopPresenter.ts:45-47 -- no-texture fallback renders an ellipse and piece letter.",
+        "Chess.js accepts e4 e6 d4 d5 Bf4 Bd6 Bxd6; Hiccup captures Killer in that sequence."
+      ],
+      "file": "src/game/animation/BishopPresenter.ts",
+      "first_evidence": "src/game/animation/BishopPresenter.ts:32 -- const fallback = resolveFirewormDefender(context);",
+      "independent_reviewers": [
+        "correctness",
+        "adversarial"
+      ],
+      "line": 32,
+      "owner": "downstream-resolver",
+      "pre_existing": false,
+      "requires_verification": true,
+      "reviewers": [
+        "correctness",
+        "adversarial"
+      ],
+      "severity": "P2",
+      "suggested_fix": "Load the matching Bishop defender's ready pose on demand and use it in the shared illustrated-defender resolver; test a Bishop-versus-Bishop capture and facing.",
+      "title": "Render Bishop defenders with their artwork",
+      "why_it_matters": "In a normal legal Bishop-vs-Bishop capture, the new Bishop identity reaches the existing resolver, but the resolver does not return Bishop art. The presenter therefore replaces the actual opponent with a lettered B placeholder, despite this batch providing an illustrated ready pose. For example e4 e6 d4 d5 Bf4 Bd6 Bxd6 has Hiccup capture Killer; the impact and reaction display a generic badge rather than Killer. This fails the established knight-defender pattern and makes the newly introduced character identity disappear at the moment of the reaction."
+    },
+    {
+      "#": 3,
+      "autofix_class": "gated_auto",
+      "confidence": 75,
+      "evidence": [
+        "src/game/animation/bishopAssets.ts:16 -- scene.load.once(Phaser.Loader.Events.COMPLETE, complete);",
+        "src/game/scenes/AttackScene.ts:189-192 invokes the presenter only after the load callback, otherwise skips on unavailable.",
+        "node_modules/phaser/src/core/Config.js:531 defaults loader.timeout to 0, and XHRLoader.js:58 assigns that value to xhr.timeout."
+      ],
+      "file": "src/game/animation/bishopAssets.ts",
+      "first_evidence": "src/game/animation/bishopAssets.ts:16 -- scene.load.once(Phaser.Loader.Events.COMPLETE, complete);",
+      "independent_reviewers": [
+        "reliability"
+      ],
+      "line": 16,
+      "owner": "downstream-resolver",
+      "pre_existing": false,
+      "requires_verification": true,
+      "reviewers": [
+        "reliability"
+      ],
+      "severity": "P2",
+      "suggested_fix": "Apply a bounded timeout to the Bishop file requests or the load operation, cancel the completion listener on timeout, and call the existing unavailable fallback exactly once; test stalled responses and late completion after timeout.",
+      "title": "Bound stalled Bishop artwork requests",
+      "why_it_matters": "A first Bishop capture can remain on \u2018Getting ready\u2019 with board input locked indefinitely when an artwork request stalls rather than returning an error. Skip is available, but the move does not complete naturally, and Phaser's default XHR timeout is zero. A bounded load timeout that detaches the listener and invokes the existing failure fallback would restore progress without requiring the player to diagnose a stalled download.",
+      "validation_status": "confirmed",
+      "validation_reason": "When an artwork request stalls, the snapshot waits exclusively for loader COMPLETE at bishopAssets.ts:16 while AttackScene.ts:189-192 starts or skips only in that callback; Phaser's Config.js:531 defaults timeout to zero and XHRLoader.js:58 uses it, with no project override found, so natural completion remains blocked unless the user skips; incidence was not measured."
+    },
+    {
+      "#": 4,
+      "autofix_class": "gated_auto",
+      "confidence": 75,
+      "evidence": [
+        "src/game/animation/bishopAssets.ts:16-18 -- scene.load.once(Phaser.Loader.Events.COMPLETE, complete); / if (!scene.load.isLoading()) scene.load.start(); / return () => scene.load.off(Phaser.Loader.Events.COMPLETE, complete);",
+        "node_modules/phaser/src/loader/LoaderPlugin.js:1120 -- loadComplete() occurs only when list, inflight and queue are empty.",
+        "src/game/scenes/AttackScene.ts:189-193 -- every Bishop starts only after loadBishop callback fires."
+      ],
+      "file": "src/game/animation/bishopAssets.ts",
+      "first_evidence": "src/game/animation/bishopAssets.ts:16-18 -- scene.load.once(Phaser.Loader.Events.COMPLETE, complete); / if (!scene.load.isLoading()) scene.load.start(); / return () => scene.load.off(Phaser.Loader.Events.COMPLETE, complete);",
+      "independent_reviewers": [
+        "julik-frontend-races"
+      ],
+      "line": 16,
+      "owner": "downstream-resolver",
+      "pre_existing": false,
+      "requires_verification": true,
+      "reviewers": [
+        "julik-frontend-races"
+      ],
+      "severity": "P2",
+      "suggested_fix": "Track completion and failure for the requested keys rather than waiting for the global loader COMPLETE event, or cancel and remove the abandoned requests; exercise Skip followed by a different Bishop capture while the first response remains held.",
+      "title": "Skipped downloads block subsequent Bishop captures",
+      "why_it_matters": "If a player skips a capture while one artwork request is stalled and then triggers another Bishop capture, the second capture remains locked in the preparing state until the abandoned request finishes. Cancelling detaches only the old callback, and the new callback waits for the shared loader\u2019s global completion, which requires every pending and in-flight file, including the skipped capture\u2019s files. The player can skip again, but cannot see the new capture while the unrelated request hangs.",
+      "validation_status": "confirmed",
+      "validation_reason": "When a cold request remains in flight after Skip, the snapshot's bishopAssets.ts:16-18 only removes its callback; Phaser LoaderPlugin.js:1119-1121 emits global completion only after all pending, in-flight and processing files finish, so a later capture's callback also waits on the abandoned request; the precise incidence was not measured.",
+      "protected_subject": "concurrency"
+    }
+  ],
+  "triage_groups": [
+    {
+      "title": "Artwork loading and cancellation",
+      "findings": [
+        3,
+        4
+      ],
+      "context": "Both issues arise from waiting on the shared loader.",
+      "preferred_resolution": "Isolate or cancel capture requests and bound their wait.",
+      "why": "A stalled or abandoned load can delay a later capture."
+    },
+    {
+      "title": "Presentation fidelity and verification",
+      "findings": [
+        1,
+        2
+      ],
+      "context": "Named defenders and actual phases need explicit coverage.",
+      "preferred_resolution": "Load named Bishop defenders and assert actual animation phases.",
+      "why": "A completed move alone does not establish that the scene played."
+    }
+  ],
+  "pre_existing_findings": [],
+  "requirements_completeness": {
+    "plan": "docs/plans/2026-10-27-four-bishops-plan.md",
+    "source": "explicit",
+    "requirements": [
+      {
+        "id": "R1",
+        "status": "partially addressed",
+        "note": "Four attacker scenes and art are represented; finding 2 addresses defender depiction."
+      },
+      {
+        "id": "R2",
+        "status": "partially addressed",
+        "note": "Identity and lifecycle paths exist; findings 3 and 4 concern stalled and abandoned loads."
+      },
+      {
+        "id": "R3",
+        "status": "partially addressed",
+        "note": "Capture tests and recording scripts exist; finding 1 strengthens assertions. Binary recordings were excluded from this review."
+      },
+      {
+        "id": "R4",
+        "status": "partially addressed",
+        "note": "Previous knight approval documentation is updated; draft PR and owner acceptance are delivery steps outside this pre-fix review."
+      }
+    ],
+    "implementation_units": [
+      {
+        "unit": "1",
+        "status": "addressed in reviewed diff"
+      },
+      {
+        "unit": "2",
+        "status": "partially addressed",
+        "note": "Findings 2-4."
+      },
+      {
+        "unit": "3",
+        "status": "partially addressed",
+        "note": "Finding 1 and later delivery; recordings excluded from code review."
+      }
+    ],
+    "unrequested_behavior_rules": []
+  },
+  "learnings": [],
+  "agent_native_gaps": [],
+  "deployment_notes": [],
+  "residual_risks": [
+    "Owner visual acceptance and physical-phone performance remain separate from automated tests, as AGENTS.md requires.",
+    "The 14 Bishop WebP textures are retained in the shared Phaser texture manager after use; their cumulative decoded memory and mobile performance remain unmeasured."
+  ],
+  "testing_gaps": [
+    "The cold-load Skip regression did not wait for the held requests to complete before asserting that no late callback resumed presentation."
+  ],
+  "coverage": {
+    "depth": "full",
+    "notes": [
+      "AGENTS.md supplied project standards.",
+      "Artwork and recordings were excluded from the code diff and inspected separately.",
+      "The reviewed pre-fix tree is available in snapshot/."
+    ],
+    "validator": {
+      "confirmed": 4,
+      "rejected": 0,
+      "unresolved": 0,
+      "malformed": 0,
+      "failed": 0,
+      "shortcut_skipped": 0,
+      "note": "One independent local validator batch confirmed all four findings against the pre-fix snapshot."
+    },
+    "first_evidence_backfilled": 0,
+    "mode_aware_demotions": 1,
+    "suppressed_by_confidence": {},
+    "failed_reviewers": []
+  },
+  "peer": {
+    "outcome": "in-process-fallback",
+    "coverage": "Different-provider review unavailable: no eligible CLI installed; local adversarial review ran."
+  },
+  "artifact_path": "/tmp/compound-engineering-1000/ce-code-review/bishops-resume-20261027",
+  "run_id": "bishops-resume-20261027"
+}

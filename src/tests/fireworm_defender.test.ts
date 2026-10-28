@@ -39,7 +39,20 @@ describe('new knight defender artwork', () => {
     'uses %s art only for the matching class and faction', (id,color) => {
       expect(resolveFirewormDefender({...base, defenderCharacterId:id, defenderPieceType:'n', defenderColor:color}))
         .toMatchObject({texture:`knight-${id}`,frame:'0',facing:1});
+      expect(resolveFirewormDefender({...base, defenderCharacterId:id, defenderPieceType:'b', defenderColor:color}).texture).toBeUndefined();
       expect(resolveFirewormDefender({...base, defenderCharacterId:id, defenderPieceType:'p', defenderColor:color}).texture).toBeUndefined();
       expect(resolveFirewormDefender({...base, defenderCharacterId:id, defenderPieceType:'n', defenderColor:color==='w'?'b':'w'}).texture).toBeUndefined();
+    });
+});
+
+
+describe('Bishop defender artwork', () => {
+  it.each([['hiccup','w'],['toothless','w'],['thuggory','b'],['killer','b']] as const)(
+    'uses %s only for the matching Bishop and faction', (id,color) => {
+      expect(resolveFirewormDefender({...base, defenderCharacterId:id, defenderPieceType:'b', defenderColor:color}, true))
+        .toMatchObject({texture:`bishop-${id}-ready`, facing:1});
+      expect(resolveFirewormDefender({...base, defenderCharacterId:id, defenderPieceType:'b', defenderColor:color}).texture).toBeUndefined();
+      expect(resolveFirewormDefender({...base, defenderCharacterId:id, defenderPieceType:'p', defenderColor:color}).texture).toBeUndefined();
+      expect(resolveFirewormDefender({...base, defenderCharacterId:id, defenderPieceType:'b', defenderColor:color==='w'?'b':'w'}).texture).toBeUndefined();
     });
 });

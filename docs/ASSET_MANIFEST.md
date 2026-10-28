@@ -61,3 +61,7 @@ public/assets/
 - The prototype PNG pack is now approximately 13MB on disk; loading readiness is tested, physical-phone memory/frame-rate acceptance remains open. See [refinement verification](reviews/fireworm-foreground-refinement.md) and the provenance document above.
 
 The [facing/impact follow-up](reviews/fireworm-facing-impact.md) changes no source PNGs. `frameFireworm` extracts a clean pawn texture around a neighbouring flame-tip fragment in the atlas; the presenter flips that right-facing pawn toward its attacker while retaining Flamehuffer's native left-facing artwork.
+
+## Bishop candidate artwork
+
+Original connected Bishop poses and Hiccup’s glider are encoded as WebP under `public/art/bishops/`. The active Bishop's images load on demand instead of adding to the existing startup download. See [provenance and inspection](../public/art/bishops/PROVENANCE.md). The owner approved all four Bishop animations on 2026-10-28, including Killer’s revised fire-breathing attack. Physical-device performance remains unmeasured.

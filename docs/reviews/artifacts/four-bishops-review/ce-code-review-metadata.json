@@ -1,0 +1,73 @@
+{
+  "branch": "bishops-battle-scenes",
+  "completed_at": "2026-10-27T19:38:11.600254+00:00",
+  "cost": {
+    "host": "codex",
+    "scope": {
+      "changed_lines": 536,
+      "depth": "full",
+      "exec_nontest_lines": 247,
+      "size_band": "large",
+      "unclassified_lines": 57
+    },
+    "stages": [
+      {
+        "elapsed_seconds": 0.036,
+        "ended_at": "2026-10-27T19:20:30.397349+00:00",
+        "facts": {
+          "changed_lines": 536,
+          "depth": "full",
+          "exec_nontest_lines": 247,
+          "size_band": "large",
+          "unclassified_lines": 57
+        },
+        "stage": "scope",
+        "started_at": "2026-10-27T19:20:30.361345+00:00"
+      },
+      {
+        "elapsed_seconds": 767.923,
+        "ended_at": "2026-10-27T19:33:18.320597+00:00",
+        "reviewers": 7,
+        "stage": "select",
+        "started_at": "2026-10-27T19:20:30.397349+00:00"
+      },
+      {
+        "candidates": 6,
+        "elapsed_seconds": 0.036,
+        "ended_at": "2026-10-27T19:33:18.356120+00:00",
+        "stage": "dispatch",
+        "started_at": "2026-10-27T19:33:18.320597+00:00"
+      },
+      {
+        "candidates": 4,
+        "elapsed_seconds": 47.091,
+        "ended_at": "2026-10-27T19:34:49.443470+00:00",
+        "stage": "merge",
+        "started_at": "2026-10-27T19:34:02.352509+00:00"
+      },
+      {
+        "elapsed_seconds": 0.031,
+        "ended_at": "2026-10-27T19:36:43.195925+00:00",
+        "stage": "validate",
+        "started_at": "2026-10-27T19:36:43.164501+00:00"
+      },
+      {
+        "elapsed_seconds": 25.038,
+        "ended_at": "2026-10-27T19:38:11.638875+00:00",
+        "stage": "report",
+        "started_at": "2026-10-27T19:37:46.600989+00:00"
+      }
+    ],
+    "status": "complete",
+    "totals": {
+      "artifact_bytes": 101624341,
+      "candidates": 6,
+      "elapsed_seconds": 840.155,
+      "reviewers": 7
+    },
+    "truncated_events": 0
+  },
+  "head_sha": "48cb69c00802cfa0a3a9c05b0d24aa0c56cf0b22",
+  "run_id": "bishops-resume-20261027",
+  "verdict": "Ready with fixes"
+}

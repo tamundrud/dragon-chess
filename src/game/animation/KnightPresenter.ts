@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import { BISHOPS, bishopHeightRatio, type BishopId } from './bishopAssets';
 import { CharacterRegistry } from '../characters/CharacterRegistry';
 import { defenderFlipX, resolveFirewormDefender } from './firewormDefender';
 import { knightImpact } from './knightImpact';
@@ -29,7 +30,7 @@ export class KnightPresenter implements AttackPresenter {
       .setDisplaySize(id === 'poisonous_piffleworm' ? 300 : 410, id === 'poisonous_piffleworm' ? 300 : 410)
       .setOrigin(0.5, 0.94).setAlpha(i === 0 ? 1 : 0));
     dragon.add(poses);
-    const fallback = resolveFirewormDefender(context);
+    const fallback = resolveFirewormDefender(context, scene.textures?.exists(`bishop-${context.defenderCharacterId}-ready`) ?? false);
     const defenderCharacter = CharacterRegistry.getInstance().getById(context.defenderCharacterId);
     const matchingDefender = defenderCharacter?.pieceType === fallback.type &&
       defenderCharacter.faction === (fallback.color === 'w' ? 'light' : 'dark');
@@ -41,7 +42,8 @@ export class KnightPresenter implements AttackPresenter {
     const target = scene.add.container(650, 490);
     const targetSize = appearance.type === 'r' || (appearance.type === 'n' && knightDefender) ? 275 : 215;
     if (appearance.texture) target.add(scene.add.image(0, 0, appearance.texture, appearance.frame)
-      .setDisplaySize(targetSize, targetSize).setOrigin(0.5, 0.94).setFlipX(defenderFlipX(appearance.facing!, 245, 650)));
+      .setDisplaySize(targetSize, appearance.type === 'b' && BISHOPS.some(id => id === context.defenderCharacterId)
+        ? targetSize * bishopHeightRatio(context.defenderCharacterId as BishopId) : targetSize).setOrigin(0.5, 0.94).setFlipX(defenderFlipX(appearance.facing!, 245, 650)));
     else {
       target.add(scene.add.ellipse(0, -90, 140, 165, appearance.color === 'b' ? 0x345c75 : 0xc39647, 0.95));
       target.add(scene.add.text(0, -95, appearance.type.toUpperCase(), { fontSize:'72px', color:'#fff4da', fontFamily:'Georgia' }).setOrigin(0.5));
