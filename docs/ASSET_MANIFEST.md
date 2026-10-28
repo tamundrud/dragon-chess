@@ -64,4 +64,4 @@ The [facing/impact follow-up](reviews/fireworm-facing-impact.md) changes no sour
 
 ## Bishop candidate artwork
 
-Original connected Bishop poses and Hiccup’s glider are encoded as WebP under `public/art/bishops/`. The active Bishop's images load on demand instead of adding to the existing startup download. See [provenance and inspection](../public/art/bishops/PROVENANCE.md). Visual acceptance and physical-device performance remain open.
+Original connected Bishop poses and Hiccup’s glider are encoded as WebP under `public/art/bishops/`. The active Bishop's images load on demand instead of adding to the existing startup download. See [provenance and inspection](../public/art/bishops/PROVENANCE.md). The owner approved all four Bishop animations on 2026-10-28, including Killer’s revised fire-breathing attack. Physical-device performance remains unmeasured.
