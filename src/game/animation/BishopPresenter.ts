@@ -2,6 +2,7 @@ import Phaser from 'phaser';
 import { CharacterRegistry } from '../characters/CharacterRegistry';
 import { defenderFlipX, resolveFirewormDefender } from './firewormDefender';
 import { bishopImpact } from './bishopImpact';
+import { createFirewormBreath } from './firewormEffects';
 import { KNIGHTS } from './knightAssets';
 import { BISHOPS, bishopHeightRatio, type BishopId } from './bishopAssets';
 import type { AttackContext, AttackDefinition, AttackLifecycleState, AttackPlaybackSettings, AttackPresenter } from './attackTypes';
@@ -38,7 +39,8 @@ export class BishopPresenter implements AttackPresenter {
       ? { ...fallback, label:'FIREWORM · ROOK', texture:'fireworm-ready', frame:undefined, facing:1 as const }
       : context.defenderCharacterId === 'viking_warrior' && fallback.type === 'p' && fallback.color === 'w'
         ? { ...fallback, label:'HOOLIGAN WARRIOR · PAWN', texture:'knight-hooligan', facing:1 as const } : fallback;
-    const target = scene.add.container(650, 490);
+    const targetX = id === 'killer' ? 580 : 650;
+    const target = scene.add.container(targetX, 490);
     const targetSize = appearance.type === 'r' || (appearance.type === 'n' && knightDefender) ? 275 : 215;
     if (appearance.texture) target.add(scene.add.image(0, 0, appearance.texture, appearance.frame)
       .setDisplaySize(targetSize, appearance.type === 'b' && BISHOPS.some(id => id === context.defenderCharacterId)
@@ -48,6 +50,11 @@ export class BishopPresenter implements AttackPresenter {
       target.add(scene.add.text(0, -95, appearance.type.toUpperCase(), { fontSize:'72px', color:'#fff4da', fontFamily:'Georgia' }).setOrigin(0.5));
     }
     const dazed = scene.add.text(0, -targetSize, '✦  ·  ✦', {fontSize:'24px', color:'#ffe08b', stroke:'#283b48', strokeThickness:3}).setOrigin(0.5).setVisible(false);
+    const soot = scene.add.container(0, 0).setVisible(false);
+    if (id === 'killer') for (const [x, y] of [[-0.12, -0.42], [0.14, -0.64], [0.05, -0.3]]) {
+      soot.add(scene.add.ellipse(x * targetSize, y * targetSize, targetSize * 0.23, targetSize * 0.09, 0x242935, 0.55));
+    }
+    target.add(soot);
     target.add(dazed);
     const effects = scene.add.container(0, 0);
     root.add([dragon, target, effects]);
@@ -62,21 +69,22 @@ export class BishopPresenter implements AttackPresenter {
     root.setAlpha(0); tween({targets:root, alpha:1, duration:180});
     const origins = settings.origins?.();
     if (!settings.reducedMotion && settings.presentation !== 'arena' && origins) {
-      for (const [actor, origin, end] of [[dragon, origins.attacker, {x:245,y:490}], [target, origins.defender, {x:650,y:490}]] as const) {
+      for (const [actor, origin, end] of [[dragon, origins.attacker, {x:245,y:490}], [target, origins.defender, {x:targetX,y:490}]] as const) {
         actor.setPosition(origin.x, origin.y).setScale(0.16);
         tween({targets:actor, x:end.x, y:end.y, scaleX:1, scaleY:1, duration:500, ease:'Cubic.easeOut'});
       }
     }
     if (settings.reducedMotion) {
       at(240, () => { say('attacking', 'Here we go!'); pose(1); });
-      at(460, () => { say('impact', 'A surprise!'); dazed.setVisible(true); });
+      at(460, () => { say('impact', 'A surprise!'); dazed.setVisible(true); if (id === 'killer') soot.setVisible(true); });
       at(700, () => { say('recovering', 'Back to the board'); pose(2); tween({targets:target, alpha:0.25, duration:200}); });
       at(1000, () => this.finish()); return;
     }
     at(520, () => tween({targets:dragon, scaleY:0.94, angle:-3, duration:280, ease:'Sine.easeInOut'}));
     let glider: Phaser.GameObjects.Image | undefined;
+    let stopBreath: (() => void) | undefined;
     at(850, () => {
-      const messages: Record<BishopId, string> = { hiccup:'A clever invention!', toothless:'A tiny dragon pounce!', thuggory:'A shield charge!', killer:'A silver swoop!' };
+      const messages: Record<BishopId, string> = { hiccup:'A clever invention!', toothless:'A tiny dragon pounce!', thuggory:'A shield charge!', killer:'Killer breathes fire!' };
       say('attacking', messages[id]); pose(1);
       if (id === 'hiccup') {
         tween({targets:dragon, x:285, angle:4, scaleY:1, duration:300});
@@ -91,16 +99,23 @@ export class BishopPresenter implements AttackPresenter {
       } else if (id === 'thuggory') {
         tween({targets:dragon, x:455, angle:5, scaleY:1, duration:480, ease:'Cubic.easeIn'});
       } else {
-        tween({targets:dragon, x:340, y:270, angle:-7, scaleY:1, duration:220, ease:'Sine.easeOut'});
-        tween({targets:dragon, x:445, y:435, angle:14, duration:260, delay:220, ease:'Sine.easeIn'});
+        tween({targets:dragon, x:262, angle:0, scaleY:1, duration:210, ease:'Cubic.easeOut'});
+        const mouth = () => {
+          const x = 174 * dragon.scaleX, y = -100 * dragon.scaleY, angle = dragon.rotation;
+          return {x:dragon.x + x * Math.cos(angle) - y * Math.sin(angle), y:dragon.y + x * Math.sin(angle) + y * Math.cos(angle)};
+        };
+        stopBreath = createFirewormBreath(scene, effects, tween, mouth,
+          () => ({x:Math.min(target.x + targetSize * 0.65, 790 - targetSize * 0.25), y:target.y - targetSize * 0.56}), targetSize);
       }
     });
     at(1330, () => {
       say('impact', 'What a surprise!');
       if (glider) tween({targets:glider, alpha:0, y:410, duration:350});
-      bishopImpact(scene, effects, id, tween);
-      tween({targets:target, x:675, angle:12, duration:220, ease:'Back.easeOut'});
+      if (id === 'killer') soot.setVisible(true);
+      else bishopImpact(scene, effects, id, tween);
+      tween({targets:target, x:targetX + 25, angle:12, duration:220, ease:'Back.easeOut'});
     });
+    at(1600, () => stopBreath?.());
     at(1900, () => {
       say('recovering', 'A dizzy opponent!'); dazed.setVisible(true); pose(2);
       tween({targets:target, scaleY:0.9, duration:180});

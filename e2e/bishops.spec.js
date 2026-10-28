@@ -82,6 +82,24 @@ test('a Bishop captures an illustrated opposing Bishop', async ({page}, info) =>
   await page.clock.runFor(2500); await expect(page.locator('#game-ui')).toHaveAttribute('data-attack-state','idle');
 });
 
+test('Killer breathes fire at an illustrated Bishop after rotation', async ({page}, info) => {
+  await openGame(page,{pausedClock:true});
+  for (const square of ['d2','d4','e7','e6','c1','f4','f8','d6','e2','e3','d6','f4']) {
+    await tapSquare(page,square); await page.clock.runFor(32);
+  }
+  const ui = page.locator('#game-ui');
+  await expect.poll(async () => { await page.clock.runFor(32); return ui.getAttribute('data-attack-state'); }, {timeout:30000}).toBe('preparing');
+  const original = page.viewportSize();
+  await page.setViewportSize({width:original.height,height:original.width});
+  await expect.poll(async () => { await page.clock.runFor(32); return ui.getAttribute('data-attack-state'); }, {timeout:30000}).toBe('attacking');
+  await page.clock.runFor(550); await expect(ui).toHaveAttribute('data-attack-state','impact');
+  await captureScreenshot(page,info,'killer-bishop-contact-rotated');
+  await page.clock.runFor(2500); await expect(ui).toHaveAttribute('data-attack-state','idle');
+  await expectTurn(page,'white');
+  await activate(page.getByRole('button',{name:'Undo',exact:true}));
+  await expectTurn(page,'black');
+});
+
 test('a later Bishop scene does not wait for an abandoned download', async ({page}) => {
   await openGame(page,{pausedClock:true});
   const held = []; const later = [];

@@ -14,7 +14,7 @@ describe.each(cases)('%s presentation', (id, attack) => {
     vi.useFakeTimers(); removals=[];
     function object() {
       const value: Record<string, unknown> = { x:0, y:0, scaleX:1, scaleY:1 };
-      for (const name of ['add','destroy','setFlipX','setAngle','setScale','setDisplaySize','setOrigin','setAlpha','setVisible','setText','setPosition','setStrokeStyle']) value[name] = () => value;
+      for (const name of ['add','destroy','setFlipX','setAngle','setRotation','setScale','setDisplaySize','setOrigin','setAlpha','setVisible','setText','setPosition','setStrokeStyle']) value[name] = () => value;
       return value;
     }
     const scene = {
@@ -61,12 +61,12 @@ describe.each(cases)('%s board travel', (id, attack) => {
       const value={x,y,scaleX:1,scaleY:1,rotation:0,alpha:1,
         setPosition(x:number,y:number){this.x=x;this.y=y;return this;},
         setScale(x:number,y=x){this.scaleX=x;this.scaleY=y;return this;}} as Record<string,unknown>;
-      for (const name of ['add','destroy','setFlipX','setAngle','setDisplaySize','setOrigin','setAlpha','setVisible','setText','setStrokeStyle']) value[name]=()=>value;
+      for (const name of ['add','destroy','setFlipX','setAngle','setRotation','setDisplaySize','setOrigin','setAlpha','setVisible','setText','setStrokeStyle']) value[name]=()=>value;
       return value;
     }
     const scene={
       add:Object.fromEntries(['container','image','text','ellipse','rectangle','star'].map(name=>[name,(x?:number,y?:number)=>{
-        const value=object(x,y); if(name==='container' && (x===245 || x===650)) actors.push(value as unknown as typeof actors[number]); return value;
+        const value=object(x,y); if(name==='container' && (x===245 || x===650 || x===580)) actors.push(value as unknown as typeof actors[number]); return value;
       }])),
       time:{delayedCall:(delay:number,callback:()=>void)=>{const timer=setTimeout(callback,delay);return {remove:()=>clearTimeout(timer)};}},
       tweens:{add:(config:Record<string,unknown>)=>{
@@ -108,7 +108,7 @@ describe.each(cases)('%s board travel', (id, attack) => {
   it('keeps arena actors staged without return travel',()=>{
     presenter.playAttack(context,AttackRegistry.getInstance().getById(attack)!,{durationScale:1,reducedMotion:false,presentation:'arena',
       origins:()=>({attacker:{x:40,y:70},defender:{x:720,y:90},destination:{x:720,y:90}})},()=>{},()=>{});
-    expect(actors.map(({x,y,scaleX})=>({x,y,scaleX}))).toEqual([{x:245,y:490,scaleX:1},{x:650,y:490,scaleX:1}]);
+    expect(actors.map(({x,y,scaleX})=>({x,y,scaleX}))).toEqual([{x:245,y:490,scaleX:1},{x:id === 'killer' ? 580 : 650,y:490,scaleX:1}]);
     vi.advanceTimersByTime(2980); expect(motions.some(motion=>motion.returnMotion)).toBe(false);
   });
 });
