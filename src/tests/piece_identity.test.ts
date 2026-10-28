@@ -82,3 +82,24 @@ describe('approved knight identities', () => {
     expect(game.getCharacterId(from)).not.toBe(id);
   });
 });
+
+describe('approved bishop identities', () => {
+  it('seeds both factions and preserves moved identities through Undo', () => {
+    const game = new ChessGameController();
+    expect(['c1','f1','c8','f8'].map(square => game.getCharacterId(square)))
+      .toEqual(['hiccup','toothless','thuggory','killer']);
+    for (const [from,to] of [['d2','d3'],['d7','d6'],['c1','f4'],['c8','f5']]) {
+      expect(game.commitMove({from,to})).not.toBeNull();
+    }
+    expect(game.getCharacterId('f4')).toBe('hiccup');
+    expect(game.getCharacterId('f5')).toBe('thuggory');
+    game.undo(); expect(game.getCharacterId('c8')).toBe('thuggory');
+  });
+  it.each([['4k3/P7/8/8/8/8/8/4K3 w - - 0 1','a7','a8','hiccup'],
+    ['4k3/8/8/8/8/8/p7/4K3 b - - 0 1','a2','a1','thuggory']])('promotes to a same-faction bishop', (fen,from,to,id) => {
+    const game = new ChessGameController(fen);
+    expect(game.commitMove({from,to,promotion:'b'})).not.toBeNull();
+    expect(game.getCharacterId(to)).toBe(id);
+    game.undo(); expect(game.getCharacterId(from)).not.toBe(id);
+  });
+});

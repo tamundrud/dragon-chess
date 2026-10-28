@@ -66,4 +66,4 @@ The [PR #14 impact follow-up](reviews/fireworm-facing-impact.md) derives illustr
 
 ## Four knight scenes
 
-Windwalker swoops, One Eye pounces, Driller-Dragon charges with its horn, and Poisonous Piffleworm blows a bubble. Shared staging, timing and cleanup preserve board/arena, resize, Skip and reduced-motion behavior. Artwork and choreography are provisional pending individual visual acceptance; see the batch verification record.
+Windwalker swoops, One Eye pounces, Driller-Dragon charges with its horn, and Poisonous Piffleworm blows a bubble. Shared staging, timing and cleanup preserve board/arena, resize, Skip and reduced-motion behavior. All four knight animations have owner visual approval (confirmed 2026-10-27); see the batch verification record.

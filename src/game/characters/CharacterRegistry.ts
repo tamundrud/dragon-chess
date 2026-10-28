@@ -5,6 +5,10 @@ export class CharacterRegistry {
   private static instance: CharacterRegistry;
   private characters: Map<string, CharacterDefinition> = new Map();
   private squareAssignments: Map<string, string> = new Map([
+    ['c1', 'hiccup'],
+    ['f1', 'toothless'],
+    ['c8', 'thuggory'],
+    ['f8', 'killer'],
     ['a1', 'fireworm'],
     ['a8', 'flamehuffer'],
     ['h8', 'common_or_garden'],
@@ -20,7 +24,8 @@ export class CharacterRegistry {
     ['w_q', 'valhallarama'],
     ['w_p', 'viking_warrior'],
     ['w_r', 'fireworm'],
-    ['w_b', 'light_generic'],
+    ['w_b', 'hiccup'],
+    ['b_b', 'thuggory'],
     ['b_p', 'rival_generic'],
     ['b_n', 'driller_dragon'],
   ]);
@@ -66,6 +71,14 @@ export class CharacterRegistry {
     ] as const) {
       this.register({ id, displayName, faction, pieceType: 'n', boardTokenAsset: `token_${id}_temp`,
         attackStageAsset: id, defaultAttackId: attack, artStatus: 'temporary', personalityTags: [] });
+    }
+    for (const [id, displayName, faction] of [
+      ['hiccup', 'Hiccup', 'light'], ['toothless', 'Toothless', 'light'],
+      ['thuggory', 'Thuggory', 'dark'], ['killer', 'Killer', 'dark'],
+    ] as const) {
+      this.register({ id, displayName, faction, pieceType: 'b', boardTokenAsset: `token_${id}_temp`,
+        attackStageAsset: id, defaultAttackId: faction === 'light' ? 'generic_strike' : 'rival_strike',
+        artStatus: 'temporary', personalityTags: [] });
     }
     // Light Faction (Berk)
     this.register({
