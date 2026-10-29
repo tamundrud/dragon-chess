@@ -1,0 +1,7 @@
+{
+  "verdicts": [
+    {"#":1,"status":"confirmed","protected_subject":null,"reason":"Batch4Presenter.ts:31–39 falls back to an untextured rook for Fireworm, while the registered Fireworm art is preloaded; chess.js accepts a2a4 a7a5 a1a3 a8a6 a3b3 a6b6 c2c4 b6b3, making the capture reachable."},
+    {"#":2,"status":"confirmed","protected_subject":null,"reason":"Batch4Presenter.ts:91–95 invokes the destination provider during the return tween, but the new unit mock never advances tween updates and the rotation browser test asserts only phase, canvas dimensions and completion, so a reachable viewport change cannot verify the return position."},
+    {"#":3,"status":"confirmed","protected_subject":"concurrency","reason":"AttackScene.ts launches a required attacker load and optional Bishop load together, and batch4Assets.ts:27 can settle on image error; batch4.spec.js exercises a held request and user Skip but never aborts a required image while the optional request remains pending, so that reachable ordering is untested."}
+  ]
+}

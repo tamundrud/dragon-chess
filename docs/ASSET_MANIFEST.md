@@ -2,7 +2,7 @@
 
 ## Planned asset directory structure
 
-This is the intended production layout, not a directory tree shipped by the current build. The Fireworm prototype ships original generated PNG artwork under `public/art/fireworm/`; the four provisional knight pose sheets and Hooligan defender ship under `public/art/knights/`; other art remains procedural/temporary. Audio files are not shipped.
+This is the intended production layout, not a directory tree shipped by the current build. The Fireworm prototype ships original generated PNG artwork under `public/art/fireworm/`; the four provisional knight pose sheets and Hooligan defender ship under `public/art/knights/`; Bishop and Batch 4 pose packs are also shipped as documented below; remaining art is procedural or temporary. Audio files are not shipped.
 ```text
 public/assets/
   board/
@@ -65,3 +65,7 @@ The [facing/impact follow-up](reviews/fireworm-facing-impact.md) changes no sour
 ## Bishop candidate artwork
 
 Original connected Bishop poses and Hiccup’s glider are encoded as WebP under `public/art/bishops/`. The active Bishop's images load on demand instead of adding to the existing startup download. See [provenance and inspection](../public/art/bishops/PROVENANCE.md). The owner approved all four Bishop animations on 2026-10-28, including Killer’s revised fire-breathing attack. Physical-device performance remains unmeasured.
+
+## Batch 4 candidate artwork
+
+Original connected poses for three rook dragons and Stoick are encoded as on-demand WebP under `public/art/batch4/`. The artwork provenance and inspection are recorded in [the batch provenance](../public/art/batch4/PROVENANCE.md). Animation approval and physical-device performance remain open; see [Batch 4 verification](reviews/batch4-scenes.md).

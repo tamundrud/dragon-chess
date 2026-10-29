@@ -6,6 +6,8 @@ import { AudioController } from '../audio/AudioController';
 import { BoardScene } from './BoardScene';
 import { KnightPresenter } from '../animation/KnightPresenter';
 import { BishopPresenter } from '../animation/BishopPresenter';
+import { Batch4Presenter } from '../animation/Batch4Presenter';
+import { BATCH4, loadBatch4, type Batch4Id } from '../animation/batch4Assets';
 import { BISHOPS, loadBishop, type BishopId } from '../animation/bishopAssets';
 import { KNIGHTS, preloadKnights, frameKnights } from '../animation/knightAssets';
 import { FirewormPresenter } from '../animation/FirewormPresenter';
@@ -28,12 +30,14 @@ export class AttackScene extends Phaser.Scene implements AttackPresenter {
   private firewormPresenter!: FirewormPresenter;
   private knightPresenter!: KnightPresenter;
   private bishopPresenter!: BishopPresenter;
+  private batch4Presenter!: Batch4Presenter;
+  private cancelBatch4Load: (() => void) | null = null;
   private cancelBishopLoad: (() => void) | null = null;
   private fireDragonPresenter!: FireDragonPresenter;
   private cleanedUp = true;
   private firewormBoard = false;
   private firewormActive = false;
-  private knightActive = false;
+  private illustratedActive = false;
   private onCompleteCallback: (() => void) | null = null;
 
   constructor() {
@@ -134,6 +138,7 @@ export class AttackScene extends Phaser.Scene implements AttackPresenter {
 
     this.layoutStage(width, height);
 
+    this.batch4Presenter = new Batch4Presenter(this, this.artworkContainer, this.statusText, this.attackerText, this.defenderText);
     this.bishopPresenter = new BishopPresenter(this, this.artworkContainer, this.statusText, this.attackerText, this.defenderText);
     this.knightPresenter = new KnightPresenter(this, this.artworkContainer, this.statusText, this.attackerText, this.defenderText);
     this.firewormPresenter = new FirewormPresenter(this, this.artworkContainer, this.statusText, this.attackerText, this.defenderText);
@@ -157,13 +162,14 @@ export class AttackScene extends Phaser.Scene implements AttackPresenter {
     this.onCompleteCallback = onComplete;
     this.stageContainer.setVisible(true);
     const bishopActive = BISHOPS.some(id => id === context.attackerCharacterId);
-    const knightActive = this.knightActive = KNIGHTS.some(id => id === context.attackerCharacterId) || bishopActive;
-    this.firewormActive = definition.id === 'fireworm_fireworks' || knightActive;
+    const batch4Active = BATCH4.some(id => id === context.attackerCharacterId);
+    const illustratedActive = this.illustratedActive = KNIGHTS.some(id => id === context.attackerCharacterId) || bishopActive || batch4Active;
+    this.firewormActive = definition.id === 'fireworm_fireworks' || illustratedActive;
     this.firewormBoard = this.firewormActive && settings.presentation !== 'arena';
     this.layoutStage(this.scale.width, this.scale.height);
     this.drawOverlay();
 
-    if (definition.id === 'fireworm_fireworks' || knightActive) {
+    if (definition.id === 'fireworm_fireworks' || illustratedActive) {
       this.attackerContainer.setVisible(false);
       this.defenderContainer.setVisible(false);
       this.impactEffectContainer.setVisible(false);
@@ -173,7 +179,7 @@ export class AttackScene extends Phaser.Scene implements AttackPresenter {
         const layout = fitAttackArtwork(this.scale.width, this.scale.height);
         return { x:(p.x - layout.x) / layout.scale, y:(p.y - layout.y) / layout.scale };
       };
-      const presenter = bishopActive ? this.bishopPresenter : knightActive ? this.knightPresenter : this.firewormPresenter;
+      const presenter = batch4Active ? this.batch4Presenter : bishopActive ? this.bishopPresenter : illustratedActive ? this.knightPresenter : this.firewormPresenter;
       const start = () => presenter.playAttack(context, definition, { ...settings,
         origins: () => ({ attacker:point(context.moveFrom), defender:point(context.moveTo), destination:point(context.moveTo) }),
       }, onPhaseChange, () => {
@@ -184,14 +190,36 @@ export class AttackScene extends Phaser.Scene implements AttackPresenter {
       });
       const bishopDefender = context.defenderPieceType === 'b' && BISHOPS.some(id => id === context.defenderCharacterId)
         ? context.defenderCharacterId as BishopId : undefined;
-      if (bishopActive || bishopDefender) {
+      if (batch4Active) {
+        this.statusText.setText('Getting ready…');
+        this.attackerText.setText(CharacterRegistry.getInstance().getById(context.attackerCharacterId)?.displayName.toUpperCase() ?? 'ATTACKER');
+        this.defenderText.setText('');
+        let attackerReady = false;
+        let defenderReady = !bishopDefender;
+        let started = false;
+        const startWhenReady = () => {
+          if (!started && attackerReady && defenderReady) { started = true; start(); }
+        };
+        if (bishopDefender) {
+          this.cancelBishopLoad = loadBishop(this, null, () => {
+            this.cancelBishopLoad = null;
+            defenderReady = true;
+            startWhenReady();
+          }, bishopDefender);
+        }
+        this.cancelBatch4Load = loadBatch4(this, context.attackerCharacterId as Batch4Id, available => {
+          this.cancelBatch4Load = null;
+          if (!available) { this.skip(); return; }
+          attackerReady = true;
+          startWhenReady();
+        });
+      } else if (bishopActive || bishopDefender) {
         this.statusText.setText('Getting ready…');
         this.attackerText.setText(CharacterRegistry.getInstance().getById(context.attackerCharacterId)?.displayName.toUpperCase() ?? 'BISHOP');
         this.defenderText.setText('');
         this.cancelBishopLoad = loadBishop(this, bishopActive ? context.attackerCharacterId as BishopId : null, available => {
           this.cancelBishopLoad = null;
-          if (available) start();
-          else this.skip();
+          if (available) start(); else this.skip();
         }, bishopDefender);
       } else start();
       return;
@@ -382,6 +410,7 @@ export class AttackScene extends Phaser.Scene implements AttackPresenter {
     this.firewormPresenter?.cleanup();
     this.knightPresenter?.cleanup();
     this.bishopPresenter?.cleanup();
+    this.batch4Presenter?.cleanup();
     if (this.fireDragonPresenter) {
       this.fireDragonPresenter.cleanup();
     }
@@ -409,9 +438,12 @@ export class AttackScene extends Phaser.Scene implements AttackPresenter {
   private cleanUpAttackPresentation(): void {
     this.cancelBishopLoad?.();
     this.cancelBishopLoad = null;
+    this.cancelBatch4Load?.();
+    this.cancelBatch4Load = null;
     this.firewormPresenter?.cleanup();
     this.knightPresenter?.cleanup();
     this.bishopPresenter?.cleanup();
+    this.batch4Presenter?.cleanup();
     if (this.fireDragonPresenter) {
       this.fireDragonPresenter.cleanup();
     }
@@ -487,12 +519,12 @@ export class AttackScene extends Phaser.Scene implements AttackPresenter {
     this.statusText.setPosition(width / 2, this.firewormActive ? Math.max(statusFontSize, artwork.y + 28 * artwork.scale) : height * 0.22);
     this.statusText.setStroke('#080808', this.firewormActive ? 4 : 0);
     for (const [text, x] of [[this.attackerText, 0.25], [this.defenderText, 0.75]] as const) {
-      const fontSize = this.knightActive ? Math.max(10, Math.min(compact ? 12 : 18, 16 * artwork.scale)) : compact ? 12 : 18;
+      const fontSize = this.illustratedActive ? Math.max(10, Math.min(compact ? 12 : 18, 16 * artwork.scale)) : compact ? 12 : 18;
       text.setStyle({
         fontSize,
-        wordWrap: { width: Math.max(this.knightActive ? 330 * artwork.scale : width * 0.44, fontSize * 2), useAdvancedWrap: true },
+        wordWrap: { width: Math.max(this.illustratedActive ? 330 * artwork.scale : width * 0.44, fontSize * 2), useAdvancedWrap: true },
       });
-      const artX = this.knightActive && width > height ? (x === 0.25 ? 85 : 715) : (x === 0.25 ? 170 : 620);
+      const artX = this.illustratedActive && width > height ? (x === 0.25 ? 85 : 715) : (x === 0.25 ? 170 : 620);
       text.setPosition(this.firewormActive ? artwork.x + artX * artwork.scale : width * x,
         this.firewormActive ? Math.min(height * 0.78, artwork.y + 548 * artwork.scale) : height * 0.72);
     }

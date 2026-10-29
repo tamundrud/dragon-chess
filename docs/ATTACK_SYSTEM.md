@@ -23,7 +23,7 @@ Only one attack may run at a time.
 
 ## Current implementation
 
-`AttackScene` is registered with `AttackDirector`; it delegates Fireworm captures to `FirewormPresenter` and the four approved knight identities to `KnightPresenter`. The older procedural Fire Dragon remains as a technical presenter but is no longer assigned to starting knights. Other attack IDs use generic temporary graphics. Registry descriptions for axe smash, decisive arc, and shield bash are configuration intent, not separate implemented presenters. Audio calls use HTML Audio after user unlock, with missing-file/rejection tolerance; no sound files are shipped.
+`AttackScene` is registered with `AttackDirector`; it delegates Fireworm, knight, Bishop and Batch 4 identities to their illustrated presenters. The older procedural Fire Dragon remains as a technical presenter but is no longer assigned to starting knights. Unimplemented identities use generic temporary graphics. Registry descriptions for axe smash, decisive arc, and shield bash are configuration intent, not separate implemented presenters. Audio calls use HTML Audio after user unlock, with missing-file/rejection tolerance; no sound files are shipped.
 
 Leaving a game cancels its pending capture and presentation; it does not complete the move. Undo/Restart are disabled during attacks. Resizing updates labels and Skip in canvas coordinates and uniformly fits a shared 800 × 600 artwork space to the canvas. All presenters keep their existing timeline coordinates inside that space, including effects created after rotation; resize does not restart or complete the capture. See [the acceptance requirements](TEST_PLAN.md).
 
@@ -44,7 +44,7 @@ Implements the 11-beat storybook capture animation for `fire_stream_attack`:
 
 ## Fireworm illustrated prototype
 
-`fireworm_fireworks` routes through `AttackScene` to a separate `FirewormPresenter`; the procedural `FireDragonPresenter` remains for comparison. Fireworm is the starting a1 Hooligan rook. Hookfang is the h1 rook and retains generic temporary presentation. Other roster artwork is not rolled out.
+`fireworm_fireworks` routes through `AttackScene` to a separate `FirewormPresenter`; the procedural `FireDragonPresenter` remains for comparison. Fireworm is the starting a1 Hooligan rook. At that stage Hookfang was the h1 rook and retained generic temporary presentation; the later Batch 4 work adds its own scene.
 
 `ChessGameController` owns a per-game `PieceIdentity` metadata map, seeded on reset and updated only from successful chess.js commits, including captures, en passant, castling and promotion. Undo restores the corresponding metadata snapshot. The manager passes attacker/defender IDs to the director before the capture commits; an aborted presentation never updates identities. This metadata does not determine chess legality. Arbitrary FEN positions have no historical named-piece identity; they are deterministically seeded by compatible home-square/class defaults.
 
@@ -67,3 +67,7 @@ The [PR #14 impact follow-up](reviews/fireworm-facing-impact.md) derives illustr
 ## Four knight scenes
 
 Windwalker swoops, One Eye pounces, Driller-Dragon charges with its horn, and Poisonous Piffleworm blows a bubble. Shared staging, timing and cleanup preserve board/arena, resize, Skip and reduced-motion behavior. All four knight animations have owner visual approval (confirmed 2026-10-27); see the batch verification record.
+
+## Batch 4 candidate scenes
+
+Hookfang, Flamehuffer and Common or Garden Dragon have individual illustrated fire attacks; Stoick has a playful accidental axe attack. They use the same presentation-only lifecycle, board staging, reduced motion and cleanup contracts. Artwork is loaded on demand and can be cancelled. These animations await owner visual acceptance; see [Batch 4 verification](reviews/batch4-scenes.md).
