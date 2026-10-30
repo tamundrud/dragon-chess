@@ -70,3 +70,7 @@
 - The **current code** implements the Fireworm a1 rook with persistent named-piece identity, distinguishes Hookfang and the two black rooks, and assigns all four starting knights to Windwalker, One Eye, Driller-Dragon and Poisonous Piffleworm. Their illustrated capture animations have owner visual approval (confirmed 2026-10-27). The four starting Bishops are assigned to Hiccup, Toothless, Thuggory and Killer; their illustrated capture animations received owner visual approval on 2026-10-28, including Killer’s revised fire-breathing attack. Board tokens remain placeholders. **Approved roster does not mean implemented roster.**
 
 See [the visual reset plan](plans/2026-10-25-book-visual-reset.md) and [art direction](ART_DIRECTION.md).
+
+## Batch 4 candidate scenes
+
+Hookfang, Flamehuffer, Common or Garden Dragon and Stoick now have illustrated capture candidates. The owner approved the Stoick and Flamehuffer artwork studies, but these new animations require separate owner visual acceptance. See [Batch 4 verification](reviews/batch4-scenes.md).

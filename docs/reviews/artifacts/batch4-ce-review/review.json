@@ -1,0 +1,268 @@
+{
+  "status": "complete",
+  "verdict": "Ready with fixes",
+  "scope": {
+    "base": "8d3fc99472787630869597a86088c784d1c54b2d",
+    "branch": "dragon-chess-batch-4",
+    "head_sha": "8d3fc99472787630869597a86088c784d1c54b2d",
+    "pr_url": null,
+    "files_changed": 35
+  },
+  "intent": "Implement four illustrated character capture scenes while preserving chess lifecycle, foreground contact, cancellation, mobile and identity. Deliver recordings and a draft PR for owner visual acceptance.",
+  "intent_confidence": "explicit",
+  "reviewers": [
+    "correctness",
+    "project-standards",
+    "testing",
+    "maintainability",
+    "reliability",
+    "adversarial",
+    "julik-frontend-races"
+  ],
+  "findings": [
+    {
+      "#": 1,
+      "autofix_class": "gated_auto",
+      "confidence": 100,
+      "evidence": [
+        "src/game/animation/Batch4Presenter.ts:32 -- const appearance=context.defenderCharacterId==='viking_warrior'&&fallback.type==='p'&&fallback.color==='w'",
+        "src/game/animation/firewormDefender.ts: the fallback returns a label and no texture for fireworm.",
+        "src/game/animation/BishopPresenter.ts: matching Fireworm defenders use fireworm-ready.",
+        "src/game/animation/firewormDefender.ts:32 -- return { type, color, label:`${name} \u00b7 ${CLASS_NAMES[type]}\\nART PLACEHOLDER` };",
+        "src/game/animation/BishopPresenter.ts:38-39 -- const appearance = matchingDefender && context.defenderCharacterId === 'fireworm' ? { ...fallback, label:'FIREWORM \u00b7 ROOK', texture:'fireworm-ready', frame:undefined, facing:1 as const }",
+        "docs/FIREWORM_BENCHMARK.md, Quality standard: Face characters toward their opponent. Keep silhouettes and poses connected, expressive and legible at phone scale. AGENTS.md, Adding New Attack Presenters: preserve Fireworm's staging, continuity, polish and lifecycle standard.",
+        "src/game/animation/Batch4Presenter.ts:31 -- const fallback=resolveFirewormDefender(context,scene.textures?.exists(`bishop-${context.defenderCharacterId}-ready`)??false);",
+        "src/game/animation/Batch4Presenter.ts:32-33 -- the only override is for viking_warrior; otherwise appearance is fallback.",
+        "src/game/animation/firewormDefender.ts:30-32 -- unmatched Fireworm resolves to a class label with ART PLACEHOLDER and no texture.",
+        "src/game/animation/BishopPresenter.ts:39 -- the matching Fireworm case sets texture:'fireworm-ready'."
+      ],
+      "file": "src/game/animation/Batch4Presenter.ts",
+      "first_evidence": "src/game/animation/Batch4Presenter.ts:32 -- const appearance=context.defenderCharacterId==='viking_warrior'&&fallback.type==='p'&&fallback.color==='w'",
+      "independent_reviewers": [
+        "correctness",
+        "project-standards",
+        "adversarial"
+      ],
+      "line": 32,
+      "owner": "downstream-resolver",
+      "pre_existing": false,
+      "requires_verification": true,
+      "reviewers": [
+        "correctness",
+        "project-standards",
+        "adversarial"
+      ],
+      "severity": "P2",
+      "suggested_fix": "For defenderCharacterId fireworm with a matching white rook, use fireworm-ready with native facing 1, retaining the current pawn fallback and other defender paths; cover it with a capture or presenter test.",
+      "title": "Render Fireworm's existing artwork when defending",
+      "why_it_matters": "When Flamehuffer or Common or Garden Dragon captures Fireworm, the defender becomes a generic lettered rook placeholder even though Fireworm's illustrated texture is already preloaded. Other illustrated presenters explicitly preserve Fireworm as a defender, so the capture loses the named character's visual identity during the battle. Resolve the Fireworm identity to fireworm-ready for a matching white rook, as BishopPresenter does."
+    },
+    {
+      "#": 2,
+      "autofix_class": "gated_auto",
+      "confidence": 75,
+      "evidence": [
+        "e2e/batch4.spec.js:16 --  await page.clock.runFor(name==='stoick'?850:500);await expect(ui).toHaveAttribute('data-attack-state','impact');await expectCanvasSized(page);",
+        "src/tests/batch4_presenter.test.ts mocks tweens without onUpdate and asserts only lifecycle callbacks."
+      ],
+      "file": "e2e/batch4.spec.js",
+      "first_evidence": "e2e/batch4.spec.js:16 --  await page.clock.runFor(name==='stoick'?850:500);await expect(ui).toHaveAttribute('data-attack-state','impact');await expectCanvasSized(page);",
+      "independent_reviewers": [
+        "testing"
+      ],
+      "line": 16,
+      "owner": "downstream-resolver",
+      "pre_existing": false,
+      "requires_verification": true,
+      "reviewers": [
+        "testing"
+      ],
+      "severity": "P2",
+      "suggested_fix": "Add a presenter test that advances the return tween, changes the origin provider to a resized destination, and asserts the attacker reaches that new point; also verify Skip and cleanup cancel that update.",
+      "title": "Verify actor return after rotation instead of only canvas size",
+      "why_it_matters": "A capture can pass the rotation test even if the attacker returns to a stale destination or moves off the resized stage, because the test checks only the phase and canvas dimensions. The new presenter recalculates the destination during its return, but its unit tests mock tweens without executing their updates and never assert the return location. A destination-aware presenter test, as used for Bishop and Knight, would catch a regression in this required mobile behavior."
+    },
+    {
+      "#": 3,
+      "autofix_class": "gated_auto",
+      "confidence": 75,
+      "evidence": [
+        "src/game/animation/batch4Assets.ts:27 --     image.onerror=()=>{if(active)settle(false);};image.src=`/art/batch4/${name}.webp`;",
+        "e2e/batch4.spec.js:33-50 covers manual Skip and a delayed defender but not attacker image errors or timeout."
+      ],
+      "file": "src/game/animation/batch4Assets.ts",
+      "first_evidence": "src/game/animation/batch4Assets.ts:27 --     image.onerror=()=>{if(active)settle(false);};image.src=`/art/batch4/${name}.webp`;",
+      "independent_reviewers": [
+        "testing"
+      ],
+      "line": 27,
+      "owner": "downstream-resolver",
+      "pre_existing": false,
+      "requires_verification": true,
+      "reviewers": [
+        "testing"
+      ],
+      "severity": "P2",
+      "suggested_fix": "Add a Playwright case that aborts one required Batch 4 image while delaying the optional Bishop image, asserts one completion, then releases the delayed response and verifies no restarted presentation and a working Undo.",
+      "title": "Exercise failed required artwork while a defender request is pending",
+      "why_it_matters": "A failed required attacker image must complete the pending move exactly once and cancel the parallel optional Bishop load. The new tests cover successful loads and manual Skip while loads are held, but never drive the image error or timeout branch; a regression in that failure path could leave the board locked or let a late defender response restart the attack. Exercise an aborted required image while holding the optional Bishop image, then release the late response and assert completion, no restart, and Undo.",
+      "protected_subject": "concurrency"
+    }
+  ],
+  "actionable_findings": [
+    {
+      "#": 1,
+      "autofix_class": "gated_auto",
+      "confidence": 100,
+      "evidence": [
+        "src/game/animation/Batch4Presenter.ts:32 -- const appearance=context.defenderCharacterId==='viking_warrior'&&fallback.type==='p'&&fallback.color==='w'",
+        "src/game/animation/firewormDefender.ts: the fallback returns a label and no texture for fireworm.",
+        "src/game/animation/BishopPresenter.ts: matching Fireworm defenders use fireworm-ready.",
+        "src/game/animation/firewormDefender.ts:32 -- return { type, color, label:`${name} \u00b7 ${CLASS_NAMES[type]}\\nART PLACEHOLDER` };",
+        "src/game/animation/BishopPresenter.ts:38-39 -- const appearance = matchingDefender && context.defenderCharacterId === 'fireworm' ? { ...fallback, label:'FIREWORM \u00b7 ROOK', texture:'fireworm-ready', frame:undefined, facing:1 as const }",
+        "docs/FIREWORM_BENCHMARK.md, Quality standard: Face characters toward their opponent. Keep silhouettes and poses connected, expressive and legible at phone scale. AGENTS.md, Adding New Attack Presenters: preserve Fireworm's staging, continuity, polish and lifecycle standard.",
+        "src/game/animation/Batch4Presenter.ts:31 -- const fallback=resolveFirewormDefender(context,scene.textures?.exists(`bishop-${context.defenderCharacterId}-ready`)??false);",
+        "src/game/animation/Batch4Presenter.ts:32-33 -- the only override is for viking_warrior; otherwise appearance is fallback.",
+        "src/game/animation/firewormDefender.ts:30-32 -- unmatched Fireworm resolves to a class label with ART PLACEHOLDER and no texture.",
+        "src/game/animation/BishopPresenter.ts:39 -- the matching Fireworm case sets texture:'fireworm-ready'."
+      ],
+      "file": "src/game/animation/Batch4Presenter.ts",
+      "first_evidence": "src/game/animation/Batch4Presenter.ts:32 -- const appearance=context.defenderCharacterId==='viking_warrior'&&fallback.type==='p'&&fallback.color==='w'",
+      "independent_reviewers": [
+        "correctness",
+        "project-standards",
+        "adversarial"
+      ],
+      "line": 32,
+      "owner": "downstream-resolver",
+      "pre_existing": false,
+      "requires_verification": true,
+      "reviewers": [
+        "correctness",
+        "project-standards",
+        "adversarial"
+      ],
+      "severity": "P2",
+      "suggested_fix": "For defenderCharacterId fireworm with a matching white rook, use fireworm-ready with native facing 1, retaining the current pawn fallback and other defender paths; cover it with a capture or presenter test.",
+      "title": "Render Fireworm's existing artwork when defending",
+      "why_it_matters": "When Flamehuffer or Common or Garden Dragon captures Fireworm, the defender becomes a generic lettered rook placeholder even though Fireworm's illustrated texture is already preloaded. Other illustrated presenters explicitly preserve Fireworm as a defender, so the capture loses the named character's visual identity during the battle. Resolve the Fireworm identity to fireworm-ready for a matching white rook, as BishopPresenter does."
+    },
+    {
+      "#": 2,
+      "autofix_class": "gated_auto",
+      "confidence": 75,
+      "evidence": [
+        "e2e/batch4.spec.js:16 --  await page.clock.runFor(name==='stoick'?850:500);await expect(ui).toHaveAttribute('data-attack-state','impact');await expectCanvasSized(page);",
+        "src/tests/batch4_presenter.test.ts mocks tweens without onUpdate and asserts only lifecycle callbacks."
+      ],
+      "file": "e2e/batch4.spec.js",
+      "first_evidence": "e2e/batch4.spec.js:16 --  await page.clock.runFor(name==='stoick'?850:500);await expect(ui).toHaveAttribute('data-attack-state','impact');await expectCanvasSized(page);",
+      "independent_reviewers": [
+        "testing"
+      ],
+      "line": 16,
+      "owner": "downstream-resolver",
+      "pre_existing": false,
+      "requires_verification": true,
+      "reviewers": [
+        "testing"
+      ],
+      "severity": "P2",
+      "suggested_fix": "Add a presenter test that advances the return tween, changes the origin provider to a resized destination, and asserts the attacker reaches that new point; also verify Skip and cleanup cancel that update.",
+      "title": "Verify actor return after rotation instead of only canvas size",
+      "why_it_matters": "A capture can pass the rotation test even if the attacker returns to a stale destination or moves off the resized stage, because the test checks only the phase and canvas dimensions. The new presenter recalculates the destination during its return, but its unit tests mock tweens without executing their updates and never assert the return location. A destination-aware presenter test, as used for Bishop and Knight, would catch a regression in this required mobile behavior."
+    },
+    {
+      "#": 3,
+      "autofix_class": "gated_auto",
+      "confidence": 75,
+      "evidence": [
+        "src/game/animation/batch4Assets.ts:27 --     image.onerror=()=>{if(active)settle(false);};image.src=`/art/batch4/${name}.webp`;",
+        "e2e/batch4.spec.js:33-50 covers manual Skip and a delayed defender but not attacker image errors or timeout."
+      ],
+      "file": "src/game/animation/batch4Assets.ts",
+      "first_evidence": "src/game/animation/batch4Assets.ts:27 --     image.onerror=()=>{if(active)settle(false);};image.src=`/art/batch4/${name}.webp`;",
+      "independent_reviewers": [
+        "testing"
+      ],
+      "line": 27,
+      "owner": "downstream-resolver",
+      "pre_existing": false,
+      "requires_verification": true,
+      "reviewers": [
+        "testing"
+      ],
+      "severity": "P2",
+      "suggested_fix": "Add a Playwright case that aborts one required Batch 4 image while delaying the optional Bishop image, asserts one completion, then releases the delayed response and verifies no restarted presentation and a working Undo.",
+      "title": "Exercise failed required artwork while a defender request is pending",
+      "why_it_matters": "A failed required attacker image must complete the pending move exactly once and cancel the parallel optional Bishop load. The new tests cover successful loads and manual Skip while loads are held, but never drive the image error or timeout branch; a regression in that failure path could leave the board locked or let a late defender response restart the attack. Exercise an aborted required image while holding the optional Bishop image, then release the late response and assert completion, no restart, and Undo.",
+      "protected_subject": "concurrency"
+    }
+  ],
+  "triage_groups": [
+    {
+      "title": "Verify lifecycle boundaries",
+      "findings": [
+        2,
+        3
+      ],
+      "context": "The new scene return and required artwork failure paths need targeted coverage.",
+      "preferred_resolution": "Add focused tests for resize-return and failed attacker loading.",
+      "why": "Both guard behavior that phase-only and manual-skip tests do not exercise."
+    }
+  ],
+  "pre_existing_findings": [],
+  "requirements_completeness": {
+    "R1": "Illustrated choreography is present; motion quality remains subject to owner review.",
+    "R2": "Present, with Fireworm defender issue and resize/asset failure coverage gaps in findings 1-3.",
+    "R3": "Tests and recording script are in scope; video files were untracked and excluded.",
+    "R4": "Review completed; draft PR and final device/performance handoff are intentionally pending.",
+    "unrequested_behavior_rules": []
+  },
+  "learnings": [],
+  "agent_native_gaps": [],
+  "deployment_notes": [],
+  "residual_risks": [
+    "Clock-stepped Chromium recordings cannot establish physical-device frame rate, decode latency, memory use, or owner acceptance of motion."
+  ],
+  "testing_gaps": [
+    "The 15-second Batch 4 artwork timeout is not directly exercised; the error and resized return paths are tracked as primary findings."
+  ],
+  "coverage": {
+    "peer": "Cross-model pass not run: no different-provider CLI was installed; a separate local adversarial reviewer covered that lens.",
+    "first_evidence_backfilled": 0,
+    "suppressed_by_confidence": {},
+    "mode_aware_demotions": 0,
+    "semantic_merges": 2,
+    "malformed_findings": 0,
+    "malformed_returns": 0,
+    "notes": [
+      "Untracked WIP and recordings were excluded from the reviewed diff.",
+      "Reviewer prompts referenced the mandatory local rubric files for reviewers to read rather than embedding their contents inline."
+    ],
+    "depth": "full",
+    "validator": {
+      "outcome": "verdicts",
+      "confirmed": 3,
+      "rejected": 0,
+      "unresolved": 0,
+      "malformed": 0,
+      "failed": 0,
+      "shortcut_skipped": 0,
+      "protected_reclassification": 0
+    },
+    "failed_reviewers": [],
+    "standards": "AGENTS.md applied as project instruction fallback; untracked WIP and recordings excluded.",
+    "compound_packs": {
+      "roots": [],
+      "warnings": [],
+      "errors": []
+    }
+  },
+  "peer": {
+    "outcome": "in-process-fallback",
+    "coverage": "Cross-model pass not run: no different-provider CLI was installed; a separate local adversarial reviewer covered that lens."
+  },
+  "artifact_path": "/tmp/compound-engineering-1000/ce-code-review/batch4-1793284190",
+  "run_id": "batch4-1793284190"
+}

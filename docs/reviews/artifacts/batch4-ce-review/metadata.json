@@ -1,0 +1,73 @@
+{
+  "branch": "dragon-chess-batch-4",
+  "completed_at": "2026-10-29T18:27:11.540313+00:00",
+  "cost": {
+    "host": "codex",
+    "scope": {
+      "changed_lines": 403,
+      "depth": "full",
+      "exec_nontest_lines": 237,
+      "size_band": "large",
+      "unclassified_lines": 76
+    },
+    "stages": [
+      {
+        "elapsed_seconds": 0.081,
+        "ended_at": "2026-10-29T14:29:50.576678+00:00",
+        "facts": {
+          "changed_lines": 403,
+          "depth": "full",
+          "exec_nontest_lines": 237,
+          "size_band": "large",
+          "unclassified_lines": 76
+        },
+        "stage": "scope",
+        "started_at": "2026-10-29T14:29:50.496074+00:00"
+      },
+      {
+        "elapsed_seconds": 39.715,
+        "ended_at": "2026-10-29T14:30:30.292156+00:00",
+        "reviewers": 7,
+        "stage": "select",
+        "started_at": "2026-10-29T14:29:50.576678+00:00"
+      },
+      {
+        "candidates": 5,
+        "elapsed_seconds": 239.532,
+        "ended_at": "2026-10-29T14:34:29.823894+00:00",
+        "stage": "dispatch",
+        "started_at": "2026-10-29T14:30:30.292156+00:00"
+      },
+      {
+        "candidates": 3,
+        "elapsed_seconds": 86.275,
+        "ended_at": "2026-10-29T14:37:06.472065+00:00",
+        "stage": "merge",
+        "started_at": "2026-10-29T14:35:40.196814+00:00"
+      },
+      {
+        "elapsed_seconds": 13670.775,
+        "ended_at": "2026-10-29T18:25:36.514109+00:00",
+        "stage": "validate",
+        "started_at": "2026-10-29T14:37:45.739007+00:00"
+      },
+      {
+        "elapsed_seconds": 45.422,
+        "ended_at": "2026-10-29T18:27:11.571315+00:00",
+        "stage": "report",
+        "started_at": "2026-10-29T18:26:26.149089+00:00"
+      }
+    ],
+    "status": "complete",
+    "totals": {
+      "artifact_bytes": 186134,
+      "candidates": 5,
+      "elapsed_seconds": 14081.8,
+      "reviewers": 7
+    },
+    "truncated_events": 0
+  },
+  "head_sha": "8d3fc99472787630869597a86088c784d1c54b2d",
+  "run_id": "batch4-1793284190",
+  "verdict": "Ready with fixes"
+}
