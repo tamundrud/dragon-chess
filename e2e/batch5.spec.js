@@ -30,14 +30,18 @@ test('Valhallarama captures the illustrated Librarian', async ({page},info) => {
  if (info.project.name === 'chromium') {
    // WebGL may expose a cleared buffer between frames; capture immediately after
    // advancing the game until a rendered frame is available.
+   const canvas = await page.locator('#phaser-container canvas').boundingBox();
+   if (!canvas) throw new Error('Game canvas has no bounds');
+   const clip = { x:canvas.x + canvas.width * 0.34, y:canvas.y + canvas.height * 0.43,
+     width:canvas.width * 0.38, height:canvas.height * 0.45 };
    let frame;
    for (let attempt=0; attempt<12; attempt++) {
      await page.clock.runFor(16);
-     frame=await page.screenshot();
-     if (frame.length > 60_000) break;
+     frame=await page.screenshot({clip});
+     if (frame.length > 10_000) break;
    }
-   expect(frame.length).toBeGreaterThan(60_000);
-   expect(frame).toMatchSnapshot('librarian-defender-page.png',{maxDiffPixelRatio:0.03});
+   expect(frame.length).toBeGreaterThan(10_000);
+   expect(frame).toMatchSnapshot('librarian-defender-crop.png',{maxDiffPixelRatio:0.03});
  }
  await page.clock.runFor(4000); await expectTurn(page,'black');
 });

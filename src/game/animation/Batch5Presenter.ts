@@ -72,8 +72,8 @@ export class Batch5Presenter implements AttackPresenter {
       at(1550,()=>{pose(4);tween({targets:actor,angle:0,duration:120});});
     }
     if (id === 'valhallarama') {
-      at(1450,()=>{pose(2);targetArt?.setFlipX(defenderFlipX(appearance.facing!, 550, targetX));root.bringToTop(actor);root.bringToTop(effects);tween({targets:actor,y:375,duration:170});});
-      at(1620,()=>tween({targets:actor,y:405,duration:100}));
+      at(1450,()=>{pose(2);targetArt?.setFlipX(defenderFlipX(appearance.facing!, 550, targetX));root.bringToTop(actor);root.bringToTop(effects);tween({targets:actor,y:345,duration:170});});
+      at(1620,()=>tween({targets:actor,y:375,duration:100}));
     }
     at(1700,()=>{ say('impact', id === 'mogadon' ? 'Shield bump!' : id === 'valhallarama' ? 'A cheeky tap!' : 'A dazzling flourish!');
       const star=scene.add.star(id === 'valhallarama' ? targetX : targetX-35,id === 'valhallarama' ? 320 : 390,5,4,12,0xffdf7c,0.95); effects.add(star);
