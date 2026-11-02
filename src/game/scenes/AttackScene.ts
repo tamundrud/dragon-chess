@@ -7,6 +7,8 @@ import { BoardScene } from './BoardScene';
 import { KnightPresenter } from '../animation/KnightPresenter';
 import { BishopPresenter } from '../animation/BishopPresenter';
 import { Batch4Presenter } from '../animation/Batch4Presenter';
+import { Batch5Presenter } from '../animation/Batch5Presenter';
+import { BATCH5, loadBatch5, type Batch5Id } from '../animation/batch5Assets';
 import { BATCH4, loadBatch4, type Batch4Id } from '../animation/batch4Assets';
 import { BISHOPS, loadBishop, type BishopId } from '../animation/bishopAssets';
 import { KNIGHTS, preloadKnights, frameKnights } from '../animation/knightAssets';
@@ -31,6 +33,9 @@ export class AttackScene extends Phaser.Scene implements AttackPresenter {
   private knightPresenter!: KnightPresenter;
   private bishopPresenter!: BishopPresenter;
   private batch4Presenter!: Batch4Presenter;
+  private batch5Presenter!: Batch5Presenter;
+  private cancelBatch5Load: (() => void) | null = null;
+  private cancelBatch5DefenderLoad: (() => void) | null = null;
   private cancelBatch4Load: (() => void) | null = null;
   private cancelBishopLoad: (() => void) | null = null;
   private fireDragonPresenter!: FireDragonPresenter;
@@ -139,6 +144,7 @@ export class AttackScene extends Phaser.Scene implements AttackPresenter {
     this.layoutStage(width, height);
 
     this.batch4Presenter = new Batch4Presenter(this, this.artworkContainer, this.statusText, this.attackerText, this.defenderText);
+    this.batch5Presenter = new Batch5Presenter(this, this.artworkContainer, this.statusText, this.attackerText, this.defenderText);
     this.bishopPresenter = new BishopPresenter(this, this.artworkContainer, this.statusText, this.attackerText, this.defenderText);
     this.knightPresenter = new KnightPresenter(this, this.artworkContainer, this.statusText, this.attackerText, this.defenderText);
     this.firewormPresenter = new FirewormPresenter(this, this.artworkContainer, this.statusText, this.attackerText, this.defenderText);
@@ -163,7 +169,8 @@ export class AttackScene extends Phaser.Scene implements AttackPresenter {
     this.stageContainer.setVisible(true);
     const bishopActive = BISHOPS.some(id => id === context.attackerCharacterId);
     const batch4Active = BATCH4.some(id => id === context.attackerCharacterId);
-    const illustratedActive = this.illustratedActive = KNIGHTS.some(id => id === context.attackerCharacterId) || bishopActive || batch4Active;
+    const batch5Active = BATCH5.some(id => id === context.attackerCharacterId);
+    const illustratedActive = this.illustratedActive = KNIGHTS.some(id => id === context.attackerCharacterId) || bishopActive || batch4Active || batch5Active;
     this.firewormActive = definition.id === 'fireworm_fireworks' || illustratedActive;
     this.firewormBoard = this.firewormActive && settings.presentation !== 'arena';
     this.layoutStage(this.scale.width, this.scale.height);
@@ -179,7 +186,7 @@ export class AttackScene extends Phaser.Scene implements AttackPresenter {
         const layout = fitAttackArtwork(this.scale.width, this.scale.height);
         return { x:(p.x - layout.x) / layout.scale, y:(p.y - layout.y) / layout.scale };
       };
-      const presenter = batch4Active ? this.batch4Presenter : bishopActive ? this.bishopPresenter : illustratedActive ? this.knightPresenter : this.firewormPresenter;
+      const presenter = batch5Active ? this.batch5Presenter : batch4Active ? this.batch4Presenter : bishopActive ? this.bishopPresenter : illustratedActive ? this.knightPresenter : this.firewormPresenter;
       const start = () => presenter.playAttack(context, definition, { ...settings,
         origins: () => ({ attacker:point(context.moveFrom), defender:point(context.moveTo), destination:point(context.moveTo) }),
       }, onPhaseChange, () => {
@@ -190,37 +197,47 @@ export class AttackScene extends Phaser.Scene implements AttackPresenter {
       });
       const bishopDefender = context.defenderPieceType === 'b' && BISHOPS.some(id => id === context.defenderCharacterId)
         ? context.defenderCharacterId as BishopId : undefined;
-      if (batch4Active) {
+      const defenderCharacter = CharacterRegistry.getInstance().getById(context.defenderCharacterId);
+      const batch5Defender = BATCH5.some(id => id === context.defenderCharacterId)
+        && defenderCharacter?.pieceType === context.defenderPieceType
+        && defenderCharacter.faction === (context.defenderColor === 'w' ? 'light' : 'dark')
+        ? context.defenderCharacterId as Batch5Id : undefined;
+      if (batch4Active || batch5Active || bishopActive || bishopDefender || batch5Defender) {
         this.statusText.setText('Getting ready…');
         this.attackerText.setText(CharacterRegistry.getInstance().getById(context.attackerCharacterId)?.displayName.toUpperCase() ?? 'ATTACKER');
         this.defenderText.setText('');
-        let attackerReady = false;
-        let defenderReady = !bishopDefender;
+        let attackerReady = !(batch4Active || batch5Active || bishopActive);
+        let bishopReady = !(bishopActive || bishopDefender);
+        let batch5DefenderReady = !batch5Defender;
         let started = false;
         const startWhenReady = () => {
-          if (!started && attackerReady && defenderReady) { started = true; start(); }
+          if (!started && attackerReady && bishopReady && batch5DefenderReady) { started = true; start(); }
         };
-        if (bishopDefender) {
-          this.cancelBishopLoad = loadBishop(this, null, () => {
+        if (bishopActive || bishopDefender) {
+          this.cancelBishopLoad = loadBishop(this, bishopActive ? context.attackerCharacterId as BishopId : null, available => {
             this.cancelBishopLoad = null;
-            defenderReady = true;
+            if (bishopActive && !available) { this.skip(); return; }
+            bishopReady = true;
+            if (bishopActive) attackerReady = true;
             startWhenReady();
           }, bishopDefender);
         }
-        this.cancelBatch4Load = loadBatch4(this, context.attackerCharacterId as Batch4Id, available => {
-          this.cancelBatch4Load = null;
+        if (batch5Defender) {
+          this.cancelBatch5DefenderLoad = loadBatch5(this, batch5Defender, () => {
+            this.cancelBatch5DefenderLoad = null;
+            batch5DefenderReady = true;
+            startWhenReady();
+          }, true);
+        }
+        const loaded = (available: boolean) => {
+          this.cancelBatch4Load = null; this.cancelBatch5Load = null;
           if (!available) { this.skip(); return; }
           attackerReady = true;
           startWhenReady();
-        });
-      } else if (bishopActive || bishopDefender) {
-        this.statusText.setText('Getting ready…');
-        this.attackerText.setText(CharacterRegistry.getInstance().getById(context.attackerCharacterId)?.displayName.toUpperCase() ?? 'BISHOP');
-        this.defenderText.setText('');
-        this.cancelBishopLoad = loadBishop(this, bishopActive ? context.attackerCharacterId as BishopId : null, available => {
-          this.cancelBishopLoad = null;
-          if (available) start(); else this.skip();
-        }, bishopDefender);
+        };
+        if (batch5Active) this.cancelBatch5Load = loadBatch5(this, context.attackerCharacterId as Batch5Id, loaded);
+        else if (batch4Active) this.cancelBatch4Load = loadBatch4(this, context.attackerCharacterId as Batch4Id, loaded);
+        else startWhenReady();
       } else start();
       return;
     }
@@ -411,6 +428,7 @@ export class AttackScene extends Phaser.Scene implements AttackPresenter {
     this.knightPresenter?.cleanup();
     this.bishopPresenter?.cleanup();
     this.batch4Presenter?.cleanup();
+    this.batch5Presenter?.cleanup();
     if (this.fireDragonPresenter) {
       this.fireDragonPresenter.cleanup();
     }
@@ -440,10 +458,15 @@ export class AttackScene extends Phaser.Scene implements AttackPresenter {
     this.cancelBishopLoad = null;
     this.cancelBatch4Load?.();
     this.cancelBatch4Load = null;
+    this.cancelBatch5Load?.();
+    this.cancelBatch5Load = null;
+    this.cancelBatch5DefenderLoad?.();
+    this.cancelBatch5DefenderLoad = null;
     this.firewormPresenter?.cleanup();
     this.knightPresenter?.cleanup();
     this.bishopPresenter?.cleanup();
     this.batch4Presenter?.cleanup();
+    this.batch5Presenter?.cleanup();
     if (this.fireDragonPresenter) {
       this.fireDragonPresenter.cleanup();
     }

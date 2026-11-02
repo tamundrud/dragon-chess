@@ -22,6 +22,8 @@ export class CharacterRegistry {
     ['w_n', 'windwalker'],
     ['w_k', 'stoick'],
     ['w_q', 'valhallarama'],
+    ['b_k', 'mogadon'],
+    ['b_q', 'hairy_scary_librarian'],
     ['w_p', 'viking_warrior'],
     ['w_r', 'fireworm'],
     ['w_b', 'hiccup'],
@@ -142,6 +144,14 @@ export class CharacterRegistry {
     });
 
     // Dark Faction (Rival Clan)
+    for (const [id, displayName, pieceType] of [
+      ['mogadon', 'Mogadon the Meathead', 'k'],
+      ['hairy_scary_librarian', 'Hairy Scary Librarian', 'q'],
+    ] as const) {
+      this.register({ id, displayName, faction: 'dark', pieceType,
+        boardTokenAsset: `token_${id}_temp`, attackStageAsset: `stage_${id}_temp`,
+        defaultAttackId: 'rival_strike', artStatus: 'temporary', personalityTags: [] });
+    }
     this.register({
       id: 'rival_generic',
       displayName: 'Rival Raider',

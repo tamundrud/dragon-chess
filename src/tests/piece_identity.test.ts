@@ -103,3 +103,24 @@ describe('approved bishop identities', () => {
     game.undo(); expect(game.getCharacterId(from)).not.toBe(id);
   });
 });
+
+describe('approved major character identities', () => {
+  it('assigns the kings and queens and preserves them through legal moves and undo', () => {
+    const game = new ChessGameController();
+    expect(['e1','d1','e8','d8'].map(square => game.getCharacterId(square)))
+      .toEqual(['stoick','valhallarama','mogadon','hairy_scary_librarian']);
+    for (const [from,to] of [['e2','e4'],['e7','e5'],['d1','h5'],['d8','h4']]) {
+      expect(game.commitMove({from,to})).not.toBeNull();
+    }
+    expect(game.getCharacterId('h5')).toBe('valhallarama');
+    expect(game.getCharacterId('h4')).toBe('hairy_scary_librarian');
+    game.undo(); expect(game.getCharacterId('d8')).toBe('hairy_scary_librarian');
+  });
+  it.each([['4k3/P7/8/8/8/8/8/4K3 w - - 0 1','a7','a8','valhallarama'],
+    ['4k3/8/8/8/8/8/p7/4K3 b - - 0 1','a2','a1','hairy_scary_librarian']])('promotes to the faction queen identity', (fen,from,to,id) => {
+    const game = new ChessGameController(fen);
+    expect(game.commitMove({from,to,promotion:'q'})).not.toBeNull();
+    expect(game.getCharacterId(to)).toBe(id);
+    game.undo(); expect(game.getCharacterId(from)).not.toBe(id);
+  });
+});

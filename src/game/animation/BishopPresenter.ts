@@ -30,7 +30,7 @@ export class BishopPresenter implements AttackPresenter {
     const poses = poseNames.map((pose, i) => scene.add.image(0, 0, `bishop-${id}-${pose}`)
       .setDisplaySize(width, width * ratio).setOrigin(0.5, 0.94).setAlpha(i === 0 ? 1 : 0));
     dragon.add(poses);
-    const fallback = resolveFirewormDefender(context, scene.textures?.exists(`bishop-${context.defenderCharacterId}-ready`) ?? false);
+    const fallback = resolveFirewormDefender(context, scene.textures?.exists(`bishop-${context.defenderCharacterId}-ready`) ?? false, scene.textures?.exists(`batch5-${context.defenderCharacterId}-ready`) ?? false);
     const defenderCharacter = CharacterRegistry.getInstance().getById(context.defenderCharacterId);
     const matchingDefender = defenderCharacter?.pieceType === fallback.type &&
       defenderCharacter.faction === (fallback.color === 'w' ? 'light' : 'dark');
@@ -43,7 +43,7 @@ export class BishopPresenter implements AttackPresenter {
     const target = scene.add.container(targetX, 490);
     const targetSize = appearance.type === 'r' || (appearance.type === 'n' && knightDefender) ? 275 : 215;
     if (appearance.texture) target.add(scene.add.image(0, 0, appearance.texture, appearance.frame)
-      .setDisplaySize(targetSize, appearance.type === 'b' && BISHOPS.some(id => id === context.defenderCharacterId)
+      .setDisplaySize(targetSize / (appearance.heightRatio ?? 1), appearance.type === 'b' && BISHOPS.some(id => id === context.defenderCharacterId)
         ? targetSize * bishopHeightRatio(context.defenderCharacterId as BishopId) : targetSize).setOrigin(0.5, 0.94).setFlipX(defenderFlipX(appearance.facing!, 245, 650)));
     else {
       target.add(scene.add.ellipse(0, -90, 140, 165, appearance.color === 'b' ? 0x345c75 : 0xc39647, 0.95));

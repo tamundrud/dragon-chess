@@ -1,0 +1,250 @@
+{
+  "status": "complete",
+  "verdict": "Ready with fixes",
+  "scope": {
+    "base": "c642265081610a94af699f672a0e28810d82d14f",
+    "branch": "codex/batch-5-major-characters",
+    "head_sha": "c642265081610a94af699f672a0e28810d82d14f",
+    "pr_url": null,
+    "files_changed": 35
+  },
+  "intent": "Add original expressive capture presentations for Mogadon, Valhallarama and the Hairy Scary Librarian, a thin older male Viking wielding two swords. Preserve prior animations, chess authority, lifecycle and responsive playback.",
+  "intent_confidence": "explicit",
+  "reviewers": [
+    "correctness",
+    "project-standards",
+    "testing",
+    "maintainability",
+    "reliability",
+    "julik-frontend-races",
+    "adversarial"
+  ],
+  "findings": [
+    {
+      "#": 1,
+      "autofix_class": "gated_auto",
+      "confidence": 100,
+      "evidence": [
+        "e2e/batch5.spec.js:27 --  await expect.poll(()=>loaded.length,{timeout:30000}).toBe(1);",
+        "e2e/batch5.spec.js:28-29 asserts only lifecycle and turn after that request."
+      ],
+      "file": "e2e/batch5.spec.js",
+      "first_evidence": "e2e/batch5.spec.js:27 --  await expect.poll(()=>loaded.length,{timeout:30000}).toBe(1);",
+      "independent_reviewers": [
+        "testing"
+      ],
+      "line": 27,
+      "owner": "downstream-resolver",
+      "pre_existing": false,
+      "requires_verification": true,
+      "reviewers": [
+        "testing"
+      ],
+      "severity": "P2",
+      "suggested_fix": "In the legal queen capture, assert the live Phaser defender image uses the Librarian ready texture, or add an equivalent observable visual assertion that fails if the generic disc is displayed.",
+      "title": "Assert the Librarian is rendered as defender",
+      "why_it_matters": "The queen-versus-queen case passes when the Librarian's file is downloaded but the scene still renders a generic queen disc. Its only rendering-related assertion counts a completed request; the separate resolver unit test supplies availability directly and does not prove that the live scene uses the returned texture. This leaves the actual character-recognition regression undetected.",
+      "validation_status": "confirmed",
+      "validation_reason": "The captured new queen-versus-queen test asserts only the Librarian image request, attack state, and next turn, so it would not fail if that legal capture rendered a generic disc despite downloading the image."
+    },
+    {
+      "#": 2,
+      "autofix_class": "gated_auto",
+      "confidence": 75,
+      "evidence": [
+        "e2e/batch5.spec.js:12 --  await expect.poll(()=>loaded.length,{timeout:30000}).toBe(count);await page.clock.runFor(64);",
+        "e2e/batch5.spec.js:19 --  await expect(ui).toHaveAttribute('data-attack-state','preparing');await page.keyboard.press('Escape');await page.clock.runFor(5000);",
+        "src/game/scenes/AttackScene.ts:225-239 coordinates independent optional defender and required attacker requests."
+      ],
+      "file": "e2e/batch5.spec.js",
+      "first_evidence": "e2e/batch5.spec.js:12 --  await expect.poll(()=>loaded.length,{timeout:30000}).toBe(count);await page.clock.runFor(64);",
+      "independent_reviewers": [
+        "testing"
+      ],
+      "line": 12,
+      "owner": "downstream-resolver",
+      "pre_existing": false,
+      "requires_verification": true,
+      "reviewers": [
+        "testing"
+      ],
+      "severity": "P2",
+      "suggested_fix": "Add a focused browser case that holds Batch 5 image requests, skips or aborts before they complete, releases them and verifies one commit or zero on abort and no late restart; also exercise required artwork failure while optional defender loading is pending.",
+      "title": "Exercise Skip and abort during Batch 5 loading",
+      "why_it_matters": "A player can skip or leave while the new attacker or defender artwork is still downloading, but this test waits for every pose before it exercises Skip. The separate Batch 5 loader and its coordination with the optional defender loader are not exercised by the existing Batch 4 or Bishop loading tests, so a late callback could restart a cancelled scene or leave the move locked without this suite catching it.",
+      "validation_status": "confirmed",
+      "validation_reason": "The captured Batch 5 test waits for every artwork request before Skip and has no held-request abort or failure case; those orderings are reachable during the new asynchronous loader and the claimed coverage gap is present, though defect incidence was not measured.",
+      "protected_subject": "concurrency"
+    },
+    {
+      "#": 3,
+      "autofix_class": "gated_auto",
+      "confidence": 75,
+      "evidence": [
+        "src/game/animation/Batch5Presenter.ts:41 -- .setOrigin(0.5, 0.94).setFlipX(defenderFlipX(appearance.facing!, 245, targetX)));",
+        "src/game/animation/Batch5Presenter.ts:37 -- const targetX = id === 'valhallarama' ? 420 : 600, target = scene.add.container(targetX, 490), size = appearance.type === 'r' ? 275 : 215;",
+        "src/game/animation/Batch5Presenter.ts:67 -- pose(1); tween({targets:actor,x: id === 'valhallarama' ? 550 : 360,y:id === 'valhallarama' ? 220 : 350,duration:700,ease:'Cubic.easeInOut'}); });",
+        "AGENTS.md:68 requires preserving the Fireworm benchmark; docs/FIREWORM_BENCHMARK.md:8 says 'Face characters toward their opponent.'"
+      ],
+      "file": "src/game/animation/Batch5Presenter.ts",
+      "first_evidence": "src/game/animation/Batch5Presenter.ts:41 -- .setOrigin(0.5, 0.94).setFlipX(defenderFlipX(appearance.facing!, 245, targetX)));",
+      "independent_reviewers": [
+        "project-standards"
+      ],
+      "line": 41,
+      "owner": "downstream-resolver",
+      "pre_existing": false,
+      "requires_verification": true,
+      "reviewers": [
+        "project-standards"
+      ],
+      "severity": "P2",
+      "suggested_fix": "Keep a reference to the illustrated defender image and update its flip when Valhallarama passes to the right, with a readable turn before impact; verify both factions and viewport orientations.",
+      "title": "Turn the defender after Valhallarama vaults behind it",
+      "why_it_matters": "During Valhallarama's capture, the illustrated defender continues facing left after she moves to its right, so it faces away during the tap and reaction. The required Fireworm benchmark says characters face their opponent; updating the defender's facing at the vault resolves that mismatch without affecting chess state.",
+      "validation_status": "confirmed",
+      "validation_reason": "In the captured presenter the defender's image is flipped once using attacker x=245, while Valhallarama travels from x=245 past the defender at x=420 to x=550 with no subsequent defender flip; this legal attack violates the benchmark's facing requirement."
+    }
+  ],
+  "actionable_findings": [
+    {
+      "#": 1,
+      "autofix_class": "gated_auto",
+      "confidence": 100,
+      "evidence": [
+        "e2e/batch5.spec.js:27 --  await expect.poll(()=>loaded.length,{timeout:30000}).toBe(1);",
+        "e2e/batch5.spec.js:28-29 asserts only lifecycle and turn after that request."
+      ],
+      "file": "e2e/batch5.spec.js",
+      "first_evidence": "e2e/batch5.spec.js:27 --  await expect.poll(()=>loaded.length,{timeout:30000}).toBe(1);",
+      "independent_reviewers": [
+        "testing"
+      ],
+      "line": 27,
+      "owner": "downstream-resolver",
+      "pre_existing": false,
+      "requires_verification": true,
+      "reviewers": [
+        "testing"
+      ],
+      "severity": "P2",
+      "suggested_fix": "In the legal queen capture, assert the live Phaser defender image uses the Librarian ready texture, or add an equivalent observable visual assertion that fails if the generic disc is displayed.",
+      "title": "Assert the Librarian is rendered as defender",
+      "why_it_matters": "The queen-versus-queen case passes when the Librarian's file is downloaded but the scene still renders a generic queen disc. Its only rendering-related assertion counts a completed request; the separate resolver unit test supplies availability directly and does not prove that the live scene uses the returned texture. This leaves the actual character-recognition regression undetected.",
+      "validation_status": "confirmed",
+      "validation_reason": "The captured new queen-versus-queen test asserts only the Librarian image request, attack state, and next turn, so it would not fail if that legal capture rendered a generic disc despite downloading the image."
+    },
+    {
+      "#": 2,
+      "autofix_class": "gated_auto",
+      "confidence": 75,
+      "evidence": [
+        "e2e/batch5.spec.js:12 --  await expect.poll(()=>loaded.length,{timeout:30000}).toBe(count);await page.clock.runFor(64);",
+        "e2e/batch5.spec.js:19 --  await expect(ui).toHaveAttribute('data-attack-state','preparing');await page.keyboard.press('Escape');await page.clock.runFor(5000);",
+        "src/game/scenes/AttackScene.ts:225-239 coordinates independent optional defender and required attacker requests."
+      ],
+      "file": "e2e/batch5.spec.js",
+      "first_evidence": "e2e/batch5.spec.js:12 --  await expect.poll(()=>loaded.length,{timeout:30000}).toBe(count);await page.clock.runFor(64);",
+      "independent_reviewers": [
+        "testing"
+      ],
+      "line": 12,
+      "owner": "downstream-resolver",
+      "pre_existing": false,
+      "requires_verification": true,
+      "reviewers": [
+        "testing"
+      ],
+      "severity": "P2",
+      "suggested_fix": "Add a focused browser case that holds Batch 5 image requests, skips or aborts before they complete, releases them and verifies one commit or zero on abort and no late restart; also exercise required artwork failure while optional defender loading is pending.",
+      "title": "Exercise Skip and abort during Batch 5 loading",
+      "why_it_matters": "A player can skip or leave while the new attacker or defender artwork is still downloading, but this test waits for every pose before it exercises Skip. The separate Batch 5 loader and its coordination with the optional defender loader are not exercised by the existing Batch 4 or Bishop loading tests, so a late callback could restart a cancelled scene or leave the move locked without this suite catching it.",
+      "validation_status": "confirmed",
+      "validation_reason": "The captured Batch 5 test waits for every artwork request before Skip and has no held-request abort or failure case; those orderings are reachable during the new asynchronous loader and the claimed coverage gap is present, though defect incidence was not measured.",
+      "protected_subject": "concurrency"
+    },
+    {
+      "#": 3,
+      "autofix_class": "gated_auto",
+      "confidence": 75,
+      "evidence": [
+        "src/game/animation/Batch5Presenter.ts:41 -- .setOrigin(0.5, 0.94).setFlipX(defenderFlipX(appearance.facing!, 245, targetX)));",
+        "src/game/animation/Batch5Presenter.ts:37 -- const targetX = id === 'valhallarama' ? 420 : 600, target = scene.add.container(targetX, 490), size = appearance.type === 'r' ? 275 : 215;",
+        "src/game/animation/Batch5Presenter.ts:67 -- pose(1); tween({targets:actor,x: id === 'valhallarama' ? 550 : 360,y:id === 'valhallarama' ? 220 : 350,duration:700,ease:'Cubic.easeInOut'}); });",
+        "AGENTS.md:68 requires preserving the Fireworm benchmark; docs/FIREWORM_BENCHMARK.md:8 says 'Face characters toward their opponent.'"
+      ],
+      "file": "src/game/animation/Batch5Presenter.ts",
+      "first_evidence": "src/game/animation/Batch5Presenter.ts:41 -- .setOrigin(0.5, 0.94).setFlipX(defenderFlipX(appearance.facing!, 245, targetX)));",
+      "independent_reviewers": [
+        "project-standards"
+      ],
+      "line": 41,
+      "owner": "downstream-resolver",
+      "pre_existing": false,
+      "requires_verification": true,
+      "reviewers": [
+        "project-standards"
+      ],
+      "severity": "P2",
+      "suggested_fix": "Keep a reference to the illustrated defender image and update its flip when Valhallarama passes to the right, with a readable turn before impact; verify both factions and viewport orientations.",
+      "title": "Turn the defender after Valhallarama vaults behind it",
+      "why_it_matters": "During Valhallarama's capture, the illustrated defender continues facing left after she moves to its right, so it faces away during the tap and reaction. The required Fireworm benchmark says characters face their opponent; updating the defender's facing at the vault resolves that mismatch without affecting chess state.",
+      "validation_status": "confirmed",
+      "validation_reason": "In the captured presenter the defender's image is flipped once using attacker x=245, while Valhallarama travels from x=245 past the defender at x=420 to x=550 with no subsequent defender flip; this legal attack violates the benchmark's facing requirement."
+    }
+  ],
+  "triage_groups": [
+    {
+      "title": "Capture verification",
+      "findings": [
+        1,
+        2
+      ],
+      "context": "The browser checks exercise character recognition and loader cancellation.",
+      "preferred_resolution": "Add an observable defender assertion and cold-load lifecycle cases.",
+      "why": "Both protect the new loading and rendering integration."
+    }
+  ],
+  "pre_existing_findings": [],
+  "requirements_completeness": {
+    "plan": "docs/plans/2026-10-29-batch5-artwork-gate.md",
+    "source": "inferred",
+    "note": "The design-gate plan contains no enumerated requirements or implementation units. The owner approved the design direction; physical-phone visual acceptance and implementation evidence remain separate."
+  },
+  "learnings": [],
+  "agent_native_gaps": [],
+  "deployment_notes": [],
+  "residual_risks": [
+    "Physical-phone visual acceptance and device performance remain unverified."
+  ],
+  "testing_gaps": [],
+  "coverage": {
+    "depth": "full",
+    "peer": "Independent cross-model pass did not run: no different-provider CLI was installed; the local adversarial reviewer covered that lens.",
+    "suppressed_by_confidence": {},
+    "mode_aware_demotions": 0,
+    "first_evidence_backfilled": 3,
+    "malformed_findings": 0,
+    "malformed_returns": 0,
+    "validator_shortcut_skipped": 0,
+    "notes": [
+      "The staged snapshot was reviewed before follow-up edits; untracked video recordings were excluded.",
+      "The reviewed snapshot predates follow-up fixes made during the review; the caller must validate those fixes separately."
+    ],
+    "validator": {
+      "confirmed": 3,
+      "rejected": 0,
+      "unresolved": 0,
+      "malformed": 0,
+      "failed": 0,
+      "shortcut_skipped": 0,
+      "basis": "One independent validator batch returned all three verdicts."
+    }
+  },
+  "peer": {
+    "outcome": "in-process-fallback",
+    "coverage": "Independent cross-model pass did not run: no different-provider CLI was installed; the local adversarial reviewer covered that lens."
+  },
+  "artifact_path": "/tmp/compound-engineering-1000/ce-code-review/batch5-review",
+  "run_id": "batch5-review"
+}

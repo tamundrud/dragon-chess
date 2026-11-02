@@ -28,14 +28,14 @@ export class Batch4Presenter implements AttackPresenter {
     const poses=names.map((name,i)=>scene.add.image(0,0,`batch4-${id}-${name}`)
       .setDisplaySize(width,width*(human && name==='tumble'?1024/1536:ratio)).setOrigin(0.5,human?0.5:0.94).setFlipX(id==='flamehuffer' && name==='ready').setAlpha(i===0?1:0));
     actor.add(poses);
-    const fallback=resolveFirewormDefender(context,scene.textures?.exists(`bishop-${context.defenderCharacterId}-ready`)??false);
+    const fallback=resolveFirewormDefender(context,scene.textures?.exists(`bishop-${context.defenderCharacterId}-ready`)??false, scene.textures?.exists(`batch5-${context.defenderCharacterId}-ready`)??false);
     const appearance=context.defenderCharacterId==='fireworm'&&fallback.type==='r'&&fallback.color==='w'
       ? {...fallback,label:'FIREWORM · ROOK',texture:'fireworm-ready',frame:undefined,facing:1 as const}
       : context.defenderCharacterId==='viking_warrior'&&fallback.type==='p'&&fallback.color==='w'
         ? {...fallback,label:'HOOLIGAN WARRIOR · PAWN',texture:'knight-hooligan',facing:1 as const} : fallback;
     const targetX=human?560:620, target=scene.add.container(targetX,490),size=appearance.type==='r'?275:215;
     if(appearance.texture)target.add(scene.add.image(0,0,appearance.texture,appearance.frame)
-      .setDisplaySize(size,appearance.type==='b'&&BISHOPS.some(x=>x===context.defenderCharacterId)?size*bishopHeightRatio(context.defenderCharacterId as BishopId):size)
+      .setDisplaySize(size / (appearance.heightRatio ?? 1),appearance.type==='b'&&BISHOPS.some(x=>x===context.defenderCharacterId)?size*bishopHeightRatio(context.defenderCharacterId as BishopId):size)
       .setOrigin(0.5,0.94).setFlipX(defenderFlipX(appearance.facing!,245,targetX)));
     else {target.add(scene.add.ellipse(0,-90,140,165,appearance.color==='b'?0x345c75:0xc39647,0.95));
       target.add(scene.add.text(0,-95,appearance.type.toUpperCase(),{fontSize:'72px',color:'#fff4da',fontFamily:'Georgia'}).setOrigin(0.5));}
