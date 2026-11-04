@@ -26,7 +26,7 @@ export class FirewormPresenter implements AttackPresenter {
     const poses = ['fireworm-ready','fireworm-breath','fireworm-proud'].map((key, i) =>
       scene.add.image(0, 0, key).setDisplaySize(410, 410).setOrigin(0.5, 0.94).setAlpha(i === 0 ? 1 : 0));
     dragon.add(poses);
-    const appearance = resolveFirewormDefender(context, scene.textures?.exists(`bishop-${context.defenderCharacterId}-ready`) ?? false);
+    const appearance = resolveFirewormDefender(context, scene.textures?.exists(`bishop-${context.defenderCharacterId}-ready`) ?? false, scene.textures?.exists(`batch5-${context.defenderCharacterId}-ready`) ?? false);
     const target = scene.add.container(650, 490);
     const targetSize = appearance.type === 'r' ? 275 : 215;
     const attackSide = Math.sign(dragon.x - target.x) || -1;
@@ -35,7 +35,7 @@ export class FirewormPresenter implements AttackPresenter {
     let targetArt: Phaser.GameObjects.Image | null = null;
     if (appearance.texture) {
       targetArt = scene.add.image(0, 0, appearance.texture, appearance.frame)
-        .setDisplaySize(targetSize, appearance.type === 'b' && BISHOPS.some(id => id === context.defenderCharacterId)
+        .setDisplaySize(targetSize / (appearance.heightRatio ?? 1), appearance.type === 'b' && BISHOPS.some(id => id === context.defenderCharacterId)
         ? targetSize * bishopHeightRatio(context.defenderCharacterId as BishopId) : targetSize).setOrigin(0.5, 0.94)
         .setFlipX(defenderFlipX(appearance.facing!, dragon.x, target.x));
       target.add(targetArt);

@@ -56,3 +56,9 @@ describe('Bishop defender artwork', () => {
       expect(resolveFirewormDefender({...base, defenderCharacterId:id, defenderPieceType:'b', defenderColor:color==='w'?'b':'w'}).texture).toBeUndefined();
     });
 });
+
+it('resolves a loaded Librarian queen as the illustrated defender', () => {
+  const appearance = resolveFirewormDefender({moveFrom:'h5',moveTo:'h4',attackerCharacterId:'valhallarama',defenderCharacterId:'hairy_scary_librarian',defenderPieceType:'q',defenderColor:'b',attackDefinitionId:'generic_strike'}, false, true);
+  expect(appearance.texture).toBe('batch5-hairy_scary_librarian-ready');
+  expect(appearance.label).toContain('HAIRY SCARY LIBRARIAN');
+});

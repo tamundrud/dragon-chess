@@ -3,16 +3,22 @@ import type { PieceColor, PieceType } from '../../chess/chessTypes';
 import { CharacterRegistry } from '../characters/CharacterRegistry';
 import { KNIGHTS } from './knightAssets';
 import { BISHOPS } from './bishopAssets';
+import { BATCH5 } from './batch5Assets';
 
 const CLASS_NAMES: Record<PieceType, string> = { p:'PAWN', r:'ROOK', n:'KNIGHT', b:'BISHOP', q:'QUEEN', k:'KING' };
 
-export function resolveFirewormDefender(context: AttackContext, bishopAvailable = false): {
-  type: PieceType; color: PieceColor; label: string; texture?: string; frame?: string; facing?: -1 | 1;
+export function resolveFirewormDefender(context: AttackContext, bishopAvailable = false, batch5Available = false): {
+  type: PieceType; color: PieceColor; label: string; texture?: string; frame?: string; facing?: -1 | 1; heightRatio?: number;
 } {
   const character = CharacterRegistry.getInstance().getById(context.defenderCharacterId);
   const type = context.defenderPieceType ?? character?.pieceType ?? 'p';
   const color = context.defenderColor ?? (character?.faction === 'light' ? 'w' : 'b');
   const matches = character?.pieceType === type && character.faction === (color === 'w' ? 'light' : 'dark');
+  if (batch5Available && matches && BATCH5.some(id => id === context.defenderCharacterId)) {
+    return {type, color, label:`${character!.displayName.toUpperCase()} · ${CLASS_NAMES[type]}`,
+      texture:`batch5-${context.defenderCharacterId}-ready`, facing:1,
+      heightRatio:context.defenderCharacterId === 'valhallarama' ? 1199/1312 : 1024/1536};
+  }
   if (bishopAvailable && matches && type === 'b' && BISHOPS.some(id => id === context.defenderCharacterId)) {
     return { type, color, label:`${character!.displayName.toUpperCase()} · BISHOP`,
       texture:`bishop-${context.defenderCharacterId}-ready`, facing:1 };

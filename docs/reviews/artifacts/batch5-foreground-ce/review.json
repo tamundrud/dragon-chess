@@ -1,0 +1,253 @@
+{
+  "status": "complete",
+  "verdict": "Ready with fixes",
+  "scope": {
+    "base": "16e5dec",
+    "branch": "codex/batch5-recovery",
+    "head_sha": "16e5dec91a2a16e2844a04640c96978dab3997a9",
+    "pr_url": null,
+    "files_changed": 17
+  },
+  "intent": "Keep all three attacks visibly in front of the defender; redesign Valhallarama with separation, anticipation, approach, contact and recovery; preserve lifecycle and screenshot assertions.",
+  "intent_confidence": "explicit",
+  "reviewers": [
+    "correctness",
+    "project-standards",
+    "testing",
+    "julik-frontend-races",
+    "adversarial"
+  ],
+  "findings": [
+    {
+      "#": 1,
+      "autofix_class": "manual",
+      "confidence": 100,
+      "evidence": [
+        "src/game/animation/Batch5Presenter.ts:79 -- if (id === 'valhallarama') at(1550,()=>{pose(2); tween({targets:actor,x:470,duration:150,ease:'Sine.easeOut'});});",
+        "src/game/animation/Batch5Presenter.ts:44 -- else { target.add(scene.add.ellipse(0, -90, 140, 165, appearance.color === 'b' ? 0x345c75 : 0xc39647, 0.95));",
+        "firewormDefender.ts resolves common_or_garden rook to the fallback. The fallback ellipse spans y=317.5\u2013482.5 around x=600; transforming the opaque grey sword pixels of the contact asset with the setDisplaySize, setAngle and actor position yields zero overlap with that ellipse.",
+        "src/game/animation/Batch5Presenter.ts:81 -- const star=scene.add.star(id === 'valhallarama' ? targetX+50 : targetX-35,id === 'valhallarama' ? 320 : 390,5,4,12,0xffdf7c,0.95); effects.add(star);",
+        "src/game/animation/Batch5Presenter.ts:39,44 -- the target is at (600,490), while the placeholder ellipse is centered at (0,-90), sized 140 by 165; at x=650 its top is around y=342, below the star at (650,320). The new contact artwork, scaled to 330 high and rotated 10 degrees around its center at (470,380), puts its rightmost sword tip approximately at (660,321), also above the ellipse.",
+        "src/game/animation/firewormDefender.ts:16-40 -- Common or Garden is not in any illustrated return branch, so a matching black rook uses the placeholder."
+      ],
+      "file": "src/game/animation/Batch5Presenter.ts",
+      "first_evidence": "src/game/animation/Batch5Presenter.ts:79 -- if (id === 'valhallarama') at(1550,()=>{pose(2); tween({targets:actor,x:470,duration:150,ease:'Sine.easeOut'});});",
+      "independent_reviewers": [
+        "correctness",
+        "adversarial"
+      ],
+      "line": 79,
+      "owner": "downstream-resolver",
+      "pre_existing": false,
+      "requires_verification": true,
+      "reviewers": [
+        "correctness",
+        "adversarial"
+      ],
+      "severity": "P1",
+      "suggested_fix": "Choose Valhallarama contact pose position and impact coordinates from the resolved defender appearance, and verify a Common or Garden fallback capture in rendered frames.",
+      "title": "Place Valhallarama contact for fallback defenders",
+      "why_it_matters": "A legal Valhallarama capture of Common or Garden uses the generic fallback defender, and the sword passes above the ellipse while the impact star also floats outside it. The fixed sword placement was calibrated to the Hooligan art and does not account for the fallback silhouette; selecting a contact anchor for that appearance would put the weapon and effect on the defender.",
+      "validation_status": "confirmed",
+      "validation_reason": "For a Valhallarama capture of the registered black rook Common or Garden, firewormDefender.ts returns no texture and Batch5Presenter.ts:44 draws the fallback ellipse; independently transforming the contact asset at the current position and rotation finds zero blade pixels inside that ellipse, while the star is above it."
+    },
+    {
+      "#": 2,
+      "autofix_class": "manual",
+      "confidence": 75,
+      "evidence": [
+        "src/game/animation/Batch5Presenter.ts:77 -- at(1550,()=>{pose(4);tween({targets:actor,angle:0,duration:120});});",
+        "docs/reviews/artifacts/batch5-choreography/hairy_scary_librarian-contact-frames.png: at 1.53\u20132.13 seconds the upper blade tip remains above the opponent while the lower blade reaches the shield."
+      ],
+      "file": "src/game/animation/Batch5Presenter.ts",
+      "first_evidence": "src/game/animation/Batch5Presenter.ts:77 -- at(1550,()=>{pose(4);tween({targets:actor,angle:0,duration:120});});",
+      "independent_reviewers": [
+        "correctness"
+      ],
+      "line": 77,
+      "owner": "downstream-resolver",
+      "pre_existing": false,
+      "requires_verification": true,
+      "reviewers": [
+        "correctness"
+      ],
+      "severity": "P1",
+      "suggested_fix": "Revise the crossed-blade contact artwork or the contact-specific transform to bring both visible blades into the defender silhouette, then check consecutive contact frames.",
+      "title": "Make both Librarian blades reach the defender",
+      "why_it_matters": "In the supplied portrait contact frames, the lower sword reaches the Hooligan shield, but the upper sword ends visibly above the opponent throughout the held impact. This fails the approved crossed two-blade contact beat even though both blades are foreground. A revised action pose or defender-relative positioning should bring both blades to the opponent.",
+      "validation_status": "confirmed",
+      "validation_reason": "The legal Hooligan pawn capture in the consecutive Librarian contact frames shows one sword reaching the shield while the other ends above the defender throughout the held contact; the approved proposal specifies readable two-blade contact."
+    },
+    {
+      "#": 3,
+      "autofix_class": "gated_auto",
+      "confidence": 100,
+      "evidence": [
+        "src/game/animation/Batch5Presenter.ts:57 -- at(240,()=>{ say('attacking','Here we go!'); pose(1); });",
+        "src/game/animation/Batch5Presenter.ts:58 -- at(460,()=>{ say('impact','A surprise!'); dazed.setVisible(true); });",
+        "src/game/animation/Batch5Presenter.ts:59 -- at(700,()=>{ say('recovering','Back to the board'); pose(poses.length-1); tween({targets:target,alpha:0.25,duration:200}); });",
+        "src/game/animation/Batch5Presenter.ts:25-26 -- const names = id === 'mogadon' ? ['ready','action','proud'] : id === 'valhallarama' ? ['ready','action','contact','proud'] : ['ready','guard','blue','red','action','proud'];"
+      ],
+      "file": "src/game/animation/Batch5Presenter.ts",
+      "first_evidence": "src/game/animation/Batch5Presenter.ts:57 -- at(240,()=>{ say('attacking','Here we go!'); pose(1); });",
+      "independent_reviewers": [
+        "correctness"
+      ],
+      "line": 57,
+      "owner": "downstream-resolver",
+      "pre_existing": false,
+      "requires_verification": true,
+      "reviewers": [
+        "correctness"
+      ],
+      "severity": "P2",
+      "suggested_fix": "Show a static or minimally animated character-specific contact pose positioned against the defender during the reduced-motion impact, followed by recovery; add coverage for the displayed pose.",
+      "title": "Use the corrected contact poses in reduced motion",
+      "why_it_matters": "With reduced motion enabled, Valhallarama displays the old airborne action pose and never displays the corrected contact pose; the Librarian stays in crossed guard and never displays the dual-sword contact. The defender becomes dazed despite no visible contact, so the corrected choreography is absent for this user setting.",
+      "validation_status": "confirmed",
+      "validation_reason": "For reduced-motion playback, Batch5Presenter.ts:56-60 selects only pose 1 and then the last pose; for Valhallarama and the Librarian those are the airborne action and guard rather than their contact poses, so the corrected contact is never shown."
+    }
+  ],
+  "actionable_findings": [
+    {
+      "#": 1,
+      "autofix_class": "manual",
+      "confidence": 100,
+      "evidence": [
+        "src/game/animation/Batch5Presenter.ts:79 -- if (id === 'valhallarama') at(1550,()=>{pose(2); tween({targets:actor,x:470,duration:150,ease:'Sine.easeOut'});});",
+        "src/game/animation/Batch5Presenter.ts:44 -- else { target.add(scene.add.ellipse(0, -90, 140, 165, appearance.color === 'b' ? 0x345c75 : 0xc39647, 0.95));",
+        "firewormDefender.ts resolves common_or_garden rook to the fallback. The fallback ellipse spans y=317.5\u2013482.5 around x=600; transforming the opaque grey sword pixels of the contact asset with the setDisplaySize, setAngle and actor position yields zero overlap with that ellipse.",
+        "src/game/animation/Batch5Presenter.ts:81 -- const star=scene.add.star(id === 'valhallarama' ? targetX+50 : targetX-35,id === 'valhallarama' ? 320 : 390,5,4,12,0xffdf7c,0.95); effects.add(star);",
+        "src/game/animation/Batch5Presenter.ts:39,44 -- the target is at (600,490), while the placeholder ellipse is centered at (0,-90), sized 140 by 165; at x=650 its top is around y=342, below the star at (650,320). The new contact artwork, scaled to 330 high and rotated 10 degrees around its center at (470,380), puts its rightmost sword tip approximately at (660,321), also above the ellipse.",
+        "src/game/animation/firewormDefender.ts:16-40 -- Common or Garden is not in any illustrated return branch, so a matching black rook uses the placeholder."
+      ],
+      "file": "src/game/animation/Batch5Presenter.ts",
+      "first_evidence": "src/game/animation/Batch5Presenter.ts:79 -- if (id === 'valhallarama') at(1550,()=>{pose(2); tween({targets:actor,x:470,duration:150,ease:'Sine.easeOut'});});",
+      "independent_reviewers": [
+        "correctness",
+        "adversarial"
+      ],
+      "line": 79,
+      "owner": "downstream-resolver",
+      "pre_existing": false,
+      "requires_verification": true,
+      "reviewers": [
+        "correctness",
+        "adversarial"
+      ],
+      "severity": "P1",
+      "suggested_fix": "Choose Valhallarama contact pose position and impact coordinates from the resolved defender appearance, and verify a Common or Garden fallback capture in rendered frames.",
+      "title": "Place Valhallarama contact for fallback defenders",
+      "why_it_matters": "A legal Valhallarama capture of Common or Garden uses the generic fallback defender, and the sword passes above the ellipse while the impact star also floats outside it. The fixed sword placement was calibrated to the Hooligan art and does not account for the fallback silhouette; selecting a contact anchor for that appearance would put the weapon and effect on the defender.",
+      "validation_status": "confirmed",
+      "validation_reason": "For a Valhallarama capture of the registered black rook Common or Garden, firewormDefender.ts returns no texture and Batch5Presenter.ts:44 draws the fallback ellipse; independently transforming the contact asset at the current position and rotation finds zero blade pixels inside that ellipse, while the star is above it."
+    },
+    {
+      "#": 2,
+      "autofix_class": "manual",
+      "confidence": 75,
+      "evidence": [
+        "src/game/animation/Batch5Presenter.ts:77 -- at(1550,()=>{pose(4);tween({targets:actor,angle:0,duration:120});});",
+        "docs/reviews/artifacts/batch5-choreography/hairy_scary_librarian-contact-frames.png: at 1.53\u20132.13 seconds the upper blade tip remains above the opponent while the lower blade reaches the shield."
+      ],
+      "file": "src/game/animation/Batch5Presenter.ts",
+      "first_evidence": "src/game/animation/Batch5Presenter.ts:77 -- at(1550,()=>{pose(4);tween({targets:actor,angle:0,duration:120});});",
+      "independent_reviewers": [
+        "correctness"
+      ],
+      "line": 77,
+      "owner": "downstream-resolver",
+      "pre_existing": false,
+      "requires_verification": true,
+      "reviewers": [
+        "correctness"
+      ],
+      "severity": "P1",
+      "suggested_fix": "Revise the crossed-blade contact artwork or the contact-specific transform to bring both visible blades into the defender silhouette, then check consecutive contact frames.",
+      "title": "Make both Librarian blades reach the defender",
+      "why_it_matters": "In the supplied portrait contact frames, the lower sword reaches the Hooligan shield, but the upper sword ends visibly above the opponent throughout the held impact. This fails the approved crossed two-blade contact beat even though both blades are foreground. A revised action pose or defender-relative positioning should bring both blades to the opponent.",
+      "validation_status": "confirmed",
+      "validation_reason": "The legal Hooligan pawn capture in the consecutive Librarian contact frames shows one sword reaching the shield while the other ends above the defender throughout the held contact; the approved proposal specifies readable two-blade contact."
+    },
+    {
+      "#": 3,
+      "autofix_class": "gated_auto",
+      "confidence": 100,
+      "evidence": [
+        "src/game/animation/Batch5Presenter.ts:57 -- at(240,()=>{ say('attacking','Here we go!'); pose(1); });",
+        "src/game/animation/Batch5Presenter.ts:58 -- at(460,()=>{ say('impact','A surprise!'); dazed.setVisible(true); });",
+        "src/game/animation/Batch5Presenter.ts:59 -- at(700,()=>{ say('recovering','Back to the board'); pose(poses.length-1); tween({targets:target,alpha:0.25,duration:200}); });",
+        "src/game/animation/Batch5Presenter.ts:25-26 -- const names = id === 'mogadon' ? ['ready','action','proud'] : id === 'valhallarama' ? ['ready','action','contact','proud'] : ['ready','guard','blue','red','action','proud'];"
+      ],
+      "file": "src/game/animation/Batch5Presenter.ts",
+      "first_evidence": "src/game/animation/Batch5Presenter.ts:57 -- at(240,()=>{ say('attacking','Here we go!'); pose(1); });",
+      "independent_reviewers": [
+        "correctness"
+      ],
+      "line": 57,
+      "owner": "downstream-resolver",
+      "pre_existing": false,
+      "requires_verification": true,
+      "reviewers": [
+        "correctness"
+      ],
+      "severity": "P2",
+      "suggested_fix": "Show a static or minimally animated character-specific contact pose positioned against the defender during the reduced-motion impact, followed by recovery; add coverage for the displayed pose.",
+      "title": "Use the corrected contact poses in reduced motion",
+      "why_it_matters": "With reduced motion enabled, Valhallarama displays the old airborne action pose and never displays the corrected contact pose; the Librarian stays in crossed guard and never displays the dual-sword contact. The defender becomes dazed despite no visible contact, so the corrected choreography is absent for this user setting.",
+      "validation_status": "confirmed",
+      "validation_reason": "For reduced-motion playback, Batch5Presenter.ts:56-60 selects only pose 1 and then the last pose; for Valhallarama and the Librarian those are the airborne action and guard rather than their contact poses, so the corrected contact is never shown."
+    }
+  ],
+  "triage_groups": [
+    {
+      "title": "Visible weapon contact",
+      "findings": [
+        1,
+        2
+      ],
+      "context": "Both the defender shape and the crossed sword tips affect whether contact is visible.",
+      "preferred_resolution": "Adjust defender-specific strike placement and crossed-sword contact, then inspect consecutive rendered frames.",
+      "why": "Both P1 issues affect the approved contact beat."
+    }
+  ],
+  "pre_existing_findings": [],
+  "requirements_completeness": null,
+  "learnings": [],
+  "agent_native_gaps": [],
+  "deployment_notes": [],
+  "residual_risks": [],
+  "testing_gaps": [
+    "The contact-frame recordings exercise pawn defenders only. The illustrated-Librarian capture snapshot is taken during preparation, and the staging unit test uses a generic pawn and mocked images; neither establishes contact geometry against differently sized illustrated defenders."
+  ],
+  "coverage": {
+    "suppressed_by_confidence": {},
+    "malformed_findings": 0,
+    "malformed_returns": 0,
+    "first_evidence_backfilled": 0,
+    "mode_aware_demotions": 0,
+    "peer_outcome": "in-process-fallback",
+    "peer_coverage": "No different-provider route was installed; a local adversarial reviewer covered this lens.",
+    "notes": [
+      "Project standards used AGENTS.md as the fallback criteria.",
+      "No plan was found; settlement suppression was not evaluated.",
+      "No cross-model corroboration was available; no finding qualifies for the validation shortcut."
+    ],
+    "depth": "full",
+    "validation": {
+      "confirmed": 3,
+      "rejected": 0,
+      "unresolved": 0,
+      "malformed": 0,
+      "failed": 0,
+      "shortcut_skipped": 0
+    },
+    "failed_reviewers": []
+  },
+  "peer": {
+    "outcome": "in-process-fallback",
+    "coverage": "No different-provider route was installed; a local adversarial reviewer covered this lens."
+  },
+  "artifact_path": "/tmp/compound-engineering-1000/ce-code-review/batch5-foreground",
+  "run_id": "batch5-foreground"
+}

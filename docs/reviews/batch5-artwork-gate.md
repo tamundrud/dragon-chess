@@ -1,0 +1,15 @@
+# Batch 5 artwork studies — owner review
+
+**Status: owner approved the design and choreography directions on October 29, 2026**, with the identified contact corrections to be addressed during production. These are original generated concept sheets, not production assets; approval of the resulting poses and animation remains pending. The following records the pre-implementation review.
+
+- [Mogadon](artifacts/batch5-artwork/mogadon.png): the pompous Meathead king boasts, charges behind his shield, bumps the defender's shield, overbalances, and recovers his dignity. The shield contact is harmless and the joke is his own loss of balance.
+- [Valhallarama](artifacts/batch5-artwork/valhallarama.png): the adventurous Hooligan queen springs over a shield, taps the opponent's helmet with her blade, lands, and bows as the defender wobbles. Contact should be a gentle flat-of-blade tap, without injury.
+- [Hairy Scary Librarian](artifacts/batch5-artwork/librarian.png): an unusually tall, thin, hairy older male Viking with wild hair and an extraordinarily long beard tucked into his belt. His two swords, the Heart-Slicers, perform a precise guard, crossing parry and alternating flourishes, culminating in harmless shield contact and a composed, eccentric recovery. His queen role affects chess movement, not his appearance. [First study](artifacts/batch5-artwork/librarian-first-study.png).
+
+## Inspection and limits
+
+The sheets were visually inspected at full size. They use full-colour painted fantasy styling and were generated as new work, with no external illustration supplied as a reference. The second Librarian sheet used the first generated study as its reference. This is a provenance statement, not a legal guarantee of uniqueness. Individual images are composite storyboards with backgrounds, not registered transparent pose assets. In the Librarian contact panel one grip is hidden by the shield; the exact two-sword contact and ordering of the flourish need a clearer production study. Valhallarama's impact reads as a point against a helmet rather than the intended flat tap; fix that before production. Mogadon's broad silhouette should be checked against Stoick at game scale. These images do not demonstrate pose continuity, timing, phone legibility, transparency, real-device performance or a working game scene. A production pose pass must inspect cutouts on light and dark backgrounds and in portrait and landscape phone compositions, then prove motion in the actual game. No claim of physical-phone or owner acceptance is made.
+
+## After approval
+
+Use the Fireworm benchmark's foreground board staging, connected poses and clear return, but preserve each character's distinct action. Retain exactly-once completion, Skip, reduced motion, rotation, cleanup and existing chess authority. Test legal captures and defender identities, compare existing scenes, record portrait and landscape phone videos, perform CE implementation and review, and open a draft PR for visual acceptance. No merge or deploy without explicit approval.
