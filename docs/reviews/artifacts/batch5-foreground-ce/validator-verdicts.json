@@ -1,0 +1,22 @@
+{
+  "verdicts": [
+    {
+      "#": 1,
+      "status": "confirmed",
+      "protected_subject": null,
+      "reason": "For a Valhallarama capture of the registered black rook Common or Garden, firewormDefender.ts returns no texture and Batch5Presenter.ts:44 draws the fallback ellipse; independently transforming the contact asset at the current position and rotation finds zero blade pixels inside that ellipse, while the star is above it."
+    },
+    {
+      "#": 2,
+      "status": "confirmed",
+      "protected_subject": null,
+      "reason": "The legal Hooligan pawn capture in the consecutive Librarian contact frames shows one sword reaching the shield while the other ends above the defender throughout the held contact; the approved proposal specifies readable two-blade contact."
+    },
+    {
+      "#": 3,
+      "status": "confirmed",
+      "protected_subject": null,
+      "reason": "For reduced-motion playback, Batch5Presenter.ts:56-60 selects only pose 1 and then the last pose; for Valhallarama and the Librarian those are the airborne action and guard rather than their contact poses, so the corrected contact is never shown."
+    }
+  ]
+}
